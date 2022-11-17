@@ -42,7 +42,7 @@ def conectarBD(host, usuario, senha, DB):
 
 #INSERT
 def insert_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
-    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    connection = conectarBD("localhost", "root", , "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
     if alimentacao != None:
@@ -73,7 +73,7 @@ def insert_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, espec
 
 ###READ
 def read_BD(tabela):
-    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    connection = conectarBD("localhost", "root", , "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
     sql = "SELECT * FROM %s" #Realizando um select para mostrar todas as linhas e colunas da tabela
@@ -92,7 +92,7 @@ def read_BD(tabela):
 #UPDATE
 
 def update_BD(id, nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None, exclusividade=None):
-    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    connection = conectarBD("localhost", "root", , "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
     if alimentacao != None:
@@ -169,7 +169,7 @@ def update_BD(id, nome, alimentacao=None, data_nasc=None, peso=None, cor=None, e
 
 #DELETE
 def delete_BD(tabela, id):
-    connection = conectarBD("localhost", "root", "admin", "Login")
+    connection = conectarBD("localhost", "root", , "Login")
     cursor = connection.cursor()
 
     sql = "DELETE FROM %s WHERE id = %s"
