@@ -1,2 +1,2 @@
 # Projeto_final
-Telas CRUD
+Esse projeto envolve a produção de uma tela que faça o cadastro de animais ou de especies para um petshop fictício. O cadastro é equivalente ao INSERT no banco de dados, mas além desse comando a tela deve permitir que o usuário realize os comandos SELECT, UPDATE e DELETE. Tudo isso será feito utilizando as bibliotecas connector-python-mysql, PyQt5, da linguagem de programação Python.
