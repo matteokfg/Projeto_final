@@ -258,7 +258,7 @@ def insert_Email_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None,
     print(f"Foi cadastrado {nome} de ID:", userid)
 
 ###READ
-# FAZER READS PARA CADA TABELA, arrumar dentro da funcao
+# FAZER READS PARA CADA TABELA, arrumar dentro da funcao, adicionar funcoes agregadoras tbm
 def read_Raca_BD(tabela):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
