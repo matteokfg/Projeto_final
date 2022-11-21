@@ -76,8 +76,158 @@ def conectarBD(host, usuario, senha, DB):
     return connection
 
 #INSERT
-# FAZER INSERTS PARA CADA TABELA
-def insert_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+# FAZER INSERTS PARA CADA TABELA, arrumar dentro da funcao
+def insert_Raca_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
+
+    if alimentacao != None:
+        sql = "INSERT INTO Especies (nome, alimentacao) VALUES (%s, %s)"
+        data = (
+            nome,
+            alimentacao
+        )
+    else:
+        sql = "INSERT INTO Animais (nome, data_nasc, peso, cor, especie_id) VALUES (%s, %s, %s, %s, %s)"
+        data = (
+            nome,
+            data_nasc,
+            peso,
+            cor,
+            especie_id
+        )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit() #Efetua as modificacoes
+
+    userid = cursor.lastrowid #Obtém o último ID cadastrado
+
+    cursor.close() #Fecha o cursor
+    connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
+
+    print(f"Foi cadastrado {nome} de ID:", userid)
+
+def insert_Especies_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
+
+    if alimentacao != None:
+        sql = "INSERT INTO Especies (nome, alimentacao) VALUES (%s, %s)"
+        data = (
+            nome,
+            alimentacao
+        )
+    else:
+        sql = "INSERT INTO Animais (nome, data_nasc, peso, cor, especie_id) VALUES (%s, %s, %s, %s, %s)"
+        data = (
+            nome,
+            data_nasc,
+            peso,
+            cor,
+            especie_id
+        )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit() #Efetua as modificacoes
+
+    userid = cursor.lastrowid #Obtém o último ID cadastrado
+
+    cursor.close() #Fecha o cursor
+    connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
+
+    print(f"Foi cadastrado {nome} de ID:", userid)
+
+def insert_Animais_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
+
+    if alimentacao != None:
+        sql = "INSERT INTO Especies (nome, alimentacao) VALUES (%s, %s)"
+        data = (
+            nome,
+            alimentacao
+        )
+    else:
+        sql = "INSERT INTO Animais (nome, data_nasc, peso, cor, especie_id) VALUES (%s, %s, %s, %s, %s)"
+        data = (
+            nome,
+            data_nasc,
+            peso,
+            cor,
+            especie_id
+        )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit() #Efetua as modificacoes
+
+    userid = cursor.lastrowid #Obtém o último ID cadastrado
+
+    cursor.close() #Fecha o cursor
+    connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
+
+    print(f"Foi cadastrado {nome} de ID:", userid)
+
+def insert_Cliente_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
+
+    if alimentacao != None:
+        sql = "INSERT INTO Especies (nome, alimentacao) VALUES (%s, %s)"
+        data = (
+            nome,
+            alimentacao
+        )
+    else:
+        sql = "INSERT INTO Animais (nome, data_nasc, peso, cor, especie_id) VALUES (%s, %s, %s, %s, %s)"
+        data = (
+            nome,
+            data_nasc,
+            peso,
+            cor,
+            especie_id
+        )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit() #Efetua as modificacoes
+
+    userid = cursor.lastrowid #Obtém o último ID cadastrado
+
+    cursor.close() #Fecha o cursor
+    connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
+
+    print(f"Foi cadastrado {nome} de ID:", userid)
+
+def insert_Telefone_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
+
+    if alimentacao != None:
+        sql = "INSERT INTO Especies (nome, alimentacao) VALUES (%s, %s)"
+        data = (
+            nome,
+            alimentacao
+        )
+    else:
+        sql = "INSERT INTO Animais (nome, data_nasc, peso, cor, especie_id) VALUES (%s, %s, %s, %s, %s)"
+        data = (
+            nome,
+            data_nasc,
+            peso,
+            cor,
+            especie_id
+        )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit() #Efetua as modificacoes
+
+    userid = cursor.lastrowid #Obtém o último ID cadastrado
+
+    cursor.close() #Fecha o cursor
+    connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
+
+    print(f"Foi cadastrado {nome} de ID:", userid)
+
+def insert_Email_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
@@ -108,8 +258,93 @@ def insert_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, espec
     print(f"Foi cadastrado {nome} de ID:", userid)
 
 ###READ
-# FAZER READS PARA CADA TABELA
-def read_BD(tabela):
+# FAZER READS PARA CADA TABELA, arrumar dentro da funcao
+def read_Raca_BD(tabela):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco
+
+    sql = "SELECT * FROM %s" #Realizando um select para mostrar todas as linhas e colunas da tabela
+    data = (
+        tabela
+    )
+    cursor.execute(sql, data) #Executa o comando SQL
+    results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
+
+    cursor.close() #
+    connection.close() #Fecha a conexão com o banco
+
+    for result in results: #Ler os registros existentes com o select
+        print(result) #imprime os registros existentes
+
+def read_Especies_BD(tabela):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco
+
+    sql = "SELECT * FROM %s" #Realizando um select para mostrar todas as linhas e colunas da tabela
+    data = (
+        tabela
+    )
+    cursor.execute(sql, data) #Executa o comando SQL
+    results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
+
+    cursor.close() #
+    connection.close() #Fecha a conexão com o banco
+
+    for result in results: #Ler os registros existentes com o select
+        print(result) #imprime os registros existentes
+
+def read_Animais_BD(tabela):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco
+
+    sql = "SELECT * FROM %s" #Realizando um select para mostrar todas as linhas e colunas da tabela
+    data = (
+        tabela
+    )
+    cursor.execute(sql, data) #Executa o comando SQL
+    results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
+
+    cursor.close() #
+    connection.close() #Fecha a conexão com o banco
+
+    for result in results: #Ler os registros existentes com o select
+        print(result) #imprime os registros existentes
+
+def read_Cliente_BD(tabela):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco
+
+    sql = "SELECT * FROM %s" #Realizando um select para mostrar todas as linhas e colunas da tabela
+    data = (
+        tabela
+    )
+    cursor.execute(sql, data) #Executa o comando SQL
+    results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
+
+    cursor.close() #
+    connection.close() #Fecha a conexão com o banco
+
+    for result in results: #Ler os registros existentes com o select
+        print(result) #imprime os registros existentes
+
+def read_Telefone_BD(tabela):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco
+
+    sql = "SELECT * FROM %s" #Realizando um select para mostrar todas as linhas e colunas da tabela
+    data = (
+        tabela
+    )
+    cursor.execute(sql, data) #Executa o comando SQL
+    results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
+
+    cursor.close() #
+    connection.close() #Fecha a conexão com o banco
+
+    for result in results: #Ler os registros existentes com o select
+        print(result) #imprime os registros existentes
+
+def read_Email_BD(tabela):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
@@ -127,7 +362,6 @@ def read_BD(tabela):
         print(result) #imprime os registros existentes
 
 #UPDATE
-#  ARRUMAR OS UPDATES DAS TABELAS TELEFONE E EMAIL
 def update_Especies_BD(id, nome=None, alimentacao=None, raca_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
@@ -432,15 +666,111 @@ def update_Email_BD(pk, cliente_id=None, email=None, exclusividade=None):
     print(recordsaffected, " registros alterados")
 
 #DELETE
-# FAZER DELETES PARA CADA TABELA
-def delete_BD(tabela, id):
+def delete_Raca_BD(id):
     connection = conectarBD("localhost", "root", "admin", "Login")
     cursor = connection.cursor()
 
-    sql = "DELETE FROM %s WHERE id = %s"
-    data = (
-        tabela, 
+    sql = "DELETE FROM Raca WHERE id = %s"
+    data = ( 
         id
+    )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit()
+
+    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+
+    cursor.close()
+    connection.close() #Fecha a conexão com o banco
+
+    print(recordsaffected, " registros excluídos")
+
+def delete_Especies_BD(id):
+    connection = conectarBD("localhost", "root", "admin", "Login")
+    cursor = connection.cursor()
+
+    sql = "DELETE FROM Especies WHERE id = %s"
+    data = (
+        id
+    )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit()
+
+    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+
+    cursor.close()
+    connection.close() #Fecha a conexão com o banco
+
+    print(recordsaffected, " registros excluídos")
+
+def delete_Animais_BD(id):
+    connection = conectarBD("localhost", "root", "admin", "Login")
+    cursor = connection.cursor()
+
+    sql = "DELETE FROM Animais WHERE id = %s"
+    data = (
+        id
+    )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit()
+
+    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+
+    cursor.close()
+    connection.close() #Fecha a conexão com o banco
+
+    print(recordsaffected, " registros excluídos")
+
+def delete_Cliente_BD(cpf):
+    connection = conectarBD("localhost", "root", "admin", "Login")
+    cursor = connection.cursor()
+
+    sql = "DELETE FROM Cliente WHERE cpf = %s"
+    data = (
+        cpf
+    )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit()
+
+    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+
+    cursor.close()
+    connection.close() #Fecha a conexão com o banco
+
+    print(recordsaffected, " registros excluídos")
+
+def delete_Telefone_BD(cliente_id, ddd, telefone):
+    connection = conectarBD("localhost", "root", "admin", "Login")
+    cursor = connection.cursor()
+
+    sql = "DELETE FROM Telefone WHERE cliente_id = %s and ddd = %s and telefone = %s"
+    data = (
+        cliente_id,
+        ddd,
+        telefone
+    )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit()
+
+    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+
+    cursor.close()
+    connection.close() #Fecha a conexão com o banco
+
+    print(recordsaffected, " registros excluídos")
+
+def delete_Email_BD(cliente_id, email):
+    connection = conectarBD("localhost", "root", "admin", "Login")
+    cursor = connection.cursor()
+
+    sql = "DELETE FROM Email WHERE cliente_id = %s and email = %s"
+    data = (
+        cliente_id,
+        email
     )
 
     cursor.execute(sql, data) #Executa o comando SQL
