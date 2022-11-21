@@ -131,7 +131,6 @@ def read_BD(tabela):
 def update_Especies_BD(id, nome=None, alimentacao=None, raca_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
-
     
     if exclusividade == 'nome':
         sql = "UPDATE Especies SET nome = %s WHERE id = %s"
@@ -173,7 +172,6 @@ def update_Especies_BD(id, nome=None, alimentacao=None, raca_id=None, exclusivid
 def update_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, especie_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
-
 
     if exclusividade == 'nome':
         sql = "UPDATE Animais SET nome = %s WHERE id = %s"
@@ -343,19 +341,46 @@ def update_Raca_BD(id, nome=None):
 
     print(recordsaffected, " registros alterados")
 
-def updat_Telefone_BD(tabela, id=None, cpf=None, nome=None, alimentacao=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, especie_id=None, raca_id=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, animal_id=None, exclusividade=None):
+def update_Telefone_BD(pk, cliente_id=None, ddd=None, telefone=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tabela == 'Telefone':
-        if exclusividade == 'nome':
-            sql = "UPDATE Telefone SET  = %s WHERE id = %s"
-            data = (
-                nome,
-                id
-            )
+    cliente_id_pk, ddd_pk, telefone_pk = pk.split(" ")
+
+    if exclusividade == 'cliente_id':
+        sql = "UPDATE Telefone SET cliente_id = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
+        data = (
+            cliente_id,
+            cliente_id_pk,
+            ddd_pk,
+            telefone_pk
+        )
+    elif exclusividade == 'ddd':
+        sql = "UPDATE Telefone SET ddd = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
+        data = (
+            ddd,
+            cliente_id_pk,
+            ddd_pk,
+            telefone_pk
+        )
+    elif exclusividade == 'telefone':
+        sql = "UPDATE Telefone SET telefone = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
+        data = (
+            telefone,
+            cliente_id_pk,
+            ddd_pk,
+            telefone_pk
+        )
     else:
-        print("Algo deu errado, Tabela incorreta.")
+        sql = "UPDATE Telefone SET cliente_id = %s, ddd = %s, telefone = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
+        data = (
+            cliente_id,
+            ddd,
+            telefone,
+            cliente_id_pk,
+            ddd_pk,
+            telefone_pk
+        )
 
     cursor.execute(sql, data) #Executa o comando SQL
     connection.commit()
@@ -367,19 +392,34 @@ def updat_Telefone_BD(tabela, id=None, cpf=None, nome=None, alimentacao=None, da
 
     print(recordsaffected, " registros alterados")
 
-def update_Email_BD(tabela, id=None, cpf=None, nome=None, alimentacao=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, especie_id=None, raca_id=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, animal_id=None, exclusividade=None):
+def update_Email_BD(pk, cliente_id=None, email=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tabela == 'Email':
-        if exclusividade == 'nome':
-            sql = "UPDATE Email SET  = %s WHERE id = %s"
-            data = (
-                nome,
-                id
-            )
+    cliente_id_pk, email_pk = pk.split(" ")
+
+    if exclusividade == 'cliente_id':
+        sql = "UPDATE Telefone SET cliente_id = %s WHERE cliente_id = %s and email = %s"
+        data = (
+            cliente_id,
+            cliente_id_pk,
+            email_pk,
+        )
+    elif exclusividade == 'email':
+        sql = "UPDATE Telefone SET email = %s WHERE cliente_id = %s and email = %s"
+        data = (
+            email,
+            cliente_id_pk,
+            email_pk,
+        )
     else:
-        print("Algo deu errado, Tabela incorreta.")
+        sql = "UPDATE Telefone SET cliente_id = %s, email = %s WHERE cliente_id = %s and email = %s"
+        data = (
+            cliente_id,
+            email,
+            cliente_id_pk,
+            email_pk,
+        )
 
     cursor.execute(sql, data) #Executa o comando SQL
     connection.commit()
