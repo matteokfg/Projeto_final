@@ -76,6 +76,7 @@ def conectarBD(host, usuario, senha, DB):
     return connection
 
 #INSERT
+# FAZER INSERTS PARA CADA TABELA
 def insert_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
@@ -107,6 +108,7 @@ def insert_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, espec
     print(f"Foi cadastrado {nome} de ID:", userid)
 
 ###READ
+# FAZER READS PARA CADA TABELA
 def read_BD(tabela):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
@@ -125,195 +127,257 @@ def read_BD(tabela):
         print(result) #imprime os registros existentes
 
 #UPDATE
-# SEPARAR PARA O UPDATE SER DIVIDIDO POR TABELA, ASSIM CADA TABELA VAI TER UM DEF UPDATE DIFERENTE, ESPECIFICO PARA CADA UM
-def update_BD(tabela, id=None, cpf=None, nome=None, alimentacao=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, especie_id=None, raca_id=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, animal_id=None, exclusividade=None):
+#  ARRUMAR OS UPDATES DAS TABELAS TELEFONE E EMAIL
+def update_Especies_BD(id, nome=None, alimentacao=None, raca_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tabela == 'Especies':
-        if exclusividade == 'nome':
-            sql = "UPDATE Especies SET nome = %s WHERE id = %s"
-            data = (
-                nome,
-                id
-            )
-        elif exclusividade == 'alimentacao':
-            sql = "UPDATE Especies SET alimentacao = %s WHERE id = %s"
-            data = (
-                alimentacao,
-                id
-            )
-        elif exclusividade == 'raca_id':
-            sql = "UPDATE Especies SET raca_id = %s WHERE id = %s"
-            data = (
-                raca_id,
-                id
-            )
-        else:
-            sql = "UPDATE Especies SET nome = %s, alimentacao = %s, raca_id = %s WHERE id = %s"
-            data = (
-                nome, 
-                alimentacao,
-                raca_id,
-                id
-            )
-
-    elif tabela == 'Animais':
-        if exclusividade == 'nome':
-            sql = "UPDATE Animais SET nome = %s WHERE id = %s"
-            data = (
-                nome,
-                id
-            )
-        elif exclusividade == 'data_nasc':
-            sql = "UPDATE Animais SET data_nasc = %s WHERE id = %s"
-            data = (
-                data_nasc,
-                id
-            )
-        elif exclusividade == 'peso':
-            sql = "UPDATE Animais SET peso = %s WHERE id = %s"
-            data = (
-                peso,
-                id
-            )
-        elif exclusividade == 'pelagem':
-            sql = "UPDATE Animais SET pelagem = %s WHERE id = %s"
-            data = (
-                pelagem,
-                id
-            )
-        elif exclusividade == 'sexo':
-            sql = "UPDATE Animais SET sexo = %s WHERE id = %s"
-            data = (
-                sexo,
-                id
-            )
-        elif exclusividade == 'primeira_ida':
-            sql = "UPDATE Animais SET primeira_ida = %s WHERE id = %s"
-            data = (
-                primeira_ida,
-                id
-            )
-        elif exclusividade == 'ultima_ida':
-            sql = "UPDATE Animais SET ultima_ida = %s WHERE id = %s"
-            data = (
-                ultima_ida,
-                id
-            )
-        elif exclusividade == 'castrado':
-            sql = "UPDATE Animais SET castrado = %s WHERE id = %s"
-            data = (
-                castrado,
-                id
-            )
-        elif exclusividade == 'especie_id':
-            sql = "UPDATE Animais SET especie_id = %s WHERE id = %s"
-            data = (
-                especie_id,
-                id
-            )
-        else:
-            sql = "UPDATE Animais SET nome = %s, data_nasc = %s, peso = %s, pelagem = %s, sexo = %s, primeira_ida= %s, ultima_ida = %s, castrado = %s, especie_id = %s WHERE id = %s"
-            data = (
-                nome,
-                data_nasc,
-                peso,
-                pelagem,
-                sexo,
-                primeira_ida,
-                ultima_ida,
-                castrado,
-                especie_id,
-                id
-            )
-
-    elif tabela == 'Cliente':
-        if exclusividade == 'nome':
-            sql = "UPDATE Cliente SET nome = %s WHERE cpf = %s"
-            data = (
-                nome,
-                cpf
-            )
-
-        elif exclusividade == 'logradouro':
-            sql = "UPDATE Cliente SET logradouro = %s WHERE cpf = %s"
-            data = (
-                logradouro,
-                cpf
-            )
-
-        elif exclusividade == 'numero':
-            sql = "UPDATE Cliente SET numero = %s WHERE cpf = %s"
-            data = (
-                numero,
-                cpf
-            )
-
-        elif exclusividade == 'bairro':
-            sql = "UPDATE Cliente SET bairro = %s WHERE cpf = %s"
-            data = (
-                bairro,
-                cpf
-            )
-
-        elif exclusividade == 'cidade':
-            sql = "UPDATE Cliente SET cidade = %s WHERE cpf = %s"
-            data = (
-                cidade,
-                cpf
-            )
-
-        elif exclusividade == 'estado':
-            sql = "UPDATE Cliente SET estado = %s WHERE cpf = %s"
-            data = (
-                estado,
-                cpf
-            )
-
-        elif exclusividade == 'animal_id':
-            sql = "UPDATE Cliente SET animal_id = %s WHERE cpf = %s"
-            data = (
-                animal_id,
-                cpf
-            )
-
-        else:
-            sql = "UPDATE Cliente SET nome = %s, logradouro = %s, numero = %s, bairro = %s, cidade = %s, estado = %s, animal_id = %s WHERE cpf = %s"
-            data = (
-                nome,
-                logradouro,
-                numero,
-                bairro,
-                cidade,
-                estado,
-                animal_id,
-                cpf
-            )
-        
-    elif tabela == 'Raca':
-        sql = "UPDATE Raca SET nome = %s WHERE id = %s"
+    
+    if exclusividade == 'nome':
+        sql = "UPDATE Especies SET nome = %s WHERE id = %s"
         data = (
             nome,
             id
-   
-    elif tabela == 'Telefone':
+        )
+    elif exclusividade == 'alimentacao':
+        sql = "UPDATE Especies SET alimentacao = %s WHERE id = %s"
+        data = (
+            alimentacao,
+            id
+        )
+    elif exclusividade == 'raca_id':
+        sql = "UPDATE Especies SET raca_id = %s WHERE id = %s"
+        data = (
+            raca_id,
+            id
+        )
+    else:
+        sql = "UPDATE Especies SET nome = %s, alimentacao = %s, raca_id = %s WHERE id = %s"
+        data = (
+            nome, 
+            alimentacao,
+            raca_id,
+            id
+        )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit()
+
+    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+
+    cursor.close()
+    connection.close() #Fecha a conexão com o banco
+
+    print(recordsaffected, " registros alterados")
+
+def update_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, especie_id=None, exclusividade=None):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco
+
+
+    if exclusividade == 'nome':
+        sql = "UPDATE Animais SET nome = %s WHERE id = %s"
+        data = (
+            nome,
+            id
+        )
+    elif exclusividade == 'data_nasc':
+        sql = "UPDATE Animais SET data_nasc = %s WHERE id = %s"
+        data = (
+            data_nasc,
+            id
+        )
+    elif exclusividade == 'peso':
+        sql = "UPDATE Animais SET peso = %s WHERE id = %s"
+        data = (
+            peso,
+            id
+        )
+    elif exclusividade == 'pelagem':
+        sql = "UPDATE Animais SET pelagem = %s WHERE id = %s"
+        data = (
+            pelagem,
+            id
+        )
+    elif exclusividade == 'sexo':
+        sql = "UPDATE Animais SET sexo = %s WHERE id = %s"
+        data = (
+            sexo,
+            id
+        )
+    elif exclusividade == 'primeira_ida':
+        sql = "UPDATE Animais SET primeira_ida = %s WHERE id = %s"
+        data = (
+            primeira_ida,
+            id
+        )
+    elif exclusividade == 'ultima_ida':
+        sql = "UPDATE Animais SET ultima_ida = %s WHERE id = %s"
+        data = (
+            ultima_ida,
+            id
+        )
+    elif exclusividade == 'castrado':
+        sql = "UPDATE Animais SET castrado = %s WHERE id = %s"
+        data = (
+            castrado,
+            id
+        )
+    elif exclusividade == 'especie_id':
+        sql = "UPDATE Animais SET especie_id = %s WHERE id = %s"
+        data = (
+            especie_id,
+            id
+        )
+    else:
+        sql = "UPDATE Animais SET nome = %s, data_nasc = %s, peso = %s, pelagem = %s, sexo = %s, primeira_ida= %s, ultima_ida = %s, castrado = %s, especie_id = %s WHERE id = %s"
+        data = (
+            nome,
+            data_nasc,
+            peso,
+            pelagem,
+            sexo,
+            primeira_ida,
+            ultima_ida,
+            castrado,
+            especie_id,
+            id
+        )
+
+        cursor.execute(sql, data) #Executa o comando SQL
+        connection.commit()
+
+        recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+
+        cursor.close()
+        connection.close() #Fecha a conexão com o banco
+
+        print(recordsaffected, " registros alterados")
+
+def update_Cliente_BD(cpf, nome=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, animal_id=None, exclusividade=None):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco
+
+    if exclusividade == 'nome':
+        sql = "UPDATE Cliente SET nome = %s WHERE cpf = %s"
+        data = (
+            nome,
+            cpf
+        )
+    elif exclusividade == 'logradouro':
+        sql = "UPDATE Cliente SET logradouro = %s WHERE cpf = %s"
+        data = (
+            logradouro,
+            cpf
+        )
+    elif exclusividade == 'numero':
+        sql = "UPDATE Cliente SET numero = %s WHERE cpf = %s"
+        data = (
+            numero,
+            cpf
+        )
+    elif exclusividade == 'bairro':
+        sql = "UPDATE Cliente SET bairro = %s WHERE cpf = %s"
+        data = (
+            bairro,
+            cpf
+        )
+    elif exclusividade == 'cidade':
+        sql = "UPDATE Cliente SET cidade = %s WHERE cpf = %s"
+        data = (
+            cidade,
+            cpf
+        )
+    elif exclusividade == 'estado':
+        sql = "UPDATE Cliente SET estado = %s WHERE cpf = %s"
+        data = (
+            estado,
+            cpf
+        )
+    elif exclusividade == 'animal_id':
+        sql = "UPDATE Cliente SET animal_id = %s WHERE cpf = %s"
+        data = (
+            animal_id,
+            cpf
+        )
+    else:
+        sql = "UPDATE Cliente SET nome = %s, logradouro = %s, numero = %s, bairro = %s, cidade = %s, estado = %s, animal_id = %s WHERE cpf = %s"
+        data = (
+            nome,
+            logradouro,
+            numero,
+            bairro,
+            cidade,
+            estado,
+            animal_id,
+            cpf
+        )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit()
+
+    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+
+    cursor.close()
+    connection.close() #Fecha a conexão com o banco
+
+    print(recordsaffected, " registros alterados")
+
+def update_Raca_BD(id, nome=None):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco
+
+    sql = "UPDATE Raca SET nome = %s WHERE id = %s"
+    data = (
+        nome,
+        id
+    )
+
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit()
+
+    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+
+    cursor.close()
+    connection.close() #Fecha a conexão com o banco
+
+    print(recordsaffected, " registros alterados")
+
+def updat_Telefone_BD(tabela, id=None, cpf=None, nome=None, alimentacao=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, especie_id=None, raca_id=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, animal_id=None, exclusividade=None):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco
+
+    if tabela == 'Telefone':
         if exclusividade == 'nome':
             sql = "UPDATE Telefone SET  = %s WHERE id = %s"
             data = (
                 nome,
                 id
+            )
+    else:
+        print("Algo deu errado, Tabela incorreta.")
 
-    elif tabela == 'Email':
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit()
+
+    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+
+    cursor.close()
+    connection.close() #Fecha a conexão com o banco
+
+    print(recordsaffected, " registros alterados")
+
+def update_Email_BD(tabela, id=None, cpf=None, nome=None, alimentacao=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, especie_id=None, raca_id=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, animal_id=None, exclusividade=None):
+    connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
+    cursor = connection.cursor() #Cursor para comunicação com o banco
+
+    if tabela == 'Email':
         if exclusividade == 'nome':
             sql = "UPDATE Email SET  = %s WHERE id = %s"
             data = (
                 nome,
                 id
-           
-    
-    
-
+            )
     else:
         print("Algo deu errado, Tabela incorreta.")
 
@@ -328,6 +392,7 @@ def update_BD(tabela, id=None, cpf=None, nome=None, alimentacao=None, data_nasc=
     print(recordsaffected, " registros alterados")
 
 #DELETE
+# FAZER DELETES PARA CADA TABELA
 def delete_BD(tabela, id):
     connection = conectarBD("localhost", "root", "admin", "Login")
     cursor = connection.cursor()
