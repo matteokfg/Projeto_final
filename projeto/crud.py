@@ -24,8 +24,8 @@ create table Animais (
 	peso			decimal(10,2)		check (peso > 0),
 	pelagem			varchar(50)			not null,
     sexo			char(1)				not null,
-    primeira_ida	date				check (primeira_ida < curdate()), /* ver se eh ativo */
-    ultima_ida		date				check (ultima_ida <= curdate()),
+    primeira_ida	date				not null, /* ver se eh ativo */
+    ultima_ida		date				not null,
     castrado		boolean				not null,
 	especie_id		integer				references Especies(id)
 ); /* curdate() */
@@ -78,7 +78,7 @@ def conectarBD(host, usuario, senha, DB):
 
 
 #INSERT
-def insert_Raca_BD(id, nome = None):
+def insert_Raca_BD(nome):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
@@ -98,7 +98,7 @@ def insert_Raca_BD(id, nome = None):
 
     print(f"Foi cadastrada a raça {nome} do animal com ID:", userid)
 
-def insert_Especies_BD(id, nome=None, alimentacao=None, raca_id=None, exclusividade=None):
+def insert_Especies_BD(nome, raca_id, alimentacao=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
@@ -120,7 +120,7 @@ def insert_Especies_BD(id, nome=None, alimentacao=None, raca_id=None, exclusivid
     print(f"Foi cadastrada a espécie {nome} do animal com ID:", userid)
 
 
-def insert_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, especie_id=None, exclusividade=None):
+def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado, especie_id):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
@@ -147,13 +147,13 @@ def insert_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, se
 
     print(f"Foi cadastrado o animal {nome} com ID:", userid)
 
-def insert_Cliente_BD(cpf, nome=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, animal_id=None, exclusividade=None):
+def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, animal_id, bairro=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
     sql = "INSERT INTO Cliente VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
     data = (
-        cpf
+        cpf,
         nome,
         logradouro,
         numero,
@@ -173,14 +173,9 @@ def insert_Cliente_BD(cpf, nome=None, logradouro=None, numero=None, bairro=None,
 
     print(f"Foi cadastrado o cliente {nome} com ID:", userid)
 
-def insert_Telefone_BD(pk, cliente_id=None, ddd=None, telefone=None, exclusividade=None):
+def insert_Telefone_BD(cliente_id, ddd, telefone):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
-
-    pk = pk.split(" ")
-    cliente_id_pk = pk[0]
-    ddd_pk = pk[1]
-    telefone_pk = pk[2]
 
     sql = "INSERT INTO Telefone VALUES (%s, %s, %s)"
     data = (
@@ -199,13 +194,9 @@ def insert_Telefone_BD(pk, cliente_id=None, ddd=None, telefone=None, exclusivida
 
     print(f"Foi cadastrado o telefone {ddd}{telefone} do cliente com ID:", userid)
 
-def insert_Email_BD(pk, cliente_id=None, email=None, exclusividade=None):
+def insert_Email_BD(cliente_id, email):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
-
-    pk = pk.split(" ")
-    cliente_id_pk = pk[0]
-    email_pk = pk[1]
 
     sql = "INSERT INTO Email VALUES (%s, %s)"
     data = (
