@@ -75,27 +75,18 @@ def conectarBD(host, usuario, senha, DB):
 
     return connection
 
+
+
 #INSERT
-# FAZER INSERTS PARA CADA TABELA, arrumar dentro da funcao
-def insert_Raca_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+def insert_Raca_BD(id, nome = None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
-    if alimentacao != None:
-        sql = "INSERT INTO Especies (nome, alimentacao) VALUES (%s, %s)"
-        data = (
-            nome,
-            alimentacao
-        )
-    else:
-        sql = "INSERT INTO Animais (nome, data_nasc, peso, cor, especie_id) VALUES (%s, %s, %s, %s, %s)"
-        data = (
-            nome,
-            data_nasc,
-            peso,
-            cor,
-            especie_id
-        )
+    
+    sql = "INSERT INTO Raca VALUES (%s)"
+    data = (
+        nome
+    )
 
     cursor.execute(sql, data) #Executa o comando SQL
     connection.commit() #Efetua as modificacoes
@@ -105,27 +96,18 @@ def insert_Raca_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, 
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado {nome} de ID:", userid)
+    print(f"Foi cadastrada a raça {nome} do animal com ID:", userid)
 
-def insert_Especies_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+def insert_Especies_BD(id, nome=None, alimentacao=None, raca_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
+    cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if alimentacao != None:
-        sql = "INSERT INTO Especies (nome, alimentacao) VALUES (%s, %s)"
-        data = (
-            nome,
-            alimentacao
-        )
-    else:
-        sql = "INSERT INTO Animais (nome, data_nasc, peso, cor, especie_id) VALUES (%s, %s, %s, %s, %s)"
-        data = (
-            nome,
-            data_nasc,
-            peso,
-            cor,
-            especie_id
-        )
+    sql = "INSERT INTO Especies VALUES (%s, %s, %s)"
+    data = (
+        nome, 
+        alimentacao,
+        raca_id
+    )
 
     cursor.execute(sql, data) #Executa o comando SQL
     connection.commit() #Efetua as modificacoes
@@ -135,27 +117,25 @@ def insert_Especies_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=No
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado {nome} de ID:", userid)
+    print(f"Foi cadastrada a espécie {nome} do animal com ID:", userid)
 
-def insert_Animais_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+
+def insert_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, especie_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
-    if alimentacao != None:
-        sql = "INSERT INTO Especies (nome, alimentacao) VALUES (%s, %s)"
-        data = (
-            nome,
-            alimentacao
-        )
-    else:
-        sql = "INSERT INTO Animais (nome, data_nasc, peso, cor, especie_id) VALUES (%s, %s, %s, %s, %s)"
-        data = (
-            nome,
-            data_nasc,
-            peso,
-            cor,
-            especie_id
-        )
+    sql = "INSERT INTO Animais VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    data = (
+        nome,
+        data_nasc,
+        peso,
+        pelagem,
+        sexo,
+        primeira_ida,
+        ultima_ida,
+        castrado,
+        especie_id
+    )
 
     cursor.execute(sql, data) #Executa o comando SQL
     connection.commit() #Efetua as modificacoes
@@ -165,27 +145,23 @@ def insert_Animais_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=Non
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado {nome} de ID:", userid)
+    print(f"Foi cadastrado o animal {nome} com ID:", userid)
 
-def insert_Cliente_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+def insert_Cliente_BD(cpf, nome=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, animal_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
+    cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if alimentacao != None:
-        sql = "INSERT INTO Especies (nome, alimentacao) VALUES (%s, %s)"
-        data = (
-            nome,
-            alimentacao
-        )
-    else:
-        sql = "INSERT INTO Animais (nome, data_nasc, peso, cor, especie_id) VALUES (%s, %s, %s, %s, %s)"
-        data = (
-            nome,
-            data_nasc,
-            peso,
-            cor,
-            especie_id
-        )
+    sql = "INSERT INTO Cliente VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+    data = (
+        cpf
+        nome,
+        logradouro,
+        numero,
+        bairro,
+        cidade,
+        estado,
+        animal_id
+    )
 
     cursor.execute(sql, data) #Executa o comando SQL
     connection.commit() #Efetua as modificacoes
@@ -195,27 +171,23 @@ def insert_Cliente_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=Non
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado {nome} de ID:", userid)
+    print(f"Foi cadastrado o cliente {nome} com ID:", userid)
 
-def insert_Telefone_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+def insert_Telefone_BD(pk, cliente_id=None, ddd=None, telefone=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
-    if alimentacao != None:
-        sql = "INSERT INTO Especies (nome, alimentacao) VALUES (%s, %s)"
-        data = (
-            nome,
-            alimentacao
-        )
-    else:
-        sql = "INSERT INTO Animais (nome, data_nasc, peso, cor, especie_id) VALUES (%s, %s, %s, %s, %s)"
-        data = (
-            nome,
-            data_nasc,
-            peso,
-            cor,
-            especie_id
-        )
+    pk = pk.split(" ")
+    cliente_id_pk = pk[0]
+    ddd_pk = pk[1]
+    telefone_pk = pk[2]
+
+    sql = "INSERT INTO Telefone VALUES (%s, %s, %s)"
+    data = (
+        cliente_id,
+        ddd,
+        telefone
+    )
 
     cursor.execute(sql, data) #Executa o comando SQL
     connection.commit() #Efetua as modificacoes
@@ -225,27 +197,21 @@ def insert_Telefone_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=No
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado {nome} de ID:", userid)
+    print(f"Foi cadastrado o telefone {ddd}{telefone} do cliente com ID:", userid)
 
-def insert_Email_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None, especie_id=None):
+def insert_Email_BD(pk, cliente_id=None, email=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
+    cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if alimentacao != None:
-        sql = "INSERT INTO Especies (nome, alimentacao) VALUES (%s, %s)"
-        data = (
-            nome,
-            alimentacao
-        )
-    else:
-        sql = "INSERT INTO Animais (nome, data_nasc, peso, cor, especie_id) VALUES (%s, %s, %s, %s, %s)"
-        data = (
-            nome,
-            data_nasc,
-            peso,
-            cor,
-            especie_id
-        )
+    pk = pk.split(" ")
+    cliente_id_pk = pk[0]
+    email_pk = pk[1]
+
+    sql = "INSERT INTO Email VALUES (%s, %s)"
+    data = (
+        cliente_id,
+        email
+    )
 
     cursor.execute(sql, data) #Executa o comando SQL
     connection.commit() #Efetua as modificacoes
@@ -255,7 +221,7 @@ def insert_Email_BD(nome, alimentacao=None, data_nasc=None, peso=None, cor=None,
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado {nome} de ID:", userid)
+    print(f"Foi cadastrado o email {email} do cliente com ID:", userid)
 
 ###READ
 # FAZER READS PARA CADA TABELA, arrumar dentro da funcao, adicionar funcoes agregadoras tbm
