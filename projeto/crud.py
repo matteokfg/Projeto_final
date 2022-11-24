@@ -42,7 +42,7 @@ create table Cliente (
 );
 
 create table Telefone (
-	cliente_id	integer,
+	cliente_id	char(11),
     ddd			char(2),
     telefone	char(9),
     
@@ -51,7 +51,7 @@ create table Telefone (
 );
 
 create table Email (
-	cliente_id	integer,
+	cliente_id	char(11),
     email		varchar(100),
     
     primary key(cliente_id, email),
@@ -83,7 +83,7 @@ def insert_Raca_BD(nome):
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
     
-    sql = "INSERT INTO Raca VALUES (%s)"
+    sql = "INSERT INTO Raca(nome) VALUES (%s)"
     data = (
         nome
     )
@@ -102,7 +102,7 @@ def insert_Especies_BD(nome, raca_id, alimentacao=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    sql = "INSERT INTO Especies VALUES (%s, %s, %s)"
+    sql = "INSERT INTO Especies(nome, alimentacao, raca_id) VALUES (%s, %s, %s)"
     data = (
         nome, 
         alimentacao,
@@ -124,7 +124,7 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
-    sql = "INSERT INTO Animais VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO Animais(nome, data_nasc, peso, pelagem, sexo, primeria_ida, ultima_ida, castrado, especie_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
     data = (
         nome,
         data_nasc,
@@ -150,18 +150,29 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
 def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, animal_id, bairro=None):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
-
-    sql = "INSERT INTO Cliente VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
-    data = (
-        cpf,
-        nome,
-        logradouro,
-        numero,
-        bairro,
-        cidade,
-        estado,
-        animal_id
-    )
+    if bairro == None:
+        sql = "INSERT INTO Cliente(cpf, nome, logradouro, numero, cidade, estado, animal_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        data = (
+            cpf,
+            nome,
+            logradouro,
+            numero,
+            cidade,
+            estado,
+            animal_id
+        )
+    else:
+        sql = "INSERT INTO Cliente(cpf, nome, logradouro, numero, bairro, cidade, estado, animal_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
+        data = (
+            cpf,
+            nome,
+            logradouro,
+            numero,
+            bairro,
+            cidade,
+            estado,
+            animal_id
+        )
 
     cursor.execute(sql, data) #Executa o comando SQL
     connection.commit() #Efetua as modificacoes
@@ -177,7 +188,7 @@ def insert_Telefone_BD(cliente_id, ddd, telefone):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
-    sql = "INSERT INTO Telefone VALUES (%s, %s, %s)"
+    sql = "INSERT INTO Telefone(cliente_id, ddd, telefone) VALUES (%s, %s, %s)"
     data = (
         cliente_id,
         ddd,
@@ -198,7 +209,7 @@ def insert_Email_BD(cliente_id, email):
     connection = conectarBD("localhost", "root", "admin", "Login") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    sql = "INSERT INTO Email VALUES (%s, %s)"
+    sql = "INSERT INTO Email(cliente_id, email) VALUES (%s, %s)"
     data = (
         cliente_id,
         email
