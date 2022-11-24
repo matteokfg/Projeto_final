@@ -38,7 +38,7 @@ create table Cliente (
 );
 
 create table Telefone (
-	cliente_id	integer,
+	cliente_id	char(11),
     ddd			char(2),
     telefone	char(9),
     
@@ -47,7 +47,7 @@ create table Telefone (
 );
 
 create table Email (
-	cliente_id	integer,
+	cliente_id	char(11),
     email		varchar(100),
     
     primary key(cliente_id, email),
