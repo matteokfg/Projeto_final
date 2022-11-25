@@ -112,7 +112,6 @@ def insert_Especies_BD(nome, raca_id, alimentacao=None):
 
     print(f"Foi cadastrada a espécie {nome} do animal com ID:", userid)
 
-
 def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado, especie_id):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
@@ -220,7 +219,7 @@ def insert_Email_BD(cliente_id, email):
 
 ###READ
 # FAZER READS PARA CADA TABELA, arrumar dentro da funcao, adicionar funcoes agregadoras tbm
-def read_Raca_BD(tipo=None, filtro=None):
+def read_Raca_BD(tipo=None, filtro=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
     
@@ -229,11 +228,18 @@ def read_Raca_BD(tipo=None, filtro=None):
         data = (
             filtro
         )
-    elif tipo == "count_id":
-        sql = "SELECT count(id) FROM Raca"
-        data = (
-
-        )
+    elif tipo == "count":
+        if group == None:
+            sql = "SELECT count(%s) FROM Raca"
+            data = (
+                filtro
+            )
+        else:
+            sql = "SELECT count(%s) FROM Raca GROUP BY %s"
+            data = (
+                filtro,
+                group
+            )
     elif tipo == "id":
         sql = "SELECT * FROM Raca WHERE id = %s"
         data = (
@@ -254,33 +260,32 @@ def read_Raca_BD(tipo=None, filtro=None):
     for result in results: #Ler os registros existentes com o select
         print(result) #imprime os registros existentes
 
-def read_Especies_BD(tipo=None, filtro=None):
+def read_Especies_BD(tipo=None, filtro=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tipo == "id":
-        sql = "SELECT * FROM Especies WHERE id = %s"
+    if tipo == "id" or tipo == "raca_id":
+        sql = "SELECT * FROM Especies WHERE %s = %s"
         data = (
+            tipo,
             filtro
         )
-    elif tipo == "count_id":
-        sql = "SELECT count(id) FROM Especies"
+    elif tipo == "count":
+        if group == None:
+            sql = "SELECT count(%s) FROM Especies"
+            data = (
+                filtro
+            )
+        else:
+            sql = "SELECT count(%s) FROM Especies GROUP BY %s"
+            data = (
+                filtro,
+                group
+            )
+    elif tipo == "nome" or tipo == "alimentacao":
+        sql = "SELECT * FROM Especies WHERE %s like '%s%'"
         data = (
-
-        )
-    elif tipo == "nome":
-        sql = "SELECT * FROM Especies WHERE nome like '%s%'"
-        data = (
-            filtro
-        )
-    elif tipo == "alimentacao":
-        sql = "SELECT * FROM Especies WHERE alimentacao like '%s%'"
-        data = (
-            filtro
-        )
-    elif tipo == "raca_id":
-        sql = "SELECT * FROM Especies WHERE raca_id = %s"
-        data = (
+            tipo,
             filtro
         )
     else:
@@ -298,82 +303,48 @@ def read_Especies_BD(tipo=None, filtro=None):
     for result in results: #Ler os registros existentes com o select
         print(result) #imprime os registros existentes
 
-def read_Animais_BD(tipo=None, filtro=None):
+def read_Animais_BD(tipo=None, filtro=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tipo == "id":
-        sql = "SELECT * FROM Animais WHERE id = %s"
+    if tipo == "id" or tipo == "data_nasc" or tipo == "peso" or tipo == "primeira_ida" or tipo == "ultima_ida" or tipo == "castrado" or tipo == "especie_id":
+        sql = "SELECT * FROM Animais WHERE %s = %s"
         data = (
+            tipo,
             filtro
         )
-    elif tipo == "count_id":
-        sql = "SELECT count(id) FROM Animais"
+    elif tipo == "count":
+        if group == None:
+            sql = "SELECT count(%s) FROM Animais"
+            data = (
+                filtro
+            )
+        else:
+            sql = "SELECT count(%s) FROM Animais GROUP BY %s"
+            data = (
+                filtro,
+                group
+            )
+    elif tipo == "nome" or tipo == "pelagem":
+        sql = "SELECT * FROM Animais WHERE %s like '%s%'"
         data = (
-
-        )
-    elif tipo == "nome":
-        sql = "SELECT * FROM Animais WHERE nome like '%s%'"
-        data = (
+            tipo,
             filtro
         )
-    elif tipo == "data_nasc":
-        sql = "SELECT * FROM Animais WHERE data_nasc = %s"
-        data = (
-            filtro
-        )
-    elif tipo == "peso":
-        sql = "SELECT * FROM Animais WHERE peso = %s"
-        data = (
-            filtro
-        )
-    elif tipo == "media_peso":
-        sql = "SELECT avg(peso) FROM Animais"
-        data = (
-
-        )
-    elif tipo == "pelagem":
-        sql = "SELECT * FROM Animais WHERE pelagem like '%s%'"
-        data = (
-            filtro
-        )
-    elif tipo == "count_pelagem":
-        sql = "SELECT count(pelagem) FROM Animais GROUP BY pelagem"
-        data = (
-
-        )
+    elif tipo == "media":
+        if group == None:
+            sql = "SELECT avg(%s) FROM Animais"
+            data = (
+                filtro
+            )
+        else:
+            sql = "SELECT avg(%s) FROM Animais GROUP BY %s"
+            data = (
+                filtro,
+                group
+            )
     elif tipo == "sexo":
         sql = "SELECT * FROM Animais WHERE sexo = '%s'"
-        data = (
-            filtro
-        )
-    elif tipo == "count_sexo":
-        sql = "SELECT count(sexo) FROM Animais GROUP BY sexo"
-        data = (
-
-        )
-    elif tipo == "primeira_ida":
-        sql = "SELECT * FROM Animais WHERE primeira_ida = %s"
-        data = (
-            filtro
-        )
-    elif tipo == "ultima_ida":
-        sql = "SELECT * FROM Animais WHERE ultima_ida = %s"
-        data = (
-            filtro
-        )
-    elif tipo == "castrado":
-        sql = "SELECT * FROM Animais WHERE castrado = %s"
-        data = (
-            filtro
-        )
-    elif tipo == "count_castrado":
-        sql = "SELECT count(castrado) FROM Animais GROUP BY castrado"
-        data = (
-
-        )
-    if tipo == "especie_id":
-        sql = "SELECT * FROM Animais WHERE especie_id = %s"
         data = (
             filtro
         )
@@ -392,43 +363,31 @@ def read_Animais_BD(tipo=None, filtro=None):
     for result in results: #Ler os registros existentes com o select
         print(result) #imprime os registros existentes
 
-def read_Cliente_BD(tipo=None, filtro=None):
+def read_Cliente_BD(tipo=None, filtro=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tipo == "cpf":
+    if tipo == "cpf" or tipo == "numero" or tipo == "animal_id":
         sql = "SELECT * FROM Cliente WHERE cpf = %s"
         data = (
             filtro
         )
-    elif tipo == "count_cpf":
-        sql = "SELECT count(id) FROM Cliente"
+    elif tipo == "count":
+        if group == None:
+            sql = "SELECT count(%s) FROM Cliente"
+            data = (
+                filtro
+            )
+        else:
+            sql = "SELECT count(%s) FROM Cliente GROUP BY %s"
+            data = (
+                filtro,
+                group
+            )
+    elif tipo == "nome" or tipo == "logradouro" or tipo == "bairro" or tipo == "cidade":
+        sql = "SELECT * FROM Cliente WHERE %s like '%s%'"
         data = (
-
-        )
-    elif tipo == "nome":
-        sql = "SELECT * FROM Cliente WHERE nome like '%s%'"
-        data = (
-            filtro
-        )
-    elif tipo == "logradouro":
-        sql = "SELECT * FROM Cliente WHERE logradouro like '%s%'"
-        data = (
-            filtro
-        )
-    elif tipo == "numero":
-        sql = "SELECT * FROM Cliente WHERE numero = %s"
-        data = (
-            filtro
-        )
-    elif tipo == "bairro":
-        sql = "SELECT * FROM Cliente WHERE bairro like '%s%'"
-        data = (
-            filtro
-        )
-    elif tipo == "cidade":
-        sql = "SELECT * FROM Cliente WHERE cidade like '%s%'"
-        data = (
+            tipo,
             filtro
         )
     elif tipo == "estado":
@@ -446,11 +405,6 @@ def read_Cliente_BD(tipo=None, filtro=None):
             filtro[3],
             filtro[4]
         )
-    elif tipo == "animal_id":
-        sql = "SELECT * FROM Cliente WHERE animal_id = %s"
-        data = (
-            filtro
-        )
     else:
         sql = "SELECT * FROM Cliente" #Realizando um select para mostrar todas as linhas e colunas da tabela
         data = (
@@ -466,29 +420,21 @@ def read_Cliente_BD(tipo=None, filtro=None):
     for result in results: #Ler os registros existentes com o select
         print(result) #imprime os registros existentes
 
-def read_Telefone_BD(tipo=None, filtro=None):
+def read_Telefone_BD(tipo=None, filtro=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tipo == "ddd":
-        sql = "SELECT * FROM Telefone WHERE ddd = %s"
+    if tipo == "ddd" or tipo == "cliente_id" or tipo == "telefone":
+        sql = "SELECT * FROM Telefone WHERE %s = %s"
         data = (
+            tipo,
             filtro
         )
-    elif tipo == "count_ddd":
-        sql = "SELECT count(ddd) FROM Telefone GROUP BY ddd"
+    elif tipo == "count":
+        sql = "SELECT count(%s) FROM Telefone GROUP BY %s"
         data = (
-
-        )
-    elif tipo == "cliente_id":
-        sql = "SELECT * FROM Telefone WHERE cliente_id = %s"
-        data = (
-            filtro
-        )
-    elif tipo == "telefone":
-        sql = "SELECT * FROM Telefone WHERE telefone = %s"
-        data = (
-            filtro
+            filtro,
+            group
         )
     elif tipo == "cliente_ddd_telefone":
         filtro = filtro.split(" ")
@@ -515,14 +461,10 @@ def read_Email_BD(tipo=None, filtro=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tipo == "email":
-        sql = "SELECT * FROM Email WHERE email = %s"
+    if tipo == "email" or tipo == "cliente_id":
+        sql = "SELECT * FROM Email WHERE %s = %s"
         data = (
-            filtro
-        )
-    elif tipo == "cliente_id":
-        sql = "SELECT * FROM Email WHERE cliente_id = %s"
-        data = (
+            tipo,
             filtro
         )
     elif tipo == "cliente_emial":
@@ -531,6 +473,11 @@ def read_Email_BD(tipo=None, filtro=None):
         data = (
             filtro[1],
             filtro[0]
+        )
+    elif tipo == "count":
+        sql = "SELECT count(%s) FROM Email"
+        data = (
+            filtro
         )
     else:
         sql = "SELECT * FROM Email" #Realizando um select para mostrar todas as linhas e colunas da tabela
