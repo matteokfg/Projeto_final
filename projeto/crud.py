@@ -218,39 +218,26 @@ def insert_Email_BD(cliente_id, email):
 
 ###READ
 # FAZER READS PARA CADA TABELA, arrumar dentro da funcao, adicionar funcoes agregadoras tbm
-def read_Raca_BD(tipo=None, filtro=None, group=None):
+def read_Raca_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
     
-    if tipo == "nome":
-        sql = "SELECT * FROM Raca WHERE nome like '%s%'"
-        data = (
-            filtro,
-        )
-    elif tipo == "count":
+    if tabela == "nome":
+        sql = "SELECT * FROM Raca WHERE nome like '" + str(valor) + "%'"
+
+    elif tabela == "count":
         if group == None:
-            sql = "SELECT count(%s) FROM Raca"
-            data = (
-                filtro,
-            )
+            sql = "SELECT count(" + str(valor) + ") FROM Raca"
         else:
-            sql = "SELECT count(%s) FROM Raca GROUP BY %s"
-            data = (
-                filtro,
-                group
-            )
-    elif tipo == "id":
-        sql = "SELECT * FROM Raca WHERE id = %s"
-        data = (
-            filtro,
-        )
+            sql = "SELECT count(" + str(valor) + ") FROM Raca GROUP BY " + str(group)
+
+    elif tabela == "id":
+        sql = "SELECT * FROM Raca WHERE id = " + str(valor)
+
     else:
         sql = "SELECT * FROM Raca" #Realizando um select para mostrar todas as linhas e colunas da tabela
-        data = (
-            
-        )
 
-    cursor.execute(sql, data) #Executa o comando SQL
+    cursor.execute(sql) #Executa o comando SQL
     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
     cursor.close() #
@@ -259,45 +246,26 @@ def read_Raca_BD(tipo=None, filtro=None, group=None):
     for result in results: #Ler os registros existentes com o select
         print(result) #imprime os registros existentes
 
-def read_Especies_BD(tipo=None, filtro=None, group=None):
+def read_Especies_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tipo == "id" or tipo == "raca_id":
-        #sql = "SELECT * FROM Especies WHERE " + str(tipo) + " = " + str(filtro)
-        sql = "SELECT * FROM Especies WHERE %s = %s"
-        #print(sql)
-        print(tipo)
-        print(filtro)
-        data = (
-            str(tipo),
-            str(filtro)
-        )
-    elif tipo == "count":
+    if tabela == "id" or tabela == "raca_id":
+        sql = "SELECT * FROM Especies WHERE " + str(tabela) + " = " + str(valor)
+
+    elif tabela == "count":
         if group == None:
-            sql = "SELECT count(%s) FROM Especies"
-            data = (
-                filtro,
-            )
+            sql = "SELECT count("+ str(valor) +") FROM Especies"
         else:
-            sql = "SELECT count(%s) FROM Especies GROUP BY %s"
-            data = (
-                filtro,
-                group
-            )
-    elif tipo == "nome" or tipo == "alimentacao":
-        sql = "SELECT * FROM Especies WHERE %s like '%s%'"
-        data = (
-            tipo,
-            filtro
-        )
+            sql = "SELECT count(" + str(valor) + ") FROM Especies GROUP BY" + str(group)
+
+    elif tabela == "nome" or tabela == "alimentacao":
+        sql = "SELECT * FROM Especies WHERE " + str(tabela) + " like '" + str(valor) + "%'"
+
     else:
         sql = "SELECT * FROM Especies" #Realizando um select para mostrar todas as linhas e colunas da tabela
-        data = (
-            
-        )
-    print(data)
-    cursor.execute(sql,data) #Executa o comando SQL
+
+    cursor.execute(sql) #Executa o comando SQL
     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
     cursor.close() #
@@ -306,58 +274,35 @@ def read_Especies_BD(tipo=None, filtro=None, group=None):
     for result in results: #Ler os registros existentes com o select
         print(result) #imprime os registros existentes
 
-def read_Animais_BD(tipo=None, filtro=None, group=None):
+def read_Animais_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tipo == "id" or tipo == "data_nasc" or tipo == "peso" or tipo == "primeira_ida" or tipo == "ultima_ida" or tipo == "castrado" or tipo == "especie_id":
-        sql = "SELECT * FROM Animais WHERE %s = %s"
-        data = (
-            tipo,
-            filtro
-        )
-    elif tipo == "count":
+    if tabela == "id" or tabela == "data_nasc" or tabela == "peso" or tabela == "primeira_ida" or tabela == "ultima_ida" or tabela == "castrado" or tabela == "especie_id":
+        sql = "SELECT * FROM Animais WHERE " + str(tabela) + " = " + str(valor)
+
+    elif tabela == "count":
         if group == None:
-            sql = "SELECT count(%s) FROM Animais"
-            data = (
-                filtro,
-            )
+            sql = "SELECT count(" + str(valor) + ") FROM Animais"
         else:
-            sql = "SELECT count(%s) FROM Animais GROUP BY %s"
-            data = (
-                filtro,
-                group
-            )
-    elif tipo == "nome" or tipo == "pelagem":
-        sql = "SELECT * FROM Animais WHERE %s like '%s%'"
-        data = (
-            tipo,
-            filtro
-        )
-    elif tipo == "media":
+            sql = "SELECT count(" + str(valor) + ") FROM Animais GROUP BY " + str(group)
+
+    elif tabela == "nome" or tabela == "pelagem":
+        sql = "SELECT * FROM Animais WHERE " + str(tabela) + " like '" + str(valor) + "%'"
+
+    elif tabela == "media":
         if group == None:
-            sql = "SELECT avg(%s) FROM Animais"
-            data = (
-                filtro,
-            )
+            sql = "SELECT avg(" + str(valor) + ") FROM Animais"
         else:
-            sql = "SELECT avg(%s) FROM Animais GROUP BY %s"
-            data = (
-                filtro,
-                group
-            )
-    elif tipo == "sexo":
-        sql = "SELECT * FROM Animais WHERE sexo = '%s'"
-        data = (
-            filtro,
-        )
+            sql = "SELECT avg(" + str(valor) + ") FROM Animais GROUP BY " + str(group)
+
+    elif tabela == "sexo":
+        sql = "SELECT * FROM Animais WHERE sexo = '" + str(valor) + "'"
+
     else:
         sql = "SELECT * FROM Animais" #Realizando um select para mostrar todas as linhas e colunas da tabela
-        data = (
-            
-        )
 
-    cursor.execute(sql, data) #Executa o comando SQL
+    cursor.execute(sql) #Executa o comando SQL
     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
     cursor.close() #
@@ -366,55 +311,33 @@ def read_Animais_BD(tipo=None, filtro=None, group=None):
     for result in results: #Ler os registros existentes com o select
         print(result) #imprime os registros existentes
 
-def read_Cliente_BD(tipo=None, filtro=None, group=None):
+def read_Cliente_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tipo == "cpf" or tipo == "numero" or tipo == "animal_id":
-        sql = "SELECT * FROM Cliente WHERE cpf = %s"
-        data = (
-            filtro,
-        )
-    elif tipo == "count":
+    if tabela == "cpf" or tabela == "numero" or tabela == "animal_id":
+        sql = "SELECT * FROM Cliente WHERE cpf = " + str(valor)
+
+    elif tabela == "count":
         if group == None:
-            sql = "SELECT count(%s) FROM Cliente"
-            data = (
-                filtro,
-            )
+            sql = "SELECT count(" + str(valor) + ") FROM Cliente"
         else:
-            sql = "SELECT count(%s) FROM Cliente GROUP BY %s"
-            data = (
-                filtro,
-                group
-            )
-    elif tipo == "nome" or tipo == "logradouro" or tipo == "bairro" or tipo == "cidade":
-        sql = "SELECT * FROM Cliente WHERE %s like '%s%'"
-        data = (
-            tipo,
-            filtro
-        )
-    elif tipo == "estado":
-        sql = "SELECT * FROM Cliente WHERE estado = %s"
-        data = (
-            filtro.upper(),
-        )
-    elif tipo == "endereco":
-        filtro = filtro.split(" ")
-        sql = "SELECT * FROM Cliente WHERE numero = %s and bairro = %s and logradouro = %s and cidade = %s and estado = %s"
-        data = (
-            filtro[1],
-            filtro[2],
-            filtro[0],
-            filtro[3],
-            filtro[4]
-        )
+            sql = "SELECT count(" + str(valor) + ") FROM Cliente GROUP BY " + str(group)
+
+    elif tabela == "nome" or tabela == "logradouro" or tabela == "bairro" or tabela == "cidade":
+        sql = "SELECT * FROM Cliente WHERE " + str(tabela) + " like '" + str(valor) + "%'"
+
+    elif tabela == "estado":
+        sql = "SELECT * FROM Cliente WHERE estado = " + str(valor.upper())
+
+    elif tabela == "endereco":
+        valor = valor.split(" ")
+        sql = "SELECT * FROM Cliente WHERE numero = " + str(valor[1]) + " and bairro = " + str(valor[2]) + " and logradouro = " + str(valor[0]) + " and cidade = " + str(valor[3]) + " and estado = " + str(valor[4])
+    
     else:
         sql = "SELECT * FROM Cliente" #Realizando um select para mostrar todas as linhas e colunas da tabela
-        data = (
-            
-        )
 
-    cursor.execute(sql, data) #Executa o comando SQL
+    cursor.execute(sql) #Executa o comando SQL
     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
     cursor.close() #
@@ -423,35 +346,27 @@ def read_Cliente_BD(tipo=None, filtro=None, group=None):
     for result in results: #Ler os registros existentes com o select
         print(result) #imprime os registros existentes
 
-def read_Telefone_BD(tipo=None, filtro=None, group=None):
+def read_Telefone_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tipo == "ddd" or tipo == "cliente_id" or tipo == "telefone":
-        sql = "SELECT * FROM Telefone WHERE %s = %s"
-        data = (
-            tipo,
-            filtro
-        )
-    elif tipo == "count":
-        sql = "SELECT count(%s) FROM Telefone GROUP BY %s"
-        data = (
-            filtro,
-            group
-        )
-    elif tipo == "cliente_ddd_telefone":
-        filtro = filtro.split(" ")
-        sql = "SELECT * FROM Telefone WHERE cliente_id = %s and ddd = %s and telefone = %s"
-        data = (
-            filtro,
-        )
+    if tabela == "ddd" or tabela == "cliente_id" or tabela == "telefone":
+        sql = "SELECT * FROM Telefone WHERE " + str(tabela) + " = " + str(valor)
+
+    elif tabela == "count":
+        if group == None:
+            sql = "SELECT count(" + str(valor) + ") FROM Telefone"
+        else:
+            sql = "SELECT count(" + str(valor) + ") FROM Telefone GROUP BY " + str(group)
+
+    elif tabela == "cliente_ddd_telefone":
+        valor = valor.split(" ")
+        sql = "SELECT * FROM Telefone WHERE cliente_id = " + str(valor[0]) + " and ddd = " + str(valor[1]) + " and telefone = " + str(valor[2])
+
     else:
         sql = "SELECT * FROM Telefone" #Realizando um select para mostrar todas as linhas e colunas da tabela
-        data = (
-            
-        )
     
-    cursor.execute(sql, data) #Executa o comando SQL
+    cursor.execute(sql) #Executa o comando SQL
     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
     cursor.close() #
@@ -460,35 +375,24 @@ def read_Telefone_BD(tipo=None, filtro=None, group=None):
     for result in results: #Ler os registros existentes com o select
         print(result) #imprime os registros existentes
 
-def read_Email_BD(tipo=None, filtro=None):
+def read_Email_BD(tabela=None, valor=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tipo == "email" or tipo == "cliente_id":
-        sql = "SELECT * FROM Email WHERE %s = %s"
-        data = (
-            tipo,
-            filtro
-        )
-    elif tipo == "cliente_emial":
-        filtro = filtro.split(" ")
-        sql = "SELECT * FROM Email WHERE email = %s and cliente_id = %s"
-        data = (
-            filtro[1],
-            filtro[0]
-        )
-    elif tipo == "count":
-        sql = "SELECT count(%s) FROM Email"
-        data = (
-            filtro,
-        )
+    if tabela == "email" or tabela == "cliente_id":
+        sql = "SELECT * FROM Email WHERE " + str(tabela) + " = " + str(valor)
+
+    elif tabela == "cliente_emial":
+        valor = valor.split(" ")
+        sql = "SELECT * FROM Email WHERE email = " + str(valor[1]) + " and cliente_id = " + str(valor[0])
+
+    elif tabela == "count":
+        sql = "SELECT count(" + str(valor) + ") FROM Email"
+
     else:
         sql = "SELECT * FROM Email" #Realizando um select para mostrar todas as linhas e colunas da tabela
-        data = (
-            
-        )
     
-    cursor.execute(sql, data) #Executa o comando SQL
+    cursor.execute(sql) #Executa o comando SQL
     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
     cursor.close() #
