@@ -78,7 +78,6 @@ def insert_Raca_BD(nome):
     sql = "INSERT INTO Raca(nome) VALUES (%s)"
     data = (
         nome,
-
     )
 
     cursor.execute(sql, data) #Executa o comando SQL
@@ -116,7 +115,7 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
-    sql = "INSERT INTO Animais(nome, data_nasc, peso, pelagem, sexo, primeria_ida, ultima_ida, castrado, especie_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO Animais(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado, especie_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)"
     data = (
         nome,
         data_nasc,
@@ -139,7 +138,7 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
 
     print(f"Foi cadastrado o animal {nome} com ID:", userid)
 
-def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, animal_id, bairro=None):
+def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, animal_id, bairro):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
     if bairro == None:
@@ -169,12 +168,12 @@ def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, animal_id, 
     cursor.execute(sql, data) #Executa o comando SQL
     connection.commit() #Efetua as modificacoes
 
-    userid = cursor.lastrowid #Obtém o último ID cadastrado
+    #userid = cursor.lastrowid #Obtém o último ID cadastrado
 
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado o cliente {nome} com ID:", userid)
+    print(f"Foi cadastrado o cliente {nome} com CPF:", cpf)
 
 def insert_Telefone_BD(cliente_id, ddd, telefone):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -195,7 +194,7 @@ def insert_Telefone_BD(cliente_id, ddd, telefone):
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado o telefone {ddd}{telefone} do cliente com ID:", userid)
+    print(f"Foi cadastrado o telefone {ddd}{telefone} do cliente com CPF:", cliente_id)
 
 def insert_Email_BD(cliente_id, email):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -215,7 +214,7 @@ def insert_Email_BD(cliente_id, email):
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado o email {email} do cliente com ID:", userid)
+    print(f"Foi cadastrado o email {email} do cliente com CPF:", cliente_id)
 
 ###READ
 # FAZER READS PARA CADA TABELA, arrumar dentro da funcao, adicionar funcoes agregadoras tbm
@@ -226,13 +225,13 @@ def read_Raca_BD(tipo=None, filtro=None, group=None):
     if tipo == "nome":
         sql = "SELECT * FROM Raca WHERE nome like '%s%'"
         data = (
-            filtro
+            filtro,
         )
     elif tipo == "count":
         if group == None:
             sql = "SELECT count(%s) FROM Raca"
             data = (
-                filtro
+                filtro,
             )
         else:
             sql = "SELECT count(%s) FROM Raca GROUP BY %s"
@@ -243,7 +242,7 @@ def read_Raca_BD(tipo=None, filtro=None, group=None):
     elif tipo == "id":
         sql = "SELECT * FROM Raca WHERE id = %s"
         data = (
-            filtro
+            filtro,
         )
     else:
         sql = "SELECT * FROM Raca" #Realizando um select para mostrar todas as linhas e colunas da tabela
@@ -265,16 +264,20 @@ def read_Especies_BD(tipo=None, filtro=None, group=None):
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
     if tipo == "id" or tipo == "raca_id":
+        #sql = "SELECT * FROM Especies WHERE " + str(tipo) + " = " + str(filtro)
         sql = "SELECT * FROM Especies WHERE %s = %s"
+        #print(sql)
+        print(tipo)
+        print(filtro)
         data = (
-            tipo,
-            filtro
+            str(tipo),
+            str(filtro)
         )
     elif tipo == "count":
         if group == None:
             sql = "SELECT count(%s) FROM Especies"
             data = (
-                filtro
+                filtro,
             )
         else:
             sql = "SELECT count(%s) FROM Especies GROUP BY %s"
@@ -293,8 +296,8 @@ def read_Especies_BD(tipo=None, filtro=None, group=None):
         data = (
             
         )
-
-    cursor.execute(sql, data) #Executa o comando SQL
+    print(data)
+    cursor.execute(sql,data) #Executa o comando SQL
     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
     cursor.close() #
@@ -317,7 +320,7 @@ def read_Animais_BD(tipo=None, filtro=None, group=None):
         if group == None:
             sql = "SELECT count(%s) FROM Animais"
             data = (
-                filtro
+                filtro,
             )
         else:
             sql = "SELECT count(%s) FROM Animais GROUP BY %s"
@@ -335,7 +338,7 @@ def read_Animais_BD(tipo=None, filtro=None, group=None):
         if group == None:
             sql = "SELECT avg(%s) FROM Animais"
             data = (
-                filtro
+                filtro,
             )
         else:
             sql = "SELECT avg(%s) FROM Animais GROUP BY %s"
@@ -346,7 +349,7 @@ def read_Animais_BD(tipo=None, filtro=None, group=None):
     elif tipo == "sexo":
         sql = "SELECT * FROM Animais WHERE sexo = '%s'"
         data = (
-            filtro
+            filtro,
         )
     else:
         sql = "SELECT * FROM Animais" #Realizando um select para mostrar todas as linhas e colunas da tabela
@@ -370,13 +373,13 @@ def read_Cliente_BD(tipo=None, filtro=None, group=None):
     if tipo == "cpf" or tipo == "numero" or tipo == "animal_id":
         sql = "SELECT * FROM Cliente WHERE cpf = %s"
         data = (
-            filtro
+            filtro,
         )
     elif tipo == "count":
         if group == None:
             sql = "SELECT count(%s) FROM Cliente"
             data = (
-                filtro
+                filtro,
             )
         else:
             sql = "SELECT count(%s) FROM Cliente GROUP BY %s"
@@ -393,7 +396,7 @@ def read_Cliente_BD(tipo=None, filtro=None, group=None):
     elif tipo == "estado":
         sql = "SELECT * FROM Cliente WHERE estado = %s"
         data = (
-            filtro.upper()
+            filtro.upper(),
         )
     elif tipo == "endereco":
         filtro = filtro.split(" ")
@@ -440,7 +443,7 @@ def read_Telefone_BD(tipo=None, filtro=None, group=None):
         filtro = filtro.split(" ")
         sql = "SELECT * FROM Telefone WHERE cliente_id = %s and ddd = %s and telefone = %s"
         data = (
-            filtro
+            filtro,
         )
     else:
         sql = "SELECT * FROM Telefone" #Realizando um select para mostrar todas as linhas e colunas da tabela
@@ -477,7 +480,7 @@ def read_Email_BD(tipo=None, filtro=None):
     elif tipo == "count":
         sql = "SELECT count(%s) FROM Email"
         data = (
-            filtro
+            filtro,
         )
     else:
         sql = "SELECT * FROM Email" #Realizando um select para mostrar todas as linhas e colunas da tabela
@@ -608,16 +611,16 @@ def update_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, se
             especie_id,
             id
         )
+    
+    cursor.execute(sql, data) #Executa o comando SQL
+    connection.commit()
 
-        cursor.execute(sql, data) #Executa o comando SQL
-        connection.commit()
+    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
 
-        recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+    cursor.close()
+    connection.close() #Fecha a conexão com o banco
 
-        cursor.close()
-        connection.close() #Fecha a conexão com o banco
-
-        print(recordsaffected, " registros alterados")
+    print(recordsaffected, " registros alterados")
 
 def update_Cliente_BD(cpf, nome=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, animal_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -711,8 +714,10 @@ def update_Raca_BD(id, nome=None):
 def update_Telefone_BD(pk, cliente_id=None, ddd=None, telefone=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
-
-    cliente_id_pk, ddd_pk, telefone_pk = pk.split(" ")
+    pk = pk.split(" ")
+    cliente_id_pk = pk[0]
+    ddd_pk = pk[1]
+    telefone_pk = pk[2]
 
     if exclusividade == 'cliente_id':
         sql = "UPDATE Telefone SET cliente_id = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
@@ -762,25 +767,26 @@ def update_Telefone_BD(pk, cliente_id=None, ddd=None, telefone=None, exclusivida
 def update_Email_BD(pk, cliente_id=None, email=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
-
-    cliente_id_pk, email_pk = pk.split(" ")
+    pk = pk.split(" ")
+    cliente_id_pk = pk[0]
+    email_pk = pk[1]
 
     if exclusividade == 'cliente_id':
-        sql = "UPDATE Telefone SET cliente_id = %s WHERE cliente_id = %s and email = %s"
+        sql = "UPDATE Email SET cliente_id = %s WHERE cliente_id = %s and email = %s"
         data = (
             cliente_id,
             cliente_id_pk,
             email_pk,
         )
     elif exclusividade == 'email':
-        sql = "UPDATE Telefone SET email = %s WHERE cliente_id = %s and email = %s"
+        sql = "UPDATE Email SET email = %s WHERE cliente_id = %s and email = %s"
         data = (
             email,
             cliente_id_pk,
             email_pk,
         )
     else:
-        sql = "UPDATE Telefone SET cliente_id = %s, email = %s WHERE cliente_id = %s and email = %s"
+        sql = "UPDATE Email SET cliente_id = %s, email = %s WHERE cliente_id = %s and email = %s"
         data = (
             cliente_id,
             email,
@@ -805,7 +811,7 @@ def delete_Raca_BD(id):
 
     sql = "DELETE FROM Raca WHERE id = %s"
     data = ( 
-        id
+        id,
     )
 
     cursor.execute(sql, data) #Executa o comando SQL
@@ -824,7 +830,7 @@ def delete_Especies_BD(id):
 
     sql = "DELETE FROM Especies WHERE id = %s"
     data = (
-        id
+        id,
     )
 
     cursor.execute(sql, data) #Executa o comando SQL
@@ -843,7 +849,7 @@ def delete_Animais_BD(id):
 
     sql = "DELETE FROM Animais WHERE id = %s"
     data = (
-        id
+        id,
     )
 
     cursor.execute(sql, data) #Executa o comando SQL
@@ -862,7 +868,7 @@ def delete_Cliente_BD(cpf):
 
     sql = "DELETE FROM Cliente WHERE cpf = %s"
     data = (
-        cpf
+        cpf,
     )
 
     cursor.execute(sql, data) #Executa o comando SQL
@@ -915,3 +921,29 @@ def delete_Email_BD(cliente_id, email):
     connection.close() #Fecha a conexão com o banco
 
     print(recordsaffected, " registros excluídos")
+
+#insert_Raca_BD("PUG")
+#delete_Raca_BD("1")
+#update_Raca_BD(2, "pormessa")
+#read_Raca_BD("id", 1)
+
+#insert_Especies_BD("salamndra", 2)
+#insert_Animais_BD("catatau", "2022/11/24", "35", "ruivo", "m", "2022/11/24", "2022/11/24", False, "1")
+#insert_Cliente_BD("12345678911", "Cliento", "Paraty", "365", "pirapora", "AL", "1", "vila amora")
+#delete_Cliente_BD("12345678911")
+#insert_Telefone_BD("12345678911", 21, 99999999)
+#delete_Telefone_BD("12345678911", 21, 99999999)
+#insert_Email_BD("12345678911", "cliento@gmail.com")
+
+#update_Especies_BD(1, alimentacao = "meu", exclusividade = "alimentacao")
+#update_Animais_BD(1, pelagem = "ruiv", exclusividade = 'pelagem')
+#update_Cliente_BD('12345678911', estado = "SP", exclusividade = "estado")
+#update_Telefone_BD("12345678911 21 99999999", ddd = "44", exclusividade = "ddd")
+#update_Email_BD("12345678911 cliento@gmail.com", email = "clientao@gmail.com", exclusividade = "email")
+
+#read_Telefone_BD()
+#read_Raca_BD()
+#read_Cliente_BD()
+#read_Email_BD()
+
+
