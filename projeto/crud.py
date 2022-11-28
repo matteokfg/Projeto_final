@@ -61,6 +61,15 @@ import datetime #Importa a biblioteca datetime (data/hora)
 import time
 
 def conectarBD(host, usuario, senha, DB):
+    """Retorna coneccao com o banco de dados.
+
+    Argumentos:
+    string -- host do banco de dados mysql.
+    string -- usuario do host.
+    string -- senha do host, para poder acessar.
+    string -- nome do banco de dados, definido pelo comando: create database _.
+    """
+
     connection = mysql.connector.connect( #Informando os dados para conexão com o BD
         host = host,
         user = usuario, #Usuário do MySQL 
@@ -72,6 +81,12 @@ def conectarBD(host, usuario, senha, DB):
 
 #INSERT
 def insert_Raca_BD(nome):
+    """Imprime no cmd o id da raca cadastrada no BD.
+
+    Argumentos:
+    string -- nome da raca a ser cadastrada.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 	# colocar (nome_coluna) em todos os inserts, como no exemplo abaixo
@@ -92,6 +107,14 @@ def insert_Raca_BD(nome):
     print(f"Foi cadastrada a raça {nome} do animal com ID:", userid)
 
 def insert_Especies_BD(nome, raca_id, alimentacao=None):
+    """Imprime no cmd o id da especie cadastrada no BD.
+
+    Argumentos:
+    string -- nome da especie a ser cadastrada.
+    int -- numero do id da raca que pertence.
+    string -- alimentacao da especie cadastrada.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
@@ -113,6 +136,20 @@ def insert_Especies_BD(nome, raca_id, alimentacao=None):
     print(f"Foi cadastrada a espécie {nome} do animal com ID:", userid)
 
 def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado, especie_id):
+    """Imprime no cmd o id do animal cadastrado no BD.
+
+    Argumentos:
+    string -- nome do animal a ser cadastrado.
+    date -- data de nascimento do animal.
+    int -- peso do animal, tem de ser maior  que zero.
+    string -- cor da pelagem do animal cadastrado.
+    string -- de tamanho 1, para definir o sexo do animal.
+    date -- data da primeira ida do animal ao petshop.
+    date -- data de ultima ida do animal ao petshop, pode ser utilizada com a primeira ida para verificar se é ativo ou não, ou se é novo ou veterano a animal no petshop.
+    booleano -- True para castrado, False para nao castrado.
+    int -- numero do id da especie que pertence o animal.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
@@ -140,6 +177,19 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
     print(f"Foi cadastrado o animal {nome} com ID:", userid)
 
 def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, animal_id, bairro):
+    """Imprime no cmd o id do cliente/dono cadastrado no BD.
+
+    Argumentos:
+    string -- CPF do cliente/dono do animal a ser cadastrado.
+    string -- nome do cliente/dono a ser cadastrado.
+    string -- rua do endereco do cliente/dono a ser cadastrado.
+    string -- numero do endereco do cliente/dono a ser cadastrado.
+    string -- cidade do endereco do cliente/dono a ser cadastrado.
+    string -- de tamanho 2, sigla do estado do endereco do cliente/dono a ser cadastrado.
+    int -- numero do id do animal que pertence ao cliente/dono.
+    string -- bairro do endereco do cliente/dono a ser cadastrado.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
     if bairro == None:
@@ -177,6 +227,14 @@ def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, animal_id, 
     print(f"Foi cadastrado o cliente {nome} com CPF:", cpf)
 
 def insert_Telefone_BD(cliente_id, ddd, telefone):
+    """Imprime no cmd o id do telefone cadastrado no BD do cliente.
+
+    Argumentos:
+    string -- CPF do cliente/dono do telefone a ser cadastrado.
+    string -- ddd do telefone a ser cadastrado.
+    string -- numero de telefone do telefone a ser cadastrado.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
@@ -198,6 +256,13 @@ def insert_Telefone_BD(cliente_id, ddd, telefone):
     print(f"Foi cadastrado o telefone {ddd}{telefone} do cliente com CPF:", cliente_id)
 
 def insert_Email_BD(cliente_id, email):
+    """Imprime no cmd o id do email cadastrado no BD do cliente.
+
+    Argumentos:
+    string -- CPF do cliente/dono do email a ser cadastrado.
+    string -- email a ser cadastrado.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
@@ -251,7 +316,7 @@ def read_Especies_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tabela == "id" or tabela == "raca_id":
+    if (tabela == "id") or (tabela == "raca_id"):
         sql = "SELECT * FROM Especies WHERE " + str(tabela) + " = " + str(valor)
 
     elif tabela == "count":
@@ -260,7 +325,7 @@ def read_Especies_BD(tabela=None, valor=None, group=None):
         else:
             sql = "SELECT count(" + str(valor) + ") FROM Especies GROUP BY" + str(group)
 
-    elif tabela == "nome" or tabela == "alimentacao":
+    elif (tabela == "nome") or (tabela == "alimentacao"):
         sql = "SELECT * FROM Especies WHERE " + str(tabela) + " like '" + str(valor) + "%'"
 
     else:
@@ -279,7 +344,7 @@ def read_Animais_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tabela == "id" or tabela == "peso"  or tabela == "castrado" or tabela == "especie_id":
+    if (tabela == "id") or (tabela == "peso")  or (tabela == "castrado") or (tabela == "especie_id"):
         sql = "SELECT * FROM Animais WHERE " + str(tabela) + " = " + str(valor)
     elif (tabela == "data_nasc") or (tabela == "primeira_ida") or (tabela == "ultima_ida"):
         sql = "SELECT * FROM Animais WHERE " + str(tabela) + " = '" + str(valor) + "'"
@@ -289,7 +354,7 @@ def read_Animais_BD(tabela=None, valor=None, group=None):
         else:
             sql = "SELECT count(" + str(valor) + ") FROM Animais GROUP BY " + str(group)
 
-    elif tabela == "nome" or tabela == "pelagem":
+    elif (tabela == "nome") or (tabela == "pelagem"):
         sql = "SELECT * FROM Animais WHERE " + str(tabela) + " like '" + str(valor) + "%'"
 
     elif tabela == "media":
@@ -317,7 +382,7 @@ def read_Cliente_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tabela == "cpf" or tabela == "numero" or tabela == "animal_id":
+    if (tabela == "cpf") or (tabela == "numero") or (tabela == "animal_id"):
         sql = "SELECT * FROM Cliente WHERE cpf = " + str(valor)
 
     elif tabela == "count":
@@ -326,7 +391,7 @@ def read_Cliente_BD(tabela=None, valor=None, group=None):
         else:
             sql = "SELECT count(" + str(valor) + ") FROM Cliente GROUP BY " + str(group)
 
-    elif tabela == "nome" or tabela == "logradouro" or tabela == "bairro" or tabela == "cidade":
+    elif (tabela == "nome") or (tabela == "logradouro") or (tabela == "bairro") or (tabela == "cidade"):
         sql = "SELECT * FROM Cliente WHERE " + str(tabela) + " like '" + str(valor) + "%'"
 
     elif tabela == "estado":
@@ -352,7 +417,7 @@ def read_Telefone_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tabela == "ddd" or tabela == "cliente_id" or tabela == "telefone":
+    if (tabela == "ddd") or (tabela == "cliente_id") or (tabela == "telefone"):
         sql = "SELECT * FROM Telefone WHERE " + str(tabela) + " = " + str(valor)
 
     elif tabela == "count":
@@ -381,7 +446,7 @@ def read_Email_BD(tabela=None, valor=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tabela == "email" or tabela == "cliente_id":
+    if (tabela == "email") or (tabela == "cliente_id"):
         sql = "SELECT * FROM Email WHERE " + str(tabela) + " = " + str(valor)
 
     elif tabela == "cliente_email":
