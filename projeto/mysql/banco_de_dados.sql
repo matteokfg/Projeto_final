@@ -20,8 +20,8 @@ create table Animais (
 	peso			decimal(10,2)		check (peso > 0),
 	pelagem			varchar(50)			not null,
     sexo			char(1)				not null,
-    primeira_ida	date				check (primeira_ida < curdate()), /* ver se eh ativo */
-    ultima_ida		date				check (ultima_ida <= curdate()),
+    primeira_ida	date				not null, /* ver se eh ativo e menor que a data atual */
+    ultima_ida		date				not null,
     castrado		boolean				not null,
 	especie_id		integer				references Especies(id)
 ); /* curdate() */
@@ -38,7 +38,7 @@ create table Cliente (
 );
 
 create table Telefone (
-	cliente_id	integer,
+	cliente_id	char(11),
     ddd			char(2),
     telefone	char(9),
     
@@ -47,7 +47,7 @@ create table Telefone (
 );
 
 create table Email (
-	cliente_id	integer,
+	cliente_id	char(11),
     email		varchar(100),
     
     primary key(cliente_id, email),
