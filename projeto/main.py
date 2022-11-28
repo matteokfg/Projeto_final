@@ -1,11 +1,24 @@
 from PyQT5 import uic, QtWidgets
 import sys
 import os
+from datetime import datetime, date
 import mysql.connector
 import crud as Crud # importa as funcoes do documento crud.py
 # os.system("pip install mysql-connector-python")
 
 #-- INICIO ------------ FUNCOES DE VALIDACAO E DE BACKEND, ENTRE TELAS E CRUD -------------------
+def valida_data(data):
+    """Retorna booleano.
+
+    Argumentos:
+    string -- data, 'ano-mes-dia'
+    """
+    data = data.split("-")
+    if datetime.date(data[0], data[1], data[2]) >= date.today():
+        return False
+    else:
+        return True
+
 
 #-- FIM ------------ FUNCOES DE VALIDACAO E DE BACKEND, ENTRE TELAS E CRUD ----------------------
 
