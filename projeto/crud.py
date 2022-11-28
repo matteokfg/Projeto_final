@@ -55,6 +55,7 @@ create table Email (
 #Fim
 
 import os #importa a biblioteca necessária para manipulação do S.O.
+#os.system("pip install mysql-connector-python")
 import mysql.connector #Importa o conector para o python se comunicar com o BD
 import datetime #Importa a biblioteca datetime (data/hora)
 import time
@@ -278,9 +279,10 @@ def read_Animais_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if tabela == "id" or tabela == "data_nasc" or tabela == "peso" or tabela == "primeira_ida" or tabela == "ultima_ida" or tabela == "castrado" or tabela == "especie_id":
+    if tabela == "id" or tabela == "peso"  or tabela == "castrado" or tabela == "especie_id":
         sql = "SELECT * FROM Animais WHERE " + str(tabela) + " = " + str(valor)
-
+    elif (tabela == "data_nasc") or (tabela == "primeira_ida") or (tabela == "ultima_ida"):
+        sql = "SELECT * FROM Animais WHERE " + str(tabela) + " = '" + str(valor) + "'"
     elif tabela == "count":
         if group == None:
             sql = "SELECT count(" + str(valor) + ") FROM Animais"
@@ -382,22 +384,20 @@ def read_Email_BD(tabela=None, valor=None):
     if tabela == "email" or tabela == "cliente_id":
         sql = "SELECT * FROM Email WHERE " + str(tabela) + " = " + str(valor)
 
-    elif tabela == "cliente_emial":
+    elif tabela == "cliente_email":
         valor = valor.split(" ")
-        sql = "SELECT * FROM Email WHERE email = " + str(valor[1]) + " and cliente_id = " + str(valor[0])
+        sql = "SELECT * FROM Email WHERE email = '" + str(valor[1]) + "' and cliente_id = " + str(valor[0])
 
     elif tabela == "count":
         sql = "SELECT count(" + str(valor) + ") FROM Email"
 
     else:
         sql = "SELECT * FROM Email" #Realizando um select para mostrar todas as linhas e colunas da tabela
-    
     cursor.execute(sql) #Executa o comando SQL
     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
     cursor.close() #
     connection.close() #Fecha a conexão com o banco
-
     for result in results: #Ler os registros existentes com o select
         print(result) #imprime os registros existentes
 
@@ -826,28 +826,39 @@ def delete_Email_BD(cliente_id, email):
 
     print(recordsaffected, " registros excluídos")
 
-#insert_Raca_BD("PUG")
-#delete_Raca_BD("1")
-#update_Raca_BD(2, "pormessa")
-#read_Raca_BD("id", 1)
 
+
+#insert_Raca_BD("PUG")
 #insert_Especies_BD("salamndra", 2)
-#insert_Animais_BD("catatau", "2022/11/24", "35", "ruivo", "m", "2022/11/24", "2022/11/24", False, "1")
+#insert_Animais_BD("catatau", "2022-11-24", "35", "ruivo", "m", "2022-11-24", "2022-11-24", False, "1")
 #insert_Cliente_BD("12345678911", "Cliento", "Paraty", "365", "pirapora", "AL", "1", "vila amora")
-#delete_Cliente_BD("12345678911")
 #insert_Telefone_BD("12345678911", 21, 99999999)
-#delete_Telefone_BD("12345678911", 21, 99999999)
 #insert_Email_BD("12345678911", "cliento@gmail.com")
 
+#update_Raca_BD(2, "pormessa")
 #update_Especies_BD(1, alimentacao = "meu", exclusividade = "alimentacao")
 #update_Animais_BD(1, pelagem = "ruiv", exclusividade = 'pelagem')
 #update_Cliente_BD('12345678911', estado = "SP", exclusividade = "estado")
 #update_Telefone_BD("12345678911 21 99999999", ddd = "44", exclusividade = "ddd")
 #update_Email_BD("12345678911 cliento@gmail.com", email = "clientao@gmail.com", exclusividade = "email")
 
-#read_Telefone_BD()
+
+#read_Raca_BD("id", 1)
 #read_Raca_BD()
+#read_Especies_BD("nome", "s")
+#read_Especies_BD()
+#read_Animais_BD("data_nasc", "2022-11-24")
+#read_Animais_BD()
+#read_Cliente_BD("logradouro", "P")
 #read_Cliente_BD()
+#read_Telefone_BD("ddd", "21")
+#read_Telefone_BD()
+#read_Email_BD("cliente_email", "12345678911 cliento@gmail.com")
 #read_Email_BD()
 
-
+#delete_Raca_BD("1")
+#delete_Especies_BD("1")
+#delete_Animais_BD("3")
+#delete_Cliente_BD("12345678911")
+#delete_Telefone_BD("12345678911", 21, 99999999)
+#delete_Email_BD("12345678911", "cliento@gmail.com")
