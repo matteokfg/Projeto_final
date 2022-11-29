@@ -149,32 +149,32 @@ def update_id(tabela, id, exclusividade=None, **colunas):
     contador = 0
     if tabela == "Raca":
         for chave in colunas:
-            Crud.update_Raca_BD(id, chave:colunas[chave], exclusividade=exclusividade)
+            Crud.update_Raca_BD(id, chave=colunas[chave], exclusividade=chave)
             contador += 1
     elif tabela == "Especie":
         for chave in colunas:
-            Crud.update_Especies_BD(id, chave:colunas[chave], exclusividade=exclusividade)
+            Crud.update_Especies_BD(id, chave=colunas[chave], exclusividade=chave)
             contador += 1
     elif tabela == "Animal":
         for chave in colunas:
-            Crud.update_Animais_BD(id, chave:colunas[chave], exclusividade=exclusividade)
+            Crud.update_Animais_BD(id, chave=colunas[chave], exclusividade=chave)
             contador += 1
     elif tabela == "Cliente":
         for chave in colunas:
-            Crud.update_Cliente_BD(id, chave:colunas[chave], exclusividade=exclusividade)
+            Crud.update_Cliente_BD(id, chave=colunas[chave], exclusividade=chave)
             contador += 1
     elif tabela == "Telefone":
         cliente_id = id[0]
         ddd = id[1]
         telefone = id[2]
         for chave in colunas:
-            Crud.update_Telefone_BD(cliente_id, ddd, telefone, chave:colunas[chave], exclusividade=exclusividade)
+            Crud.update_Telefone_BD(cliente_id, ddd, telefone, chave=colunas[chave], exclusividade=chave)
             contador += 1
     elif tabela == "Email":
         cliente_id = id[0]
         email = id[1]
         for chave in colunas:
-            Crud.update_Email_BD(cliente_id, email, chave:colunas[chave], exclusividade=exclusividade)
+            Crud.update_Email_BD(cliente_id, email, chave=colunas[chave], exclusividade=chave)
             contador += 1
     else:
         print("Algo deu errado")
