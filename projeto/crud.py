@@ -4,15 +4,15 @@
 create database PetShop;          -- Cria o banco de dados
 use PetShop;                      -- Seleciona o banco para os próximos comandos
 /* As linhas acima não devem ser executas em serviços online como o sqlite oline*/
-create table Raca (
-	id		integer		primary key auto_increment,
-    nome	varchar(60)	unique not null
-);
 create table Especies (
 	id				integer 			primary key auto_increment,
 	nome			varchar(50)			unique  not null,
-	alimentacao		varchar(20),
-    raca_id			integer				references Raca(id)
+	alimentacao		varchar(20)
+);
+create table Raca (
+	id		    integer		primary key auto_increment,
+    nome	    varchar(60)	unique not null
+    especie_id  integer	    references Especies(id)
 );
 create table Animais (
 	id				integer 			primary key auto_increment,
@@ -80,20 +80,22 @@ def conectarBD(host, usuario, senha, DB):
     return connection
 
 #INSERT
-def insert_Raca_BD(nome):
+def insert_Raca_BD(nome, especie_id):
     """Imprime no cmd o id da raca cadastrada no BD.
 
     Argumentos:
     string -- nome da raca a ser cadastrada.
+    int -- numero do id da especie que tem essa raca.
     """
 
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 	# colocar (nome_coluna) em todos os inserts, como no exemplo abaixo
     
-    sql = "INSERT INTO Raca(nome) VALUES (%s)"
+    sql = "INSERT INTO Raca(nome, especie_id) VALUES (%s, %s)"
     data = (
         nome,
+        especie_id
     )
 
     cursor.execute(sql, data) #Executa o comando SQL
@@ -106,23 +108,21 @@ def insert_Raca_BD(nome):
 
     print(f"Foi cadastrada a raça {nome} do animal com ID:", userid)
 
-def insert_Especies_BD(nome, raca_id, alimentacao=None):
+def insert_Especies_BD(nome, alimentacao=None):
     """Imprime no cmd o id da especie cadastrada no BD.
 
     Argumentos:
     string -- nome da especie a ser cadastrada.
-    int -- numero do id da raca que pertence.
     string -- alimentacao da especie cadastrada.
     """
 
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    sql = "INSERT INTO Especies(nome, alimentacao, raca_id) VALUES (%s, %s, %s)"
+    sql = "INSERT INTO Especies(nome, alimentacao, raca_id) VALUES (%s, %s)"
     data = (
         nome, 
-        alimentacao,
-        raca_id
+        alimentacao
     )
 
     cursor.execute(sql, data) #Executa o comando SQL
@@ -297,8 +297,8 @@ def read_Raca_BD(tabela=None, valor=None, group=None):
         else:
             sql = "SELECT count(" + str(valor) + ") FROM Raca GROUP BY " + str(group)
 
-    elif tabela == "id":
-        sql = "SELECT * FROM Raca WHERE id = " + str(valor)
+    elif tabela == "id" or tabela == "especie_id":
+        sql = "SELECT * FROM Raca WHERE " + str(tabela) + " = " + str(valor)
 
     else:
         sql = "SELECT * FROM Raca" #Realizando um select para mostrar todas as linhas e colunas da tabela
@@ -316,8 +316,8 @@ def read_Especies_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if (tabela == "id") or (tabela == "raca_id"):
-        sql = "SELECT * FROM Especies WHERE " + str(tabela) + " = " + str(valor)
+    if tabela == "id":
+        sql = "SELECT * FROM Especies WHERE id = " + str(valor)
 
     elif tabela == "count":
         if group == None:
@@ -467,7 +467,7 @@ def read_Email_BD(tabela=None, valor=None):
         print(result) #imprime os registros existentes
 
 #UPDATE
-def update_Especies_BD(id, nome=None, alimentacao=None, raca_id=None, exclusividade=None):
+def update_Especies_BD(id, nome=None, alimentacao=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
     
@@ -483,18 +483,11 @@ def update_Especies_BD(id, nome=None, alimentacao=None, raca_id=None, exclusivid
             alimentacao,
             id
         )
-    elif exclusividade == 'raca_id':
-        sql = "UPDATE Especies SET raca_id = %s WHERE id = %s"
-        data = (
-            raca_id,
-            id
-        )
     else:
-        sql = "UPDATE Especies SET nome = %s, alimentacao = %s, raca_id = %s WHERE id = %s"
+        sql = "UPDATE Especies SET nome = %s, alimentacao = %s WHERE id = %s"
         data = (
             nome, 
             alimentacao,
-            raca_id,
             id
         )
 
@@ -660,16 +653,31 @@ def update_Cliente_BD(cpf, nome=None, logradouro=None, numero=None, bairro=None,
 
     print(recordsaffected, " registros alterados")
 
-def update_Raca_BD(id, nome=None):
+def update_Raca_BD(id, nome=None, especie_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    sql = "UPDATE Raca SET nome = %s WHERE id = %s"
-    data = (
-        nome,
-        id
-    )
+    if exclusividade == "nome":
+        sql = "UPDATE Raca SET nome = %s WHERE id = %s"
+        data = (
+            nome,
+            id
+        )
+    elif exclusividade == 'especie_id':
+        sql = "UPDATE Raca SET especie_id = %s WHERE id = %s"
+        data = (
+            especie_id,
+            id
+        )
+    else:
+        sql = "UPDATE Raca SET nome = %s, especie_id = %s WHERE id = %s"
+        data = (
+            nome,
+            especie_id,
+            id
+        )
 
+    
     cursor.execute(sql, data) #Executa o comando SQL
     connection.commit()
 
