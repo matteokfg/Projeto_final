@@ -182,6 +182,19 @@ def update_id(tabela, id, exclusividade=None, **colunas):
     print(f"{contador} colunas alteradas")
 #delete_id("Cliente", achar_id("Cliente", "nome", "Matteo"))
 
+def eh_ativo(nome):
+    primeria_ida = Crud.read_Animais_BD(coluna="nome", valor=nome)[6]
+    ultima_ida = Crud.read_Animais_BD(coluna="nome", valor=nome)[7]
+    if primeria_ida == ultima_ida:
+        if ultima_ida <= date.today() - datetime.date(ultima_ida.year, ultima_ida.month-3, ultima_ida.day):
+            return True
+        else:
+            return False
+    else:
+        if (ultima_ida <= (date.today() - datetime.date(ultima_ida.year, ultima_ida.month-3, ultima_ida.day))) and ((ultima_ida - primeria_ida) < datetime.delta(months = 3)):
+            return True
+        else:
+            return False
 
 #-- FIM ------------ FUNCOES DE VALIDACAO E DE BACKEND, ENTRE TELAS E CRUD ----------------------
 
