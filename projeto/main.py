@@ -14,10 +14,57 @@ def valida_data(data):
     string -- data, 'ano-mes-dia'
     """
     data = data.split("-")
-    if datetime.date(data[0], data[1], data[2]) >= date.today():
+    if (datetime.date(data[0], data[1], data[2]) >= date.today()) and (datetime.date(data[0], data[1], data[2]) <= datetime.date(1822, 11, 29)):
         return False
     else:
         return True
+
+def valida_numero(numero):
+    """Retorna booleano.
+
+    Argumentos:
+    int -- numero que sera validado como inteiro.
+    """
+    if type(numero) == type(1):
+        return True
+    else:
+        return False
+
+def valida_frase(frase):
+    """Retorna booleano.
+
+    Argumentos:
+    string -- frase que sera validada como string.
+    """
+    if type(frase) == type("a"):
+        return True
+    else:
+        return False
+
+def valida_sexo(sexo):
+    """Retorna booleano.
+
+    Argumentos:
+    string -- sigla que representa macho ou femea.
+    """
+    if (valida_frase(sexo)) and (len(sexo) == 1) and (sexo in ('M', 'F')):
+        return True
+    else:
+        return False
+
+def valida_estado(estado):
+    """Retorna booleano.
+
+    Argumentos:
+    string -- sigla que representa estado brasileiro.
+    """
+    if (valida_frase(estado)) and (len(estado) == 2):
+        if estado in ('AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'):
+            return True
+        else:
+            return False
+    else:
+        return False
 
 def acha_id(tabela, coluna, valor):
     query = []
@@ -104,8 +151,8 @@ def update_id(tabela, id, exclusividade=None, **colunas):
         print("Algo deu errado")
 
     print(f"{contador} colunas alteradas")
-
 #delete_id("Cliente", achar_id("Cliente", "nome", "Matteo"))
+
 
 #-- FIM ------------ FUNCOES DE VALIDACAO E DE BACKEND, ENTRE TELAS E CRUD ----------------------
 
