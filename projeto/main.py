@@ -64,6 +64,7 @@ def valida_estado(estado):
     """
 
     if (valida_frase(estado)) and (len(estado) == 2):
+        estado = estado.upper()
         if estado in ('AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'):
             return True
         else:
