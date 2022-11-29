@@ -13,6 +13,7 @@ def valida_data(data):
     Argumentos:
     string -- data, 'ano-mes-dia'
     """
+
     data = data.split("-")
     if (datetime.date(data[0], data[1], data[2]) >= date.today()) and (datetime.date(data[0], data[1], data[2]) <= datetime.date(1822, 11, 29)):
         return False
@@ -25,6 +26,7 @@ def valida_numero(numero):
     Argumentos:
     int -- numero que sera validado como inteiro.
     """
+
     if type(numero) == type(1):
         return True
     else:
@@ -36,6 +38,7 @@ def valida_frase(frase):
     Argumentos:
     string -- frase que sera validada como string.
     """
+
     if type(frase) == type("a"):
         return True
     else:
@@ -47,6 +50,7 @@ def valida_sexo(sexo):
     Argumentos:
     string -- sigla que representa macho ou femea.
     """
+
     if (valida_frase(sexo)) and (len(sexo) == 1) and (sexo in ('M', 'F')):
         return True
     else:
@@ -58,6 +62,7 @@ def valida_estado(estado):
     Argumentos:
     string -- sigla que representa estado brasileiro.
     """
+
     if (valida_frase(estado)) and (len(estado) == 2):
         if estado in ('AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'):
             return True
@@ -67,6 +72,14 @@ def valida_estado(estado):
         return False
 
 def acha_id(tabela, coluna, valor):
+    """Retorna id (int).
+
+    Argumentos:
+    string -- nome tabela.
+    string -- coluna tabela.
+    string ou int -- valor tabela.
+    """
+
     query = []
     id = 0
     if tabela == "Raca":
@@ -93,6 +106,13 @@ def acha_id(tabela, coluna, valor):
     return id
 
 def delete_id(tabela, id):
+    """Retorna qunatas linhas foram deletadas.
+
+    Argumentos:
+    string -- nome da tabela.
+    int -- id na tabela.
+    """
+
     query = []
     if tabela == "Raca":
         query = Crud.delete_Raca_BD(id)
@@ -117,6 +137,15 @@ def delete_id(tabela, id):
     print(query)
 
 def update_id(tabela, id, exclusividade=None, **colunas):
+    """Retorna qunatas vezes a tabela foi alterada.
+
+    Argumentos:
+    string -- nome da tabela.
+    int -- id na tabela.
+    string -- passa couna que sera a unica a sofrer UPDATE, padrao = None.
+    dictionary -- colunas como chaves e seus novos valores como valores.
+    """
+
     contador = 0
     if tabela == "Raca":
         for chave in colunas:
