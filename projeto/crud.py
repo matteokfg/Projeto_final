@@ -62,6 +62,7 @@ import time
 
 def conectarBD(host, usuario, senha, DB):
     """Retorna coneccao com o banco de dados.
+
     Argumentos:
     string -- host do banco de dados mysql.
     string -- usuario do host.
@@ -81,6 +82,7 @@ def conectarBD(host, usuario, senha, DB):
 #INSERT
 def insert_Raca_BD(nome, especie_id):
     """Imprime no cmd o id da raca cadastrada no BD.
+
     Argumentos:
     string -- nome da raca a ser cadastrada.
     int -- numero do id da especie que tem essa raca.
@@ -108,6 +110,7 @@ def insert_Raca_BD(nome, especie_id):
 
 def insert_Especies_BD(nome, alimentacao=None):
     """Imprime no cmd o id da especie cadastrada no BD.
+
     Argumentos:
     string -- nome da especie a ser cadastrada.
     string -- alimentacao da especie cadastrada.
@@ -134,6 +137,7 @@ def insert_Especies_BD(nome, alimentacao=None):
 
 def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado, especie_id):
     """Imprime no cmd o id do animal cadastrado no BD.
+
     Argumentos:
     string -- nome do animal a ser cadastrado.
     date -- data de nascimento do animal.
@@ -174,6 +178,7 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
 
 def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, animal_id, bairro):
     """Imprime no cmd o id do cliente/dono cadastrado no BD.
+
     Argumentos:
     string -- CPF do cliente/dono do animal a ser cadastrado.
     string -- nome do cliente/dono a ser cadastrado.
@@ -223,6 +228,7 @@ def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, animal_id, 
 
 def insert_Telefone_BD(cliente_id, ddd, telefone):
     """Imprime no cmd o id do telefone cadastrado no BD do cliente.
+
     Argumentos:
     string -- CPF do cliente/dono do telefone a ser cadastrado.
     string -- ddd do telefone a ser cadastrado.
@@ -251,6 +257,7 @@ def insert_Telefone_BD(cliente_id, ddd, telefone):
 
 def insert_Email_BD(cliente_id, email):
     """Imprime no cmd o id do email cadastrado no BD do cliente.
+
     Argumentos:
     string -- CPF do cliente/dono do email a ser cadastrado.
     string -- email a ser cadastrado.
@@ -277,6 +284,14 @@ def insert_Email_BD(cliente_id, email):
 
 ###READ
 def read_Raca_BD(coluna=None, valor=None, group=None):
+    """Retorna lista com as linhas da tabela Raca dos resultados obtidos pelo SELECT.
+
+    Argumentos:
+    string -- nome da coluna a ser selecionada, padrao = None.
+    string ou int -- valor a ser buscado na coluna passada, padrao = None.
+    string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
     
@@ -304,6 +319,14 @@ def read_Raca_BD(coluna=None, valor=None, group=None):
     return results #Ler os registros existentes com o select
 
 def read_Especies_BD(coluna=None, valor=None, group=None):
+    """Retorna lista com as linhas da tabela Especies dos resultados obtidos pelo SELECT.
+
+    Argumentos:
+    string -- nome da coluna a ser selecionada, padrao = None.
+    string ou int -- valor a ser buscado na coluna passada, padrao = None.
+    string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
@@ -331,6 +354,14 @@ def read_Especies_BD(coluna=None, valor=None, group=None):
     return results #Ler os registros existentes com o select
 
 def read_Animais_BD(coluna=None, valor=None, group=None):
+    """Retorna lista com as linhas da tabela Animais dos resultados obtidos pelo SELECT.
+
+    Argumentos:
+    string -- nome da coluna a ser selecionada, padrao = None.
+    string ou int -- valor a ser buscado na coluna passada, padrao = None.
+    string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
@@ -368,6 +399,14 @@ def read_Animais_BD(coluna=None, valor=None, group=None):
     return results #Ler os registros existentes com o select
 
 def read_Cliente_BD(coluna=None, valor=None, group=None):
+    """Retorna lista com as linhas da tabela Cliente dos resultados obtidos pelo SELECT.
+
+    Argumentos:
+    string -- nome da coluna a ser selecionada, padrao = None.
+    string ou int -- valor a ser buscado na coluna passada, padrao = None.
+    string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
@@ -402,6 +441,14 @@ def read_Cliente_BD(coluna=None, valor=None, group=None):
     return results #Ler os registros existentes com o select
 
 def read_Telefone_BD(coluna=None, valor=None, group=None):
+    """Retorna lista com as linhas da tabela Telefone dos resultados obtidos pelo SELECT.
+
+    Argumentos:
+    string -- nome da coluna a ser selecionada, padrao = None.
+    string ou int -- valor a ser buscado na coluna passada, padrao = None.
+    string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
@@ -430,6 +477,13 @@ def read_Telefone_BD(coluna=None, valor=None, group=None):
     return results #Ler os registros existentes com o select
 
 def read_Email_BD(coluna=None, valor=None):
+    """Retorna lista com as linhas da tabela Email dos resultados obtidos pelo SELECT.
+
+    Argumentos:
+    string -- nome da coluna a ser selecionada, padrao = None.
+    string ou int -- valor a ser buscado na coluna passada, padrao = None.
+    """
+
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
