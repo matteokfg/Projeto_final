@@ -62,7 +62,6 @@ import time
 
 def conectarBD(host, usuario, senha, DB):
     """Retorna coneccao com o banco de dados.
-
     Argumentos:
     string -- host do banco de dados mysql.
     string -- usuario do host.
@@ -82,7 +81,6 @@ def conectarBD(host, usuario, senha, DB):
 #INSERT
 def insert_Raca_BD(nome, especie_id):
     """Imprime no cmd o id da raca cadastrada no BD.
-
     Argumentos:
     string -- nome da raca a ser cadastrada.
     int -- numero do id da especie que tem essa raca.
@@ -106,11 +104,10 @@ def insert_Raca_BD(nome, especie_id):
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrada a raça {nome} do animal com ID:", userid)
+    return (f"Foi cadastrada a raça {nome} do animal com ID:", userid)
 
 def insert_Especies_BD(nome, alimentacao=None):
     """Imprime no cmd o id da especie cadastrada no BD.
-
     Argumentos:
     string -- nome da especie a ser cadastrada.
     string -- alimentacao da especie cadastrada.
@@ -133,11 +130,10 @@ def insert_Especies_BD(nome, alimentacao=None):
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrada a espécie {nome} do animal com ID:", userid)
+    return (f"Foi cadastrada a espécie {nome} do animal com ID:", userid)
 
 def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado, especie_id):
     """Imprime no cmd o id do animal cadastrado no BD.
-
     Argumentos:
     string -- nome do animal a ser cadastrado.
     date -- data de nascimento do animal.
@@ -174,11 +170,10 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado o animal {nome} com ID:", userid)
+    return (f"Foi cadastrado o animal {nome} com ID:", userid)
 
 def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, animal_id, bairro):
     """Imprime no cmd o id do cliente/dono cadastrado no BD.
-
     Argumentos:
     string -- CPF do cliente/dono do animal a ser cadastrado.
     string -- nome do cliente/dono a ser cadastrado.
@@ -224,11 +219,10 @@ def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, animal_id, 
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado o cliente {nome} com CPF:", cpf)
+    return (f"Foi cadastrado o cliente {nome} com CPF:", cpf)
 
 def insert_Telefone_BD(cliente_id, ddd, telefone):
     """Imprime no cmd o id do telefone cadastrado no BD do cliente.
-
     Argumentos:
     string -- CPF do cliente/dono do telefone a ser cadastrado.
     string -- ddd do telefone a ser cadastrado.
@@ -253,11 +247,10 @@ def insert_Telefone_BD(cliente_id, ddd, telefone):
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado o telefone {ddd}{telefone} do cliente com CPF:", cliente_id)
+    return (f"Foi cadastrado o telefone {ddd}{telefone} do cliente com CPF:", cliente_id)
 
 def insert_Email_BD(cliente_id, email):
     """Imprime no cmd o id do email cadastrado no BD do cliente.
-
     Argumentos:
     string -- CPF do cliente/dono do email a ser cadastrado.
     string -- email a ser cadastrado.
@@ -280,7 +273,7 @@ def insert_Email_BD(cliente_id, email):
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    print(f"Foi cadastrado o email {email} do cliente com CPF:", cliente_id)
+    return (f"Foi cadastrado o email {email} do cliente com CPF:", cliente_id)
 
 ###READ
 # FAZER READS PARA CADA TABELA, arrumar dentro da funcao, adicionar funcoes agregadoras tbm
@@ -309,8 +302,8 @@ def read_Raca_BD(tabela=None, valor=None, group=None):
     cursor.close() #
     connection.close() #Fecha a conexão com o banco
 
-    for result in results: #Ler os registros existentes com o select
-        print(result) #imprime os registros existentes
+    return results #Ler os registros existentes com o select
+     
 
 def read_Especies_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -337,8 +330,8 @@ def read_Especies_BD(tabela=None, valor=None, group=None):
     cursor.close() #
     connection.close() #Fecha a conexão com o banco
 
-    for result in results: #Ler os registros existentes com o select
-        print(result) #imprime os registros existentes
+    return results #Ler os registros existentes com o select
+     
 
 def read_Animais_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -375,8 +368,8 @@ def read_Animais_BD(tabela=None, valor=None, group=None):
     cursor.close() #
     connection.close() #Fecha a conexão com o banco
 
-    for result in results: #Ler os registros existentes com o select
-        print(result) #imprime os registros existentes
+    return results #Ler os registros existentes com o select
+
 
 def read_Cliente_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -410,8 +403,8 @@ def read_Cliente_BD(tabela=None, valor=None, group=None):
     cursor.close() #
     connection.close() #Fecha a conexão com o banco
 
-    for result in results: #Ler os registros existentes com o select
-        print(result) #imprime os registros existentes
+    return results #Ler os registros existentes com o select
+
 
 def read_Telefone_BD(tabela=None, valor=None, group=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -439,8 +432,8 @@ def read_Telefone_BD(tabela=None, valor=None, group=None):
     cursor.close() #
     connection.close() #Fecha a conexão com o banco
 
-    for result in results: #Ler os registros existentes com o select
-        print(result) #imprime os registros existentes
+    return results #Ler os registros existentes com o select
+
 
 def read_Email_BD(tabela=None, valor=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -463,8 +456,8 @@ def read_Email_BD(tabela=None, valor=None):
 
     cursor.close() #
     connection.close() #Fecha a conexão com o banco
-    for result in results: #Ler os registros existentes com o select
-        print(result) #imprime os registros existentes
+    return results #Ler os registros existentes com o select
+
 
 #UPDATE
 def update_Especies_BD(id, nome=None, alimentacao=None, exclusividade=None):
@@ -499,7 +492,7 @@ def update_Especies_BD(id, nome=None, alimentacao=None, exclusividade=None):
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros alterados")
+    return (recordsaffected, " registros alterados")
 
 def update_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, especie_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -582,7 +575,7 @@ def update_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, se
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros alterados")
+    return (recordsaffected, " registros alterados")
 
 def update_Cliente_BD(cpf, nome=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, animal_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -651,7 +644,7 @@ def update_Cliente_BD(cpf, nome=None, logradouro=None, numero=None, bairro=None,
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros alterados")
+    return (recordsaffected, " registros alterados")
 
 def update_Raca_BD(id, nome=None, especie_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -686,7 +679,7 @@ def update_Raca_BD(id, nome=None, especie_id=None, exclusividade=None):
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros alterados")
+    return (recordsaffected, " registros alterados")
 
 def update_Telefone_BD(pk, cliente_id=None, ddd=None, telefone=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -739,7 +732,7 @@ def update_Telefone_BD(pk, cliente_id=None, ddd=None, telefone=None, exclusivida
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros alterados")
+    return (recordsaffected, " registros alterados")
 
 def update_Email_BD(pk, cliente_id=None, email=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -779,7 +772,7 @@ def update_Email_BD(pk, cliente_id=None, email=None, exclusividade=None):
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros alterados")
+    return (recordsaffected, " registros alterados")
 
 #DELETE
 def delete_Raca_BD(id):
@@ -799,7 +792,7 @@ def delete_Raca_BD(id):
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros excluídos")
+    return (recordsaffected, " registros excluídos")
 
 def delete_Especies_BD(id):
     connection = conectarBD("localhost", "root", "admin", "PetShop")
@@ -818,7 +811,7 @@ def delete_Especies_BD(id):
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros excluídos")
+    return (recordsaffected, " registros excluídos")
 
 def delete_Animais_BD(id):
     connection = conectarBD("localhost", "root", "admin", "PetShop")
@@ -837,7 +830,7 @@ def delete_Animais_BD(id):
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros excluídos")
+    return (recordsaffected, " registros excluídos")
 
 def delete_Cliente_BD(cpf):
     connection = conectarBD("localhost", "root", "admin", "PetShop")
@@ -856,7 +849,7 @@ def delete_Cliente_BD(cpf):
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros excluídos")
+    return (recordsaffected, " registros excluídos")
 
 def delete_Telefone_BD(cliente_id, ddd, telefone):
     connection = conectarBD("localhost", "root", "admin", "PetShop")
@@ -877,7 +870,7 @@ def delete_Telefone_BD(cliente_id, ddd, telefone):
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros excluídos")
+    return (recordsaffected, " registros excluídos")
 
 def delete_Email_BD(cliente_id, email):
     connection = conectarBD("localhost", "root", "admin", "PetShop")
@@ -897,7 +890,7 @@ def delete_Email_BD(cliente_id, email):
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    print(recordsaffected, " registros excluídos")
+    return (recordsaffected, " registros excluídos")
 
 
 
