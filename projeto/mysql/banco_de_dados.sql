@@ -32,7 +32,7 @@ create table Cliente (
     nome		varchar(60) 	not null,
     logradouro	varchar(100)	not null,
     numero		varchar(8)		not null,
-    bairro		varchar(30),
+    bairro		varchar(30),		not null,
     cidade		varchar(50)		not null,
     estado		char(2)			not null
 );
