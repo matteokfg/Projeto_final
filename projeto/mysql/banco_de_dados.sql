@@ -23,7 +23,8 @@ create table Animais (
     primeira_ida	date				not null,
     ultima_ida		date				not null,
     castrado		boolean				not null,
-	especie_id		integer				references Especies(id)
+	cliente_id		integer				references Cliente(cpf)
+	raca_id			integer				references Raca(id)
 );
 
 create table Cliente (
@@ -33,8 +34,7 @@ create table Cliente (
     numero		varchar(8)		not null,
     bairro		varchar(30),
     cidade		varchar(50)		not null,
-    estado		char(2)			not null, /* colocar em letra maiuscula (.upper)) */
-	animal_id	integer			references Animais(id)
+    estado		char(2)			not null, 
 );
 
 create table Telefone (
