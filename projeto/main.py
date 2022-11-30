@@ -89,7 +89,7 @@ def acha_id(tabela, coluna, valor):
     elif tabela == "Especie":
         query = Crud.read_Especies_BD(coluna=coluna, valor=valor)
         id = query[0]
-    elif tabela == "Animal":
+    elif tabela == "Animais":
         query = Crud.read_Animais_BD(coluna=coluna, valor=valor)
         id = query[0]
     elif tabela == "Cliente":
