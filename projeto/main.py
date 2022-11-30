@@ -202,20 +202,20 @@ def eh_ativo(nome):
 
 #-- INICIO ------------ CONFIGURACAO DAS TELAS PARA DEPOIS EXECUTAR, INCLUI VINCULACAO DAS FUNCOES COM OS BOTOES -----------------------------
 
-# app = QtWidgets.QApplication(sys.argv)
-# tela_s = uic.loadUi('nome_tela.ui')
-# tela_s = uic.loadUi('nome_tela.ui')
-# tela_s = uic.loadUi('nome_tela.ui')
-# tela_s = uic.loadUi('nome_tela.ui')
-# tela_s = uic.loadUi('nome_tela.ui')
-# tela_s = uic.loadUi('nome_tela.ui')
-# tela_s = uic.loadUi('nome_tela.ui')
-# tela_inicial = uic.loadUi('nome_tela_inicial.ui')
+app = QtWidgets.QApplication(sys.argv)
+tela_bem_vindo = uic.loadUi('Tela\bem_vindo.ui')
+tela_atualizacao_cliente = uic.loadUi('Tela\atualizacao_cliente.ui')
+tela_atualizacao_pet = uic.loadUi('Tela\atualizacao_pet.ui')
+tela_cadastro_cliente = uic.loadUi('Tela\cadastro_cliente.ui')
+tela_cadastro_pet = uic.loadUi('Tela\cadastro_pet.ui')
+tela_excluir_cliente = uic.loadUi('Tela\excluir_cliente.ui')
+tela_excluir_pet = uic.loadUi('Tela\excluir_pet.ui')
+tela_filtrar = uic.loadUi('Tela\filtrar.ui')
 
-# tela_inicial.show()
+tela_bem_vindo.show()
 
 #-- FIM ------------ CONFIGURACAO DAS TELAS PARA DEPOIS EXECUTAR, INCLUI VINCULACAO DAS FUNCOES COM OS BOTOES -------------------------------
 
-# app.exec()
+app.exec()
 
 
