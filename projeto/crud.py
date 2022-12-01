@@ -24,7 +24,7 @@ create table Animais (
     primeira_ida	date				not null, /* ver se eh ativo */
     ultima_ida		date				not null,
     castrado		boolean				not null,
-	especie_id		integer				references Especies(id)
+	raca_id		integer				references Especies(id)
 ); /* curdate() */
 create table Cliente (
 	cpf			char(11)		primary key,

@@ -1,4 +1,4 @@
-from PyQT5 import uic, QtWidgets
+from PyQt5 import uic, QtWidgets
 import sys
 import os
 from datetime import datetime, date
@@ -210,27 +210,39 @@ def voltar_tela_bem_vindo():
     
 def onClicked_a():
     if tela_filtrar.radioButton_animal.isChecked():
+        tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do Animal", "Data de nascimento", "Peso", "Pelagem", "Sexo", "Primeira ida", "Última ida", "Castrado", "ID da raça", "Nome da Raça"])
         return tela_filtrar.radioButton_animal.text()
 
 def onClicked_c():
     if tela_filtrar.radioButton_cliente.isChecked():
+        tela_filtrar.comboBox_coluna.addItems(["CPF", "Nome do Cliente", "Logradouro", "Número", "Bairro", "Cidade", "Estado", "Id do Animal"])
         return tela_filtrar.radioButton_cliente.text()
 
 def onClicked_r():
     if tela_filtrar.radioButton_raca.isChecked():
+        tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da raça", "Nome da espécie", "Id da espécie"])
         return tela_filtrar.radioButton_raca.text()
 
 def onClicked_es():
     if tela_filtrar.radioButton_especie.isChecked():
+        tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da espécie", "Alimentação"])
         return tela_filtrar.radioButton_especie.text()
 
 def onClicked_em():
     if tela_filtrar.radioButton_email.isChecked():
+        tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "Email"])
         return tela_filtrar.radioButton_email.text()
-
+# nome do cliente para achar o id
 def onClicked_t():
     if tela_filtrar.radioButton_telefone.isChecked():
+        tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "DDD", "Telefone"])
         return tela_filtrar.radioButton_telefone.text()
+
+def coluna_ComboBox(s):
+    return s
+
+def valor_filtro(s):
+    return s
 #-- FIM ------------ FUNCOES DE VALIDACAO E DE BACKEND, ENTRE TELAS E CRUD ----------------------
 
 
@@ -250,6 +262,17 @@ tela_bem_vindo.show()
 tela_bem_vindo.btn_filtrar2.clicked.connect(abrir_tela_filtrar)
 
 tela_filtrar.btn_voltar.clicked.connect(voltar_tela_bem_vindo)
+tela_filtrar.radioButton_especie.toggle.connect(onClicked_es)
+tela_filtrar.radioButton_email.toggle.connect(onClicked_em)
+tela_filtrar.radioButton_animal.toggle.connect(onClicked_a)
+tela_filtrar.radioButton_cliente.toggle.connect(onClicked_c)
+tela_filtrar.radioButton_raca.toggle.connect(onClicked_r)
+tela_filtrar.radioButton_telefone.toggle.connect(onClicked_t)
+tela_filtrar.comboBox_coluna.currentTextChange.connect(coluna_ComboBox)
+tela_filtrar.txt_filtrar.textChanged.connect(valor_filtro)
+
+if tela_filtrar.comboBox_coluna.currentTextChange.connect(coluna_ComboBox) == "CPF":
+    tela_filtrar.txt_filtrar.setInputMask('000.000.000-00;_')
 
 # if tela_filtrar.txt_filtrar.setValidator(valida_frase):
 #     valor = tela_filtrar.txt_filtrar.Text()
