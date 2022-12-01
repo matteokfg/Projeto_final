@@ -207,6 +207,30 @@ def abrir_tela_filtrar():
 def voltar_tela_bem_vindo():
     tela_bem_vindo.show()
     tela_filtrar.close()
+    
+def onClicked_a():
+    if tela_filtrar.radioButton_animal.isChecked():
+        return tela_filtrar.radioButton_animal.text()
+
+def onClicked_c():
+    if tela_filtrar.radioButton_cliente.isChecked():
+        return tela_filtrar.radioButton_cliente.text()
+
+def onClicked_r():
+    if tela_filtrar.radioButton_raca.isChecked():
+        return tela_filtrar.radioButton_raca.text()
+
+def onClicked_es():
+    if tela_filtrar.radioButton_especie.isChecked():
+        return tela_filtrar.radioButton_especie.text()
+
+def onClicked_em():
+    if tela_filtrar.radioButton_email.isChecked():
+        return tela_filtrar.radioButton_email.text()
+
+def onClicked_t():
+    if tela_filtrar.radioButton_telefone.isChecked():
+        return tela_filtrar.radioButton_telefone.text()
 #-- FIM ------------ FUNCOES DE VALIDACAO E DE BACKEND, ENTRE TELAS E CRUD ----------------------
 
 
@@ -223,13 +247,14 @@ tela_excluir_pet = uic.loadUi('Tela\excluir_pet.ui')
 tela_filtrar = uic.loadUi('Tela\filtrar.ui')
 
 tela_bem_vindo.show()
-tela_bem_vindo.btn_cadastrar.clicked.connect(abrir_tela_filtrar)
+tela_bem_vindo.btn_filtrar2.clicked.connect(abrir_tela_filtrar)
 
 tela_filtrar.btn_voltar.clicked.connect(voltar_tela_bem_vindo)
-if tela_filtrar.txt_filtrar.setValidator(valida_frase):
-    valor = tela_filtrar.txt_filtrar.Text()
-    if tela_filtrar.checkBox_telefone.Value():
-        tela_filtrar.btn_filtrar.clicked.connect(read("Telefone", valor))
+
+# if tela_filtrar.txt_filtrar.setValidator(valida_frase):
+#     valor = tela_filtrar.txt_filtrar.Text()
+#     if tela_filtrar.checkBox_telefone.Value():
+#         tela_filtrar.btn_filtrar.clicked.connect(read("Telefone", valor))
 #-- FIM ------------ CONFIGURACAO DAS TELAS PARA DEPOIS EXECUTAR, INCLUI VINCULACAO DAS FUNCOES COM OS BOTOES -------------------------------
 
 app.exec()
