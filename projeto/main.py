@@ -14,8 +14,8 @@ def valida_data(data):
     string -- data, 'ano-mes-dia'
     """
 
-    data = data.split("-")
-    if (datetime.date(data[0], data[1], data[2]) >= date.today()) and (datetime.date(data[0], data[1], data[2]) <= datetime.date(1822, 11, 29)):
+    ano, mes, dia = [int(i) for i in data.split("-")]
+    if (date(ano, mes, dia) >= date.today()) and (date(ano, mes, dia) <= datetime.date(1822, 11, 29)):
         return False
     else:
         return True
@@ -140,7 +140,7 @@ def delete_id(tabela, id):
 
     print(query)
 
-def update_id(tabela, id, exclusividade=None, **colunas):
+def update_id(tabela, id, exclusividade=None, **colunas): # solucao ruim, refazer
     """Retorna qunatas vezes a tabela foi alterada.
 
     Argumentos:
