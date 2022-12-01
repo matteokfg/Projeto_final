@@ -72,6 +72,9 @@ def valida_estado(estado):
     else:
         return False
 
+def read(): # funcao que pega valores da tela_filtrar e passa como parametros e usa o read_ _BD correto
+    pass
+
 def acha_id(tabela, coluna, valor):
     """Retorna id (int).
 
@@ -104,7 +107,7 @@ def acha_id(tabela, coluna, valor):
     else:
         print("Algo deu errado")
 
-    return id
+    return id[0]
 
 def delete_id(tabela, id):
     """Retorna qunatas linhas foram deletadas.
@@ -197,6 +200,13 @@ def eh_ativo(nome):
         else:
             return False
 
+def abrir_tela_filtrar():
+    tela_filtrar.show()
+    tela_bem_vindo.close()
+
+def voltar_tela_bem_vindo():
+    tela_bem_vindo.show()
+    tela_filtrar.close()
 #-- FIM ------------ FUNCOES DE VALIDACAO E DE BACKEND, ENTRE TELAS E CRUD ----------------------
 
 
@@ -213,7 +223,13 @@ tela_excluir_pet = uic.loadUi('Tela\excluir_pet.ui')
 tela_filtrar = uic.loadUi('Tela\filtrar.ui')
 
 tela_bem_vindo.show()
+tela_bem_vindo.btn_cadastrar.clicked.connect(abrir_tela_filtrar)
 
+tela_filtrar.btn_voltar.clicked.connect(voltar_tela_bem_vindo)
+if tela_filtrar.txt_filtrar.setValidator(valida_frase):
+    valor = tela_filtrar.txt_filtrar.Text()
+    if tela_filtrar.checkBox_telefone.Value():
+        tela_filtrar.btn_filtrar.clicked.connect(read("Telefone", valor))
 #-- FIM ------------ CONFIGURACAO DAS TELAS PARA DEPOIS EXECUTAR, INCLUI VINCULACAO DAS FUNCOES COM OS BOTOES -------------------------------
 
 app.exec()
