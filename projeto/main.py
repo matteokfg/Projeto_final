@@ -66,21 +66,21 @@ def valida_sexo(sexo):
     else:
         return False
 
-def valida_estado(estado):
-    """Retorna booleano.
+# def valida_estado(estado):
+#     """Retorna booleano.
 
-    Argumentos:
-    string -- sigla que representa estado brasileiro.
-    """
+#     Argumentos:
+#     string -- sigla que representa estado brasileiro.
+#     """
 
-    if (valida_frase(estado)) and (len(estado) == 2):
-        estado = estado.upper()
-        if estado in ('AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'):
-            return True
-        else:
-            return False
-    else:
-        return False
+#     if (valida_frase(estado)) and (len(estado) == 2):
+#         estado = estado.upper()
+#         if estado in ('AC', 'AL', 'AP', 'AM', 'BA', 'CE', 'DF', 'ES', 'GO', 'MA', 'MT', 'MS', 'MG', 'PA', 'PB', 'PR', 'PE', 'PI', 'RJ', 'RN', 'RS', 'RO', 'RR', 'SC', 'SP', 'SE', 'TO'):
+#             return True
+#         else:
+#             return False
+#     else:
+#         return False
 
 # def createTable(query):
 #     tableWidget = QTableWidget()
