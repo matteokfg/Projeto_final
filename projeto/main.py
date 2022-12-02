@@ -283,7 +283,7 @@ def voltar_tela_bem_vindo():
 def onClicked_a():
     tela_filtrar.comboBox_coluna.clear()
     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do Animal", "Data de nascimento", "Peso", "Pelagem", "Sexo", "Primeira ida", "Última ida", "Castrado", "ID da raça", "Nome da Raça"])
-    print(tela_filtrar.radioButton_animal.text())
+    return tela_filtrar.radioButton_animal.text()
 
 def onClicked_c():
     tela_filtrar.comboBox_coluna.clear()
