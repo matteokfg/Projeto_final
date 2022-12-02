@@ -260,6 +260,10 @@ def abrir_tela_filtrar():
     tela_filtrar.show()
     tela_bem_vindo.close()
 
+def abrir_tela_menu_excluir():
+    tela_menu_excluir.show()
+    tela_bem_vindo.close()
+
 def voltar_tela_bem_vindo():
     tela_bem_vindo.show()
     tela_filtrar.close()
@@ -312,10 +316,15 @@ tela_cadastro_cliente = uic.loadUi('cadastro_cliente.ui')
 tela_cadastro_pet = uic.loadUi('cadastro_pet.ui')
 tela_excluir_cliente = uic.loadUi('excluir_cliente.ui')
 tela_excluir_pet = uic.loadUi('excluir_pet.ui')
+tela_menu_excluir = uic.loadUi('excluir_menu.ui')
 tela_filtrar = uic.loadUi('filtrar.ui')
 
 tela_bem_vindo.show()
 tela_bem_vindo.btn_filtrar2.clicked.connect(abrir_tela_filtrar)
+# tela_bem_vindo.btn_cadastrar.clicked.connect(abrir_tela_cadastrar_menu)
+# tela_bem_vindo.btn_atualizar2.clicked.connect(abrir_tela_atualizar_menu)
+tela_bem_vindo.btn_excluir2.clicked.connect(abrir_tela_menu_excluir)
+
 
 tela_filtrar.btn_voltar.clicked.connect(voltar_tela_bem_vindo)
 tabela = tela_filtrar.radioButton_especie.toggle.connect(onClicked_es)
