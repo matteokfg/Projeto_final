@@ -4,7 +4,7 @@
 create database PetShop;          -- Cria o banco de dados
 use PetShop;                      -- Seleciona o banco para os próximos comandos
 /* As linhas acima não devem ser executas em serviços online como o sqlite oline*/
-create table Especies (
+/*create table Especies (
 	id				integer 			primary key auto_increment,
 	nome			varchar(50)			unique  not null,
 	alimentacao		varchar(20)
@@ -13,7 +13,7 @@ create table Raca (
 	id		    integer		primary key auto_increment,
     nome	    varchar(60)	unique not null
     especie_id  integer	    references Especies(id)
-);
+);*/
 create table Animais (
 	id				integer 			primary key auto_increment,
 	nome			varchar(50) 		not null,
@@ -25,7 +25,8 @@ create table Animais (
     ultima_ida		date				not null,
     castrado		boolean				not null,
 	raca_id		integer				references Especies(id)
-); /* curdate() */
+); 
+/*
 create table Cliente (
 	cpf			char(11)		primary key,
     nome		varchar(60) 	not null,
@@ -50,7 +51,7 @@ create table Email (
     
     primary key(cliente_id, email),
     foreign key(cliente_id) references Cliente(cpf)
-);
+);*/
 """
 #Fim
 

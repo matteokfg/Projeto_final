@@ -271,8 +271,8 @@ def abrir_tela_menu_excluir():
     tela_menu_excluir.show()
     tela_bem_vindo.close()
 
-def abrir_tela_menu_cadastrar():
-    tela_menu_cadastro.show()
+def abrir_tela_cadastro_menu():
+    tela_cadastro_pet.show()
     tela_bem_vindo.close()
 
 def abrir_tela_menu_atualizar():
@@ -333,12 +333,13 @@ tela_cadastro_pet = uic.loadUi('cadastro_pet.ui')
 tela_filtrar = uic.loadUi('filtrar.ui')
 #tela_menu_cadastro = uic.loadUi('cadastro_menu.ui')
 #tela_menu_atualizacao = uic.loadUi('atualizacao_menu.ui')
+tela_consulta = uic.loadUi('tela_consulta_pet.ui')
 #-- nao mexer --
 
 #-- nao mexer -- matteo
 tela_bem_vindo.show()
 tela_bem_vindo.btn_filtrar2.clicked.connect(abrir_tela_filtrar)
-tela_bem_vindo.btn_cadastrar.clicked.connect(abrir_tela_menu_cadastrar)
+tela_bem_vindo.btn_cadastrar.clicked.connect(abrir_tela_cadastrar_pet)
 tela_bem_vindo.btn_atualizar2.clicked.connect(abrir_tela_menu_atualizar)
 tela_bem_vindo.btn_excluir2.clicked.connect(abrir_tela_menu_excluir)
 #-- nao mexer --
