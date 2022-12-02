@@ -72,8 +72,64 @@ def valida_estado(estado):
     else:
         return False
 
+def createTable(query):
+    tableWidget = QTableWidget()
+
+    if tabela == "Animal":
+        tableWidget.setColumnCount(10)
+    elif tabela == "Cliente":
+        tableWidget.setColumnCount(8)
+    elif tabela == "Email":
+        tableWidget.setColumnCount(2)
+    elif tabela == "Telefone":
+        tableWidget.setColumnCount(3)
+    elif tabela == "Raça":
+        tableWidget.setColumnCount(3)
+    elif tabela == "Especie":
+        tableWidget.setColumnCount(3)
+    else:
+        pass
+
+    for i in range(len(query)):
+        tableWidget.setItem(0, i, QTableWidgetItem(query[i]))
+
+    tableWidget.horizontalHeader().setStrechLastSection(True)
+    tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Scretch)
+
+def mostra(query):
+    sub_window = QWidget()
+    layout = QVBoxLayout()
+    sub_window.setLayout(layout)
+
+    createTable(query)
+
+    sub_window.addWidget(tableWidget)
+
+    sub_window.show()
+
 def read(): # funcao que pega valores da tela_filtrar e passa como parametros e usa o read_ _BD correto
-    pass
+    if valida_frase(tabela):
+        if tabela == "Animal":
+            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+                query = Crud.read_Animais_BD(coluna=coluna, valor=valor)
+        elif tabela == "Cliente":
+            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+                query = Crud.read_Cliente_BD(coluna=coluna, valor=valor)
+        elif tabela == "Email":
+            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+                query = Crud.read_Email_BD(coluna=coluna, valor=valor)
+        elif tabela == "Telefone":
+            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+                query = Crud.read_Telefone_BD(coluna=coluna, valor=valor)
+        elif tabela == "Raça":
+            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+                query = Crud.read_Raca_BD(coluna=coluna, valor=valor)
+        elif tabela == "Especie":
+            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+                query = Crud.read_Especies_BD(coluna=coluna, valor=valor)
+        else:
+            print("algo deu errado, tabela inexistente")
+    mostra(query)
 
 def acha_id(tabela, coluna, valor):
     """Retorna id (int).
@@ -249,30 +305,41 @@ def valor_filtro(s):
 #-- INICIO ------------ CONFIGURACAO DAS TELAS PARA DEPOIS EXECUTAR, INCLUI VINCULACAO DAS FUNCOES COM OS BOTOES -----------------------------
 
 app = QtWidgets.QApplication(sys.argv)
-tela_bem_vindo = uic.loadUi('Tela\bem_vindo.ui')
-tela_atualizacao_cliente = uic.loadUi('Tela\atualizacao_cliente.ui')
-tela_atualizacao_pet = uic.loadUi('Tela\atualizacao_pet.ui')
-tela_cadastro_cliente = uic.loadUi('Tela\cadastro_cliente.ui')
-tela_cadastro_pet = uic.loadUi('Tela\cadastro_pet.ui')
-tela_excluir_cliente = uic.loadUi('Tela\excluir_cliente.ui')
-tela_excluir_pet = uic.loadUi('Tela\excluir_pet.ui')
-tela_filtrar = uic.loadUi('Tela\filtrar.ui')
+tela_bem_vindo = uic.loadUi('bem_vindo.ui')
+tela_atualizacao_cliente = uic.loadUi('atualizacao_cliente.ui')
+tela_atualizacao_pet = uic.loadUi('atualizacao_pet.ui')
+tela_cadastro_cliente = uic.loadUi('cadastro_cliente.ui')
+tela_cadastro_pet = uic.loadUi('cadastro_pet.ui')
+tela_excluir_cliente = uic.loadUi('excluir_cliente.ui')
+tela_excluir_pet = uic.loadUi('excluir_pet.ui')
+tela_filtrar = uic.loadUi('filtrar.ui')
 
 tela_bem_vindo.show()
 tela_bem_vindo.btn_filtrar2.clicked.connect(abrir_tela_filtrar)
 
 tela_filtrar.btn_voltar.clicked.connect(voltar_tela_bem_vindo)
-tela_filtrar.radioButton_especie.toggle.connect(onClicked_es)
-tela_filtrar.radioButton_email.toggle.connect(onClicked_em)
-tela_filtrar.radioButton_animal.toggle.connect(onClicked_a)
-tela_filtrar.radioButton_cliente.toggle.connect(onClicked_c)
-tela_filtrar.radioButton_raca.toggle.connect(onClicked_r)
-tela_filtrar.radioButton_telefone.toggle.connect(onClicked_t)
-tela_filtrar.comboBox_coluna.currentTextChange.connect(coluna_ComboBox)
-tela_filtrar.txt_filtrar.textChanged.connect(valor_filtro)
+tabela = tela_filtrar.radioButton_especie.toggle.connect(onClicked_es)
+tabela = tela_filtrar.radioButton_email.toggle.connect(onClicked_em)
+tabela = tela_filtrar.radioButton_animal.toggle.connect(onClicked_a)
+tabela = tela_filtrar.radioButton_cliente.toggle.connect(onClicked_c)
+tabela = tela_filtrar.radioButton_raca.toggle.connect(onClicked_r)
+tabela = tela_filtrar.radioButton_telefone.toggle.connect(onClicked_t)
+coluna = tela_filtrar.comboBox_coluna.currentTextChange.connect(coluna_ComboBox)
+valor = tela_filtrar.txt_filtrar.textChanged.connect(valor_filtro)
+tela_filtrar.btn_filtrar.clicked.connect(read)
 
 if tela_filtrar.comboBox_coluna.currentTextChange.connect(coluna_ComboBox) == "CPF":
     tela_filtrar.txt_filtrar.setInputMask('000.000.000-00;_')
+elif tela_filtrar.comboBox_coluna.currentTextChange.connect(coluna_ComboBox) in ("Data de nascimento", "Primeira ida", "Última ida"):
+    tela_filtrar.txt_filtrar.setInputMask('0000-00-00;_')
+else:
+    pass
+
+if tela_filtrar.comboBox_coluna.currentTextChange.connect(coluna_ComboBox) == "Estado":
+    if valida_estado(valor):
+        pass
+    else:
+        tela_filtrar.txt_filtrar.setText("")
 
 # if tela_filtrar.txt_filtrar.setValidator(valida_frase):
 #     valor = tela_filtrar.txt_filtrar.Text()
