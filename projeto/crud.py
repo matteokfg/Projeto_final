@@ -134,7 +134,7 @@ def conectarBD(host, usuario, senha, DB):
 
 #     return (f"Foi cadastrada a espécie {nome} do animal com ID:", userid)
 
-def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado, cliente_id, raca_id):
+def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado, cliente_id=None, raca_id=None):
     """Imprime no cmd o id do animal cadastrado no BD.
     Argumentos:
     string -- nome do animal a ser cadastrado.
@@ -151,7 +151,7 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
-    sql = "INSERT INTO Animais(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado, cliente_id, raca_id) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+    sql = "INSERT INTO Animais(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
     data = (
         nome,
         data_nasc,
@@ -160,9 +160,9 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
         sexo,
         primeira_ida,
         ultima_ida,
-        castrado,
-        cliente_id, 
-        raca_id
+        castrado
+        # cliente_id, 
+        # raca_id
     )
 
     cursor.execute(sql, data) #Executa o comando SQL

@@ -1,5 +1,10 @@
 from PyQt5 import uic, QtWidgets
-from PyQt5.QtWidgets import QTableWidgetItem
+from PyQt5.QtWidgets import (
+    QMainWindow, 
+    QVBoxLayout, 
+    QlLabel
+)
+from Qt import QSize
 import sys
 import os
 from datetime import datetime, date
@@ -218,7 +223,7 @@ def delete_id():
 
     # print(query)
 
-def update_id(tabela, id, exclusividade=None, **colunas): # solucao ruim, refazer
+def update_id(): # solucao ruim, refazer
     """Retorna qunatas vezes a tabela foi alterada.
 
     Argumentos:
@@ -264,19 +269,19 @@ def update_id(tabela, id, exclusividade=None, **colunas): # solucao ruim, refaze
     print(f"{contador} colunas alteradas")
 #delete_id("Cliente", achar_id("Cliente", "nome", "Matteo"))
 
-def eh_ativo(nome):
-    primeira_ida = Crud.read_Animais_BD(coluna="nome", valor=nome)[6]
-    ultima_ida = Crud.read_Animais_BD(coluna="nome", valor=nome)[7]
-    if primeira_ida == ultima_ida:
-        if ultima_ida <= date.today() - datetime.date(ultima_ida.year, ultima_ida.month-3, ultima_ida.day):
-            return True
-        else:
-            return False
-    else:
-        if (ultima_ida <= (date.today() - datetime.date(ultima_ida.year, ultima_ida.month-3, ultima_ida.day))) and ((ultima_ida - primeira_ida) < datetime.delta(months = 3)):
-            return True
-        else:
-            return False
+# def eh_ativo(nome):
+#     primeira_ida = Crud.read_Animais_BD(coluna="nome", valor=nome)[6]
+#     ultima_ida = Crud.read_Animais_BD(coluna="nome", valor=nome)[7]
+#     if primeira_ida == ultima_ida:
+#         if ultima_ida <= date.today() - datetime.date(ultima_ida.year, ultima_ida.month-3, ultima_ida.day):
+#             return True
+#         else:
+#             return False
+#     else:
+#         if (ultima_ida <= (date.today() - datetime.date(ultima_ida.year, ultima_ida.month-3, ultima_ida.day))) and ((ultima_ida - primeira_ida) < datetime.delta(months = 3)):
+#             return True
+#         else:
+#             return False
 
 def abrir_tela_filtrar():
     tela_filtrar.show()
@@ -303,30 +308,30 @@ def onClicked_a():
     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do Animal", "Data de nascimento", "Peso", "Pelagem", "Sexo", "Primeira ida", "Última ida", "Castrado", "ID da raça", "Nome da Raça"])
     return tela_filtrar.radioButton_animal.text()
 
-def onClicked_c():
-    tela_filtrar.comboBox_coluna.clear()
-    tela_filtrar.comboBox_coluna.addItems(["CPF", "Nome do Cliente", "Logradouro", "Número", "Bairro", "Cidade", "Estado", "Id do Animal"])
-    return tela_filtrar.radioButton_cliente.text()
+# def onClicked_c():
+#     tela_filtrar.comboBox_coluna.clear()
+#     tela_filtrar.comboBox_coluna.addItems(["CPF", "Nome do Cliente", "Logradouro", "Número", "Bairro", "Cidade", "Estado", "Id do Animal"])
+#     return tela_filtrar.radioButton_cliente.text()
 
-def onClicked_r():
-    tela_filtrar.comboBox_coluna.clear()
-    tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da raça", "Nome da espécie", "Id da espécie"])
-    return tela_filtrar.radioButton_raca.text()
+# def onClicked_r():
+#     tela_filtrar.comboBox_coluna.clear()
+#     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da raça", "Nome da espécie", "Id da espécie"])
+#     return tela_filtrar.radioButton_raca.text()
 
-def onClicked_es():
-    tela_filtrar.comboBox_coluna.clear()
-    tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da espécie", "Alimentação"])
-    return tela_filtrar.radioButton_especie.text()
+# def onClicked_es():
+#     tela_filtrar.comboBox_coluna.clear()
+#     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da espécie", "Alimentação"])
+#     return tela_filtrar.radioButton_especie.text()
 
-def onClicked_em():
-    tela_filtrar.comboBox_coluna.clear()
-    tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "Email"])
-    return tela_filtrar.radioButton_email.text()
-# nome do cliente para achar o id
-def onClicked_t():
-    tela_filtrar.comboBox_coluna.clear()
-    tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "DDD", "Telefone"])
-    return tela_filtrar.radioButton_telefone.text()
+# def onClicked_em():
+#     tela_filtrar.comboBox_coluna.clear()
+#     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "Email"])
+#     return tela_filtrar.radioButton_email.text()
+# # nome do cliente para achar o id
+# def onClicked_t():
+#     tela_filtrar.comboBox_coluna.clear()
+#     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "DDD", "Telefone"])
+#     return tela_filtrar.radioButton_telefone.text()
 
 def valor_filtro(s):
     return s
