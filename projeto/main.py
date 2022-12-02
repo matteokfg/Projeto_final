@@ -268,36 +268,47 @@ def abrir_tela_menu_excluir():
     tela_menu_excluir.show()
     tela_bem_vindo.close()
 
+def abrir_tela_menu_cadastrar():
+    tela_menu_cadastro.show()
+    tela_bem_vindo.close()
+
+def abrir_tela_menu_atualizar():
+    tela_menu_atualizacao.show()
+    tela_bem_vindo.close()
+
 def voltar_tela_bem_vindo():
     tela_bem_vindo.show()
     tela_filtrar.close()
     
 def onClicked_a():
+    tela_filtrar.comboBox_coluna.clear()
     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do Animal", "Data de nascimento", "Peso", "Pelagem", "Sexo", "Primeira ida", "Última ida", "Castrado", "ID da raça", "Nome da Raça"])
-    return tela_filtrar.radioButton_animal.text()
+    print(tela_filtrar.radioButton_animal.text())
 
 def onClicked_c():
+    tela_filtrar.comboBox_coluna.clear()
     tela_filtrar.comboBox_coluna.addItems(["CPF", "Nome do Cliente", "Logradouro", "Número", "Bairro", "Cidade", "Estado", "Id do Animal"])
     return tela_filtrar.radioButton_cliente.text()
 
 def onClicked_r():
+    tela_filtrar.comboBox_coluna.clear()
     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da raça", "Nome da espécie", "Id da espécie"])
     return tela_filtrar.radioButton_raca.text()
 
 def onClicked_es():
+    tela_filtrar.comboBox_coluna.clear()
     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da espécie", "Alimentação"])
     return tela_filtrar.radioButton_especie.text()
 
 def onClicked_em():
+    tela_filtrar.comboBox_coluna.clear()
     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "Email"])
     return tela_filtrar.radioButton_email.text()
 # nome do cliente para achar o id
 def onClicked_t():
+    tela_filtrar.comboBox_coluna.clear()
     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "DDD", "Telefone"])
     return tela_filtrar.radioButton_telefone.text()
-
-def coluna_ComboBox(s):
-    return s
 
 def valor_filtro(s):
     return s
@@ -324,36 +335,32 @@ tela_menu_atualizacao = uic.loadUi('atualizacao_menu.ui')
 #-- nao mexer -- matteo
 tela_bem_vindo.show()
 tela_bem_vindo.btn_filtrar2.clicked.connect(abrir_tela_filtrar)
-# tela_bem_vindo.btn_cadastrar.clicked.connect(abrir_tela_cadastrar_menu)
-# tela_bem_vindo.btn_atualizar2.clicked.connect(abrir_tela_atualizar_menu)
+tela_bem_vindo.btn_cadastrar.clicked.connect(abrir_tela_menu_cadastrar)
+tela_bem_vindo.btn_atualizar2.clicked.connect(abrir_tela_menu_atualizar)
 tela_bem_vindo.btn_excluir2.clicked.connect(abrir_tela_menu_excluir)
 #-- nao mexer --
 #-- matteo --
+
+
 tela_filtrar.btn_voltar.clicked.connect(voltar_tela_bem_vindo)
-if tela_filtrar.radioButton_especie.isChecked():
-    tabela = onClicked_es()
-if tela_filtrar.radioButton_email.isChecked():
-    tabela = onClicked_em()
-if tela_filtrar.radioButton_animal.isChecked():
-    tabela = onClicked_a()
-if tela_filtrar.radioButton_cliente.isChecked():
-    tabela = onClicked_c()
-if tela_filtrar.radioButton_raca.isChecked():
-    tabela = onClicked_r()
-if tela_filtrar.radioButton_telefone.isChecked():
-    tabela = onClicked_t()
-coluna = tela_filtrar.comboBox_coluna.currentTextChanged.connect(coluna_ComboBox)
+tela_filtrar.radioButton_especie.clicked.connect(onClicked_es)
+tela_filtrar.radioButton_animal.clicked.connect(onClicked_a)
+tela_filtrar.radioButton_email.clicked.connect(onClicked_em)
+tela_filtrar.radioButton_cliente.clicked.connect(onClicked_c)
+tela_filtrar.radioButton_raca.clicked.connect(onClicked_r)
+tela_filtrar.radioButton_telefone.clicked.connect(onClicked_t)
+coluna = tela_filtrar.comboBox_coluna.currentText()
 valor = tela_filtrar.txt_filtrar.textChanged.connect(valor_filtro)
 tela_filtrar.btn_filtrar.clicked.connect(read)
 
-if tela_filtrar.comboBox_coluna.currentTextChanged.connect(coluna_ComboBox) == "CPF":
+if tela_filtrar.comboBox_coluna.currentText() == "CPF":
     tela_filtrar.txt_filtrar.setInputMask('000.000.000-00;_')
-elif tela_filtrar.comboBox_coluna.currentTextChanged.connect(coluna_ComboBox) in ("Data de nascimento", "Primeira ida", "Última ida"):
+elif tela_filtrar.comboBox_coluna.currentText() in ("Data de nascimento", "Primeira ida", "Última ida"):
     tela_filtrar.txt_filtrar.setInputMask('0000-00-00;_')
 else:
     pass
 
-if tela_filtrar.comboBox_coluna.currentTextChanged.connect(coluna_ComboBox) == "Estado":
+if tela_filtrar.comboBox_coluna.currentText() == "Estado":
     if valida_estado(valor):
         pass
     else:
