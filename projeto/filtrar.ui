@@ -221,7 +221,7 @@
      </rect>
     </property>
     <property name="editable">
-     <bool>false</bool>
+     <bool>true</bool>
     </property>
    </widget>
    <zorder>label_3</zorder>

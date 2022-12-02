@@ -27,7 +27,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../../../Downloads/Seja bem-vindo (1).png</pixmap>
+     <pixmap>../../../Projeto_final/projeto/seja bem vindo.png</pixmap>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_cadastrar">
