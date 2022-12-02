@@ -2,9 +2,9 @@ from PyQt5 import uic, QtWidgets
 from PyQt5.QtWidgets import (
     QMainWindow, 
     QVBoxLayout, 
-    QlLabel
+    QLabel
 )
-from Qt import QSize
+from PySide6.QtCore import QSize
 import sys
 import os
 from datetime import datetime, date
@@ -113,7 +113,7 @@ def mostra(frase):
     sub_window.setFixedSize(QSize(100, 100))
 
     # createTable(query)
-    label = QlLabel("")
+    label = QLabel("")
     label.setText(frase)
 
     sub_window.addWidget(label)
@@ -308,30 +308,30 @@ def onClicked_a():
     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do Animal", "Data de nascimento", "Peso", "Pelagem", "Sexo", "Primeira ida", "Última ida", "Castrado", "ID da raça", "Nome da Raça"])
     return tela_filtrar.radioButton_animal.text()
 
-# def onClicked_c():
-#     tela_filtrar.comboBox_coluna.clear()
-#     tela_filtrar.comboBox_coluna.addItems(["CPF", "Nome do Cliente", "Logradouro", "Número", "Bairro", "Cidade", "Estado", "Id do Animal"])
-#     return tela_filtrar.radioButton_cliente.text()
+def onClicked_c():
+    tela_filtrar.comboBox_coluna.clear()
+    tela_filtrar.comboBox_coluna.addItems(["CPF", "Nome do Cliente", "Logradouro", "Número", "Bairro", "Cidade", "Estado", "Id do Animal"])
+    return tela_filtrar.radioButton_cliente.text()
 
-# def onClicked_r():
-#     tela_filtrar.comboBox_coluna.clear()
-#     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da raça", "Nome da espécie", "Id da espécie"])
-#     return tela_filtrar.radioButton_raca.text()
+def onClicked_r():
+    tela_filtrar.comboBox_coluna.clear()
+    tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da raça", "Nome da espécie", "Id da espécie"])
+    return tela_filtrar.radioButton_raca.text()
 
-# def onClicked_es():
-#     tela_filtrar.comboBox_coluna.clear()
-#     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da espécie", "Alimentação"])
-#     return tela_filtrar.radioButton_especie.text()
+def onClicked_es():
+    tela_filtrar.comboBox_coluna.clear()
+    tela_filtrar.comboBox_coluna.addItems(["ID", "Nome da espécie", "Alimentação"])
+    return tela_filtrar.radioButton_especie.text()
 
-# def onClicked_em():
-#     tela_filtrar.comboBox_coluna.clear()
-#     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "Email"])
-#     return tela_filtrar.radioButton_email.text()
-# # nome do cliente para achar o id
-# def onClicked_t():
-#     tela_filtrar.comboBox_coluna.clear()
-#     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "DDD", "Telefone"])
-#     return tela_filtrar.radioButton_telefone.text()
+def onClicked_em():
+    tela_filtrar.comboBox_coluna.clear()
+    tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "Email"])
+    return tela_filtrar.radioButton_email.text()
+# nome do cliente para achar o id
+def onClicked_t():
+    tela_filtrar.comboBox_coluna.clear()
+    tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do cliente", "DDD", "Telefone"])
+    return tela_filtrar.radioButton_telefone.text()
 
 def valor_filtro(s):
     return s
@@ -340,7 +340,6 @@ def valor_filtro(s):
 
 #-- INICIO ------------ CONFIGURACAO DAS TELAS PARA DEPOIS EXECUTAR, INCLUI VINCULACAO DAS FUNCOES COM OS BOTOES -----------------------------
 
-#-- nao mexer --
 app = QtWidgets.QApplication(sys.argv)
 tela_bem_vindo = uic.loadUi('Pet_Inicial_Novo.ui')
 # tela_atualizacao_cliente = uic.loadUi('atualizacao_cliente.ui')
@@ -354,15 +353,12 @@ tela_filtrar = uic.loadUi('filtrar.ui')
 #tela_menu_cadastro = uic.loadUi('cadastro_menu.ui')
 #tela_menu_atualizacao = uic.loadUi('atualizacao_menu.ui')
 tela_consulta = uic.loadUi('tela_consulta_pet.ui')
-#-- nao mexer --
 
-#-- nao mexer -- matteo
 tela_bem_vindo.show()
 tela_bem_vindo.btn_filtrar.clicked.connect(abrir_tela_filtrar)
 tela_bem_vindo.btn_cadastrar.clicked.connect(abrir_tela_cadastrar_pet)
 tela_bem_vindo.btn_consultar.clicked.connect(abrir_tela_consultar)
-#-- nao mexer --
-#-- matteo --
+
 
 tela_consulta.btn_voltar.clicked.connect(voltar_tela_bem_vindo_consulta)
 tela_consulta.pushButton_pesquisar.clicked.connect(acha_id)
@@ -380,20 +376,19 @@ coluna = tela_filtrar.comboBox_coluna.currentText()
 valor = tela_filtrar.txt_filtrar.textChanged.connect(valor_filtro)
 tela_filtrar.btn_filtrar.clicked.connect(read)
 
-if tela_filtrar.comboBox_coluna.currentText() == "CPF":
-    tela_filtrar.txt_filtrar.setInputMask('000.000.000-00;_')
-elif tela_filtrar.comboBox_coluna.currentText() in ("Data de nascimento", "Primeira ida", "Última ida"):
+# if tela_filtrar.comboBox_coluna.currentText() == "CPF":
+#     tela_filtrar.txt_filtrar.setInputMask('000.000.000-00;_')
+if tela_filtrar.comboBox_coluna.currentText() in ("Data de nascimento", "Primeira ida", "Última ida"):
     tela_filtrar.txt_filtrar.setInputMask('0000-00-00;_')
 else:
     pass
 
-if tela_filtrar.comboBox_coluna.currentText() == "Estado":
-    if valida_estado(valor):
-        pass
-    else:
-        tela_filtrar.txt_filtrar.setText("")
+# if tela_filtrar.comboBox_coluna.currentText() == "Estado":
+#     if valida_estado(valor):
+#         pass
+#     else:
+#         tela_filtrar.txt_filtrar.setText("")
 
-#-- matteo --
 #-- FIM ------------ CONFIGURACAO DAS TELAS PARA DEPOIS EXECUTAR, INCLUI VINCULACAO DAS FUNCOES COM OS BOTOES -------------------------------
 
 app.exec()
