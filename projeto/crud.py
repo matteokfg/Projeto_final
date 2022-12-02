@@ -80,58 +80,59 @@ def conectarBD(host, usuario, senha, DB):
     return connection
 
 #INSERT
-def insert_Raca_BD(nome, especie_id):
-    """Imprime no cmd o id da raca cadastrada no BD.
-    Argumentos:
-    string -- nome da raca a ser cadastrada.
-    int -- numero do id da especie que tem essa raca.
-    """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
-	# colocar (nome_coluna) em todos os inserts, como no exemplo abaixo
+# def insert_Raca_BD(nome, especie_id):
+#     """Imprime no cmd o id da raca cadastrada no BD.
+#     Argumentos:
+#     string -- nome da raca a ser cadastrada.
+#     int -- numero do id da especie que tem essa raca.
+#     """
+
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
+# 	# colocar (nome_coluna) em todos os inserts, como no exemplo abaixo
     
-    sql = "INSERT INTO Raca(nome, especie_id) VALUES (%s, %s)"
-    data = (
-        nome,
-        especie_id
-    )
+#     sql = "INSERT INTO Raca(nome, especie_id) VALUES (%s, %s)"
+#     data = (
+#         nome,
+#         especie_id
+#     )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit() #Efetua as modificacoes
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit() #Efetua as modificacoes
 
-    userid = cursor.lastrowid #Obtém o último ID cadastrado
+#     userid = cursor.lastrowid #Obtém o último ID cadastrado
 
-    cursor.close() #Fecha o cursor
-    connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
+#     cursor.close() #Fecha o cursor
+#     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    return (f"Foi cadastrada a raça {nome} do animal com ID:", userid)
+#     return (f"Foi cadastrada a raça {nome} do animal com ID:", userid)
 
-def insert_Especies_BD(nome, alimentacao=None):
-    """Imprime no cmd o id da especie cadastrada no BD.
-    Argumentos:
-    string -- nome da especie a ser cadastrada.
-    string -- alimentacao da especie cadastrada.
-    """
+# def insert_Especies_BD(nome, alimentacao=None):
+#     """Imprime no cmd o id da especie cadastrada no BD.
+#     Argumentos:
+#     string -- nome da especie a ser cadastrada.
+#     string -- alimentacao da especie cadastrada.
+#     """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    sql = "INSERT INTO Especies(nome, alimentacao) VALUES (%s, %s)"
-    data = (
-        nome, 
-        alimentacao
-    )
+#     sql = "INSERT INTO Especies(nome, alimentacao) VALUES (%s, %s)"
+#     data = (
+#         nome, 
+#         alimentacao
+#     )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit() #Efetua as modificacoes
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit() #Efetua as modificacoes
 
-    userid = cursor.lastrowid #Obtém o último ID cadastrado
+#     userid = cursor.lastrowid #Obtém o último ID cadastrado
 
-    cursor.close() #Fecha o cursor
-    connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
+#     cursor.close() #Fecha o cursor
+#     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    return (f"Foi cadastrada a espécie {nome} do animal com ID:", userid)
+#     return (f"Foi cadastrada a espécie {nome} do animal com ID:", userid)
 
 def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado, cliente_id, raca_id):
     """Imprime no cmd o id do animal cadastrado no BD.
@@ -174,165 +175,165 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
 
     return (f"Foi cadastrado o animal {nome} com ID:", userid)
 
-def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, bairro):
-    """Imprime no cmd o id do cliente/dono cadastrado no BD.
-    Argumentos:
-    string -- CPF do cliente/dono do animal a ser cadastrado.
-    string -- nome do cliente/dono a ser cadastrado.
-    string -- rua do endereco do cliente/dono a ser cadastrado.
-    string -- numero do endereco do cliente/dono a ser cadastrado.
-    string -- cidade do endereco do cliente/dono a ser cadastrado.
-    string -- de tamanho 2, sigla do estado do endereco do cliente/dono a ser cadastrado.
-    int -- numero do id do animal que pertence ao cliente/dono.
-    string -- bairro do endereco do cliente/dono a ser cadastrado.
-    """
+# def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, bairro):
+#     """Imprime no cmd o id do cliente/dono cadastrado no BD.
+#     Argumentos:
+#     string -- CPF do cliente/dono do animal a ser cadastrado.
+#     string -- nome do cliente/dono a ser cadastrado.
+#     string -- rua do endereco do cliente/dono a ser cadastrado.
+#     string -- numero do endereco do cliente/dono a ser cadastrado.
+#     string -- cidade do endereco do cliente/dono a ser cadastrado.
+#     string -- de tamanho 2, sigla do estado do endereco do cliente/dono a ser cadastrado.
+#     int -- numero do id do animal que pertence ao cliente/dono.
+#     string -- bairro do endereco do cliente/dono a ser cadastrado.
+#     """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    sql = "INSERT INTO Cliente(cpf, nome, logradouro, numero, bairro, cidade, estado) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-    data = (
-        cpf,
-        nome,
-        logradouro,
-        numero,
-        bairro,
-        cidade,
-        estado
-    )
+#     sql = "INSERT INTO Cliente(cpf, nome, logradouro, numero, bairro, cidade, estado) VALUES (%s, %s, %s, %s, %s, %s, %s)"
+#     data = (
+#         cpf,
+#         nome,
+#         logradouro,
+#         numero,
+#         bairro,
+#         cidade,
+#         estado
+#     )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit() #Efetua as modificacoes
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit() #Efetua as modificacoes
 
-    #userid = cursor.lastrowid #Obtém o último ID cadastrado
+#     #userid = cursor.lastrowid #Obtém o último ID cadastrado
 
-    cursor.close() #Fecha o cursor
-    connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
+#     cursor.close() #Fecha o cursor
+#     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    return (f"Foi cadastrado o cliente {nome} com CPF:", cpf)
+#     return (f"Foi cadastrado o cliente {nome} com CPF:", cpf)
 
-def insert_Telefone_BD(cliente_id, ddd, telefone):
-    """Imprime no cmd o id do telefone cadastrado no BD do cliente.
-    Argumentos:
-    string -- CPF do cliente/dono do telefone a ser cadastrado.
-    string -- ddd do telefone a ser cadastrado.
-    string -- numero de telefone do telefone a ser cadastrado.
-    """
+# def insert_Telefone_BD(cliente_id, ddd, telefone):
+#     """Imprime no cmd o id do telefone cadastrado no BD do cliente.
+#     Argumentos:
+#     string -- CPF do cliente/dono do telefone a ser cadastrado.
+#     string -- ddd do telefone a ser cadastrado.
+#     string -- numero de telefone do telefone a ser cadastrado.
+#     """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
-    sql = "INSERT INTO Telefone(cliente_id, ddd, telefone) VALUES (%s, %s, %s)"
-    data = (
-        cliente_id,
-        ddd,
-        telefone
-    )
+#     sql = "INSERT INTO Telefone(cliente_id, ddd, telefone) VALUES (%s, %s, %s)"
+#     data = (
+#         cliente_id,
+#         ddd,
+#         telefone
+#     )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit() #Efetua as modificacoes
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit() #Efetua as modificacoes
 
-    userid = cursor.lastrowid #Obtém o último ID cadastrado
+#     userid = cursor.lastrowid #Obtém o último ID cadastrado
 
-    cursor.close() #Fecha o cursor
-    connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
+#     cursor.close() #Fecha o cursor
+#     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    return (f"Foi cadastrado o telefone {ddd}{telefone} do cliente com CPF:", cliente_id)
+#     return (f"Foi cadastrado o telefone {ddd}{telefone} do cliente com CPF:", cliente_id)
 
-def insert_Email_BD(cliente_id, email):
-    """Imprime no cmd o id do email cadastrado no BD do cliente.
-    Argumentos:
-    string -- CPF do cliente/dono do email a ser cadastrado.
-    string -- email a ser cadastrado.
-    """
+# def insert_Email_BD(cliente_id, email):
+#     """Imprime no cmd o id do email cadastrado no BD do cliente.
+#     Argumentos:
+#     string -- CPF do cliente/dono do email a ser cadastrado.
+#     string -- email a ser cadastrado.
+#     """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    sql = "INSERT INTO Email(cliente_id, email) VALUES (%s, %s)"
-    data = (
-        cliente_id,
-        email
-    )
+#     sql = "INSERT INTO Email(cliente_id, email) VALUES (%s, %s)"
+#     data = (
+#         cliente_id,
+#         email
+#     )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit() #Efetua as modificacoes
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit() #Efetua as modificacoes
 
-    userid = cursor.lastrowid #Obtém o último ID cadastrado
+#     userid = cursor.lastrowid #Obtém o último ID cadastrado
 
-    cursor.close() #Fecha o cursor
-    connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
+#     cursor.close() #Fecha o cursor
+#     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    return (f"Foi cadastrado o email {email} do cliente com CPF:", cliente_id)
+#     return (f"Foi cadastrado o email {email} do cliente com CPF:", cliente_id)
 
 ###READ
-def read_Raca_BD(coluna=None, valor=None, group=None):
-    """Retorna lista com as linhas da tabela Raca dos resultados obtidos pelo SELECT.
-    Argumentos:
-    string -- nome da coluna a ser selecionada, padrao = None.
-    string ou int -- valor a ser buscado na coluna passada, padrao = None.
-    string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
-    """
+# def read_Raca_BD(coluna=None, valor=None, group=None):
+#     """Retorna lista com as linhas da tabela Raca dos resultados obtidos pelo SELECT.
+#     Argumentos:
+#     string -- nome da coluna a ser selecionada, padrao = None.
+#     string ou int -- valor a ser buscado na coluna passada, padrao = None.
+#     string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
+#     """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
     
-    if coluna == "nome":
-        sql = "SELECT * FROM Raca WHERE nome like '" + str(valor) + "%'"
+#     if coluna == "nome":
+#         sql = "SELECT * FROM Raca WHERE nome like '" + str(valor) + "%'"
 
-    elif coluna == "count":
-        if group == None:
-            sql = "SELECT count(" + str(valor) + ") FROM Raca"
-        else:
-            sql = "SELECT count(" + str(valor) + ") FROM Raca GROUP BY " + str(group)
+#     elif coluna == "count":
+#         if group == None:
+#             sql = "SELECT count(" + str(valor) + ") FROM Raca"
+#         else:
+#             sql = "SELECT count(" + str(valor) + ") FROM Raca GROUP BY " + str(group)
 
-    elif coluna == "id" or coluna == "especie_id":
-        sql = "SELECT * FROM Raca WHERE " + str(coluna) + " = " + str(valor)
+#     elif coluna == "id" or coluna == "especie_id":
+#         sql = "SELECT * FROM Raca WHERE " + str(coluna) + " = " + str(valor)
 
-    else:
-        sql = "SELECT * FROM Raca" #Realizando um select para mostrar todas as linhas e colunas da coluna
+#     else:
+#         sql = "SELECT * FROM Raca" #Realizando um select para mostrar todas as linhas e colunas da coluna
 
-    cursor.execute(sql) #Executa o comando SQL
-    results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
+#     cursor.execute(sql) #Executa o comando SQL
+#     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
-    cursor.close() #
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close() #
+#     connection.close() #Fecha a conexão com o banco
 
-    return results #Ler os registros existentes com o select
+#     return results #Ler os registros existentes com o select
 
-def read_Especies_BD(coluna=None, valor=None, group=None):
-    """Retorna lista com as linhas da tabela Especies dos resultados obtidos pelo SELECT.
-    Argumentos:
-    string -- nome da coluna a ser selecionada, padrao = None.
-    string ou int -- valor a ser buscado na coluna passada, padrao = None.
-    string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
-    """
+# def read_Especies_BD(coluna=None, valor=None, group=None):
+#     """Retorna lista com as linhas da tabela Especies dos resultados obtidos pelo SELECT.
+#     Argumentos:
+#     string -- nome da coluna a ser selecionada, padrao = None.
+#     string ou int -- valor a ser buscado na coluna passada, padrao = None.
+#     string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
+#     """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if coluna == "id":
-        sql = "SELECT * FROM Especies WHERE id = " + str(valor)
+#     if coluna == "id":
+#         sql = "SELECT * FROM Especies WHERE id = " + str(valor)
 
-    elif coluna == "count":
-        if group == None:
-            sql = "SELECT count("+ str(valor) +") FROM Especies"
-        else:
-            sql = "SELECT count(" + str(valor) + ") FROM Especies GROUP BY" + str(group)
+#     elif coluna == "count":
+#         if group == None:
+#             sql = "SELECT count("+ str(valor) +") FROM Especies"
+#         else:
+#             sql = "SELECT count(" + str(valor) + ") FROM Especies GROUP BY" + str(group)
 
-    elif (coluna == "nome") or (coluna == "alimentacao"):
-        sql = "SELECT * FROM Especies WHERE " + str(coluna) + " like '" + str(valor) + "%'"
+#     elif (coluna == "nome") or (coluna == "alimentacao"):
+#         sql = "SELECT * FROM Especies WHERE " + str(coluna) + " like '" + str(valor) + "%'"
 
-    else:
-        sql = "SELECT * FROM Especies" #Realizando um select para mostrar todas as linhas e colunas da coluna
+#     else:
+#         sql = "SELECT * FROM Especies" #Realizando um select para mostrar todas as linhas e colunas da coluna
 
-    cursor.execute(sql) #Executa o comando SQL
-    results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
+#     cursor.execute(sql) #Executa o comando SQL
+#     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
-    cursor.close() #
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close() #
+#     connection.close() #Fecha a conexão com o banco
 
-    return results #Ler os registros existentes com o select
+#     return results #Ler os registros existentes com o select
 
 def read_Animais_BD(coluna=None, valor=None, group=None):
     """Retorna lista com as linhas da tabela Animais dos resultados obtidos pelo SELECT.
@@ -378,110 +379,110 @@ def read_Animais_BD(coluna=None, valor=None, group=None):
 
     return results #Ler os registros existentes com o select
 
-def read_Cliente_BD(coluna=None, valor=None, group=None):
-    """Retorna lista com as linhas da tabela Cliente dos resultados obtidos pelo SELECT.
-    Argumentos:
-    string -- nome da coluna a ser selecionada, padrao = None.
-    string ou int -- valor a ser buscado na coluna passada, padrao = None.
-    string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
-    """
+# def read_Cliente_BD(coluna=None, valor=None, group=None):
+#     """Retorna lista com as linhas da tabela Cliente dos resultados obtidos pelo SELECT.
+#     Argumentos:
+#     string -- nome da coluna a ser selecionada, padrao = None.
+#     string ou int -- valor a ser buscado na coluna passada, padrao = None.
+#     string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
+#     """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if (coluna == "cpf") or (coluna == "numero"):
-        sql = "SELECT * FROM Cliente WHERE cpf = " + str(valor)
+#     if (coluna == "cpf") or (coluna == "numero"):
+#         sql = "SELECT * FROM Cliente WHERE cpf = " + str(valor)
 
-    elif coluna == "count":
-        if group == None:
-            sql = "SELECT count(" + str(valor) + ") FROM Cliente"
-        else:
-            sql = "SELECT count(" + str(valor) + ") FROM Cliente GROUP BY " + str(group)
+#     elif coluna == "count":
+#         if group == None:
+#             sql = "SELECT count(" + str(valor) + ") FROM Cliente"
+#         else:
+#             sql = "SELECT count(" + str(valor) + ") FROM Cliente GROUP BY " + str(group)
 
-    elif (coluna == "nome") or (coluna == "logradouro") or (coluna == "bairro") or (coluna == "cidade"):
-        sql = "SELECT * FROM Cliente WHERE " + str(coluna) + " like '" + str(valor) + "%'"
+#     elif (coluna == "nome") or (coluna == "logradouro") or (coluna == "bairro") or (coluna == "cidade"):
+#         sql = "SELECT * FROM Cliente WHERE " + str(coluna) + " like '" + str(valor) + "%'"
 
-    elif coluna == "estado":
-        sql = "SELECT * FROM Cliente WHERE estado = " + str(valor.upper())
+#     elif coluna == "estado":
+#         sql = "SELECT * FROM Cliente WHERE estado = " + str(valor.upper())
 
-    elif coluna == "endereco":
-        valor = valor.split(" ")
-        sql = "SELECT * FROM Cliente WHERE numero = " + str(valor[1]) + " and bairro = " + str(valor[2]) + " and logradouro = " + str(valor[0]) + " and cidade = " + str(valor[3]) + " and estado = " + str(valor[4])
+#     elif coluna == "endereco":
+#         valor = valor.split(" ")
+#         sql = "SELECT * FROM Cliente WHERE numero = " + str(valor[1]) + " and bairro = " + str(valor[2]) + " and logradouro = " + str(valor[0]) + " and cidade = " + str(valor[3]) + " and estado = " + str(valor[4])
     
-    else:
-        sql = "SELECT * FROM Cliente" #Realizando um select para mostrar todas as linhas e colunas da coluna
+#     else:
+#         sql = "SELECT * FROM Cliente" #Realizando um select para mostrar todas as linhas e colunas da coluna
 
-    cursor.execute(sql) #Executa o comando SQL
-    results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
+#     cursor.execute(sql) #Executa o comando SQL
+#     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
-    cursor.close() #
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close() #
+#     connection.close() #Fecha a conexão com o banco
 
-    return results #Ler os registros existentes com o select
+#     return results #Ler os registros existentes com o select
 
-def read_Telefone_BD(coluna=None, valor=None, group=None):
-    """Retorna lista com as linhas da tabela Telefone dos resultados obtidos pelo SELECT.
-    Argumentos:
-    string -- nome da coluna a ser selecionada, padrao = None.
-    string ou int -- valor a ser buscado na coluna passada, padrao = None.
-    string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
-    """
+# def read_Telefone_BD(coluna=None, valor=None, group=None):
+#     """Retorna lista com as linhas da tabela Telefone dos resultados obtidos pelo SELECT.
+#     Argumentos:
+#     string -- nome da coluna a ser selecionada, padrao = None.
+#     string ou int -- valor a ser buscado na coluna passada, padrao = None.
+#     string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
+#     """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if (coluna == "ddd") or (coluna == "cliente_id") or (coluna == "telefone"):
-        sql = "SELECT * FROM Telefone WHERE " + str(coluna) + " = " + str(valor)
+#     if (coluna == "ddd") or (coluna == "cliente_id") or (coluna == "telefone"):
+#         sql = "SELECT * FROM Telefone WHERE " + str(coluna) + " = " + str(valor)
 
-    elif coluna == "count":
-        if group == None:
-            sql = "SELECT count(" + str(valor) + ") FROM Telefone"
-        else:
-            sql = "SELECT count(" + str(valor) + ") FROM Telefone GROUP BY " + str(group)
+#     elif coluna == "count":
+#         if group == None:
+#             sql = "SELECT count(" + str(valor) + ") FROM Telefone"
+#         else:
+#             sql = "SELECT count(" + str(valor) + ") FROM Telefone GROUP BY " + str(group)
 
-    elif coluna == "cliente_ddd_telefone":
-        valor = valor.split(" ")
-        sql = "SELECT * FROM Telefone WHERE cliente_id = " + str(valor[0]) + " and ddd = " + str(valor[1]) + " and telefone = " + str(valor[2])
+#     elif coluna == "cliente_ddd_telefone":
+#         valor = valor.split(" ")
+#         sql = "SELECT * FROM Telefone WHERE cliente_id = " + str(valor[0]) + " and ddd = " + str(valor[1]) + " and telefone = " + str(valor[2])
 
-    else:
-        sql = "SELECT * FROM Telefone" #Realizando um select para mostrar todas as linhas e colunas da coluna
+#     else:
+#         sql = "SELECT * FROM Telefone" #Realizando um select para mostrar todas as linhas e colunas da coluna
     
-    cursor.execute(sql) #Executa o comando SQL
-    results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
+#     cursor.execute(sql) #Executa o comando SQL
+#     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
-    cursor.close() #
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close() #
+#     connection.close() #Fecha a conexão com o banco
 
-    return results #Ler os registros existentes com o select
+#     return results #Ler os registros existentes com o select
 
-def read_Email_BD(coluna=None, valor=None):
-    """Retorna lista com as linhas da tabela Email dos resultados obtidos pelo SELECT.
-    Argumentos:
-    string -- nome da coluna a ser selecionada, padrao = None.
-    string ou int -- valor a ser buscado na coluna passada, padrao = None.
-    """
+# def read_Email_BD(coluna=None, valor=None):
+#     """Retorna lista com as linhas da tabela Email dos resultados obtidos pelo SELECT.
+#     Argumentos:
+#     string -- nome da coluna a ser selecionada, padrao = None.
+#     string ou int -- valor a ser buscado na coluna passada, padrao = None.
+#     """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if (coluna == "email") or (coluna == "cliente_id"):
-        sql = "SELECT * FROM Email WHERE " + str(coluna) + " = " + str(valor)
+#     if (coluna == "email") or (coluna == "cliente_id"):
+#         sql = "SELECT * FROM Email WHERE " + str(coluna) + " = " + str(valor)
 
-    elif coluna == "cliente_email":
-        valor = valor.split(" ")
-        sql = "SELECT * FROM Email WHERE email = '" + str(valor[1]) + "' and cliente_id = " + str(valor[0])
+#     elif coluna == "cliente_email":
+#         valor = valor.split(" ")
+#         sql = "SELECT * FROM Email WHERE email = '" + str(valor[1]) + "' and cliente_id = " + str(valor[0])
 
-    elif coluna == "count":
-        sql = "SELECT count(" + str(valor) + ") FROM Email"
+#     elif coluna == "count":
+#         sql = "SELECT count(" + str(valor) + ") FROM Email"
 
-    else:
-        sql = "SELECT * FROM Email" #Realizando um select para mostrar todas as linhas e colunas da coluna
-    cursor.execute(sql) #Executa o comando SQL
-    results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
+#     else:
+#         sql = "SELECT * FROM Email" #Realizando um select para mostrar todas as linhas e colunas da coluna
+#     cursor.execute(sql) #Executa o comando SQL
+#     results = cursor.fetchall() #Obtém todas as linhas no conjunto de resultados da consulta
 
-    cursor.close() #
-    connection.close() #Fecha a conexão com o banco
-    return results #Ler os registros existentes com o select
+#     cursor.close() #
+#     connection.close() #Fecha a conexão com o banco
+#     return results #Ler os registros existentes com o select
 
 
 #UPDATE
