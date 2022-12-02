@@ -7,10 +7,9 @@ import mysql.connector
 import crud as Crud # importa as funcoes do documento crud.py
 # os.system("pip install mysql-connector-python")
 
-tabela = ""
 coluna = ""
 valor = ""
-
+id = 0
 
 #-- INICIO ------------ FUNCOES DE VALIDACAO E DE BACKEND, ENTRE TELAS E CRUD -------------------
 def valida_data(data):
@@ -78,130 +77,146 @@ def valida_estado(estado):
     else:
         return False
 
-def createTable(query):
-    tableWidget = QTableWidget()
+# def createTable(query):
+#     tableWidget = QTableWidget()
 
-    if tabela == "Animal":
-        tableWidget.setColumnCount(10)
-    elif tabela == "Cliente":
-        tableWidget.setColumnCount(8)
-    elif tabela == "Email":
-        tableWidget.setColumnCount(2)
-    elif tabela == "Telefone":
-        tableWidget.setColumnCount(3)
-    elif tabela == "Raça":
-        tableWidget.setColumnCount(3)
-    elif tabela == "Especie":
-        tableWidget.setColumnCount(3)
-    else:
-        pass
+#     if tabela == "Animal":
+#         tableWidget.setColumnCount(10)
+#     # elif tabela == "Cliente":
+#         # tableWidget.setColumnCount(8)
+#     # elif tabela == "Email":
+#     #     tableWidget.setColumnCount(2)
+#     # elif tabela == "Telefone":
+#     #     tableWidget.setColumnCount(3)
+#     elif tabela == "Raça":
+#         tableWidget.setColumnCount(3)
+#     elif tabela == "Especie":
+#         tableWidget.setColumnCount(3)
+#     else:
+#         pass
 
-    for i in range(len(query)):
-        tableWidget.setItem(0, i, QTableWidgetItem(query[i]))
+#     for i in range(len(query)):
+#         tableWidget.setItem(0, i, QTableWidgetItem(query[i]))
 
-    tableWidget.horizontalHeader().setStrechLastSection(True)
-    tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Scretch)
+#     tableWidget.horizontalHeader().setStrechLastSection(True)
+#     tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Scretch)
 
-def mostra(query):
-    sub_window = QWidget()
+def mostra(frase):
+    sub_window = QMainWindow()
     layout = QVBoxLayout()
     sub_window.setLayout(layout)
+    sub_window.setFixedSize(QSize(100, 100))
 
-    createTable(query)
+    # createTable(query)
+    label = QlLabel("")
+    label.setText(frase)
 
-    sub_window.addWidget(tableWidget)
+    sub_window.addWidget(label)
 
     sub_window.show()
 
 def read(): # funcao que pega valores da tela_filtrar e passa como parametros e usa o read_ _BD correto
     busca = []
     if valida_frase(tabela):
-        if tabela == "Animal":
-            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
-                busca = Crud.read_Animais_BD(coluna=coluna, valor=valor)
-        elif tabela == "Cliente":
-            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
-                busca = Crud.read_Cliente_BD(coluna=coluna, valor=valor)
-        elif tabela == "Email":
-            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
-                busca = Crud.read_Email_BD(coluna=coluna, valor=valor)
-        elif tabela == "Telefone":
-            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
-                busca = Crud.read_Telefone_BD(coluna=coluna, valor=valor)
-        elif tabela == "Raça":
-            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
-                busca = Crud.read_Raca_BD(coluna=coluna, valor=valor)
-        elif tabela == "Especie":
-            if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
-                busca = Crud.read_Especies_BD(coluna=coluna, valor=valor)
+        if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+            busca = Crud.read_Animais_BD(coluna=coluna, valor=valor)
+        # elif tabela == "Cliente":
+        #     if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+        #         busca = Crud.read_Cliente_BD(coluna=coluna, valor=valor)
+        # elif tabela == "Email":
+        #     if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+        #         busca = Crud.read_Email_BD(coluna=coluna, valor=valor)
+        # elif tabela == "Telefone":
+        #     if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+        #         busca = Crud.read_Telefone_BD(coluna=coluna, valor=valor)
+        # elif tabela == "Raça":
+        #     if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+        #         busca = Crud.read_Raca_BD(coluna=coluna, valor=valor)
+        # elif tabela == "Especie":
+        #     if valida_frase(coluna) and (valida_frase(valor) or valida_data(valor) or valida_numero(valor) or valida_sexo(valor)):
+        #         busca = Crud.read_Especies_BD(coluna=coluna, valor=valor)
         else:
             print("algo deu errado, tabela inexistente")
     mostra(busca)
 
-def acha_id(tabela, coluna, valor):
-    """Retorna id (int).
+def acha_id():
+    nome = tela_consulta.txt_nome_pet.text()
+    busca_id = Crud.read_Animais_BD(coluna="nome", valor=nome)
+    if tela_consulta.tableWidget_consulta_pet.rowCount() != 0:
+        for i in range(len(busca_id)):
+            tela_consulta.tableWidget_consulta_pet.removeRow(i)
+    for n, el in enumerate(busca_id):
+        tela_consulta.tableWidget_consulta_pet.insertRow(n)
+        for ni, i in enumerate(el):
+            tela_consulta.tableWidget_consulta_pet.setItem(n, ni, i)
+    id = busca_id[0][0]
+    return id
+    # """Retorna id (int).
 
-    Argumentos:
-    string -- nome tabela.
-    string -- coluna tabela.
-    string ou int -- valor tabela.
-    """
+    # Argumentos:
+    # string -- nome tabela.
+    # string -- coluna tabela.
+    # string ou int -- valor tabela.
+    # """
 
-    query = []
-    id = 0
-    if tabela == "Raca":
-        query = Crud.read_Raca_BD(coluna=coluna, valor=valor)
-        id = query[0]
-    elif tabela == "Especie":
-        query = Crud.read_Especies_BD(coluna=coluna, valor=valor)
-        id = query[0]
-    elif tabela == "Animais":
-        query = Crud.read_Animais_BD(coluna=coluna, valor=valor)
-        id = query[0]
-    elif tabela == "Cliente":
-        query = Crud.read_Cliente_BD(coluna=coluna, valor=valor)
-        id = query[0]
-    elif tabela == "Telefone":
-        query = Crud.read_Telefone_BD(coluna=coluna, valor=valor)
-        id = query
-    elif tabela == "Email":
-        query = Crud.read_Email_BD(coluna=coluna, valor=valor)
-        id = query
-    else:
-        print("Algo deu errado")
+    # query = []
+    # id = 0
+    # if tabela == "Raca":
+    #     query = Crud.read_Raca_BD(coluna=coluna, valor=valor)
+    #     id = query[0]
+    # elif tabela == "Especie":
+    #     query = Crud.read_Especies_BD(coluna=coluna, valor=valor)
+    #     id = query[0]
+    # elif tabela == "Animais":
+    #     query = Crud.read_Animais_BD(coluna=coluna, valor=valor)
+    #     id = query[0]
+    # elif tabela == "Cliente":
+    #     query = Crud.read_Cliente_BD(coluna=coluna, valor=valor)
+    #     id = query[0]
+    # elif tabela == "Telefone":
+    #     query = Crud.read_Telefone_BD(coluna=coluna, valor=valor)
+    #     id = query
+    # elif tabela == "Email":
+    #     query = Crud.read_Email_BD(coluna=coluna, valor=valor)
+    #     id = query
+    # else:
+    #     print("Algo deu errado")
 
-    return id[0]
+    # return id[0]
 
-def delete_id(tabela, id):
-    """Retorna qunatas linhas foram deletadas.
+def delete_id():
+    retorno = Crud.delete_Animais_BD(id)
+    mostra(retorno)
 
-    Argumentos:
-    string -- nome da tabela.
-    int -- id na tabela.
-    """
+    # """Retorna qunatas linhas foram deletadas.
 
-    query = []
-    if tabela == "Raca":
-        query = Crud.delete_Raca_BD(id)
-    elif tabela == "Especie":
-        query = Crud.delete_Especies_BD(id)
-    elif tabela == "Animal":
-        query = Crud.delete_Animais_BD(id)
-    elif tabela == "Cliente":
-        query = Crud.delete_Cliente_BD(id)
-    elif tabela == "Telefone":
-        cliente_id = id[0]
-        ddd = id[1]
-        telefone = id[2]
-        query = Crud.delete_Telefone_BD(cliente_id, ddd, telefone)
-    elif tabela == "Email":
-        cliente_id = id[0]
-        email = id[1]
-        query = Crud.delete_Email_BD(cliente_id, email)
-    else:
-        print("Algo deu errado")
+    # Argumentos:
+    # string -- nome da tabela.
+    # int -- id na tabela.
+    # """
 
-    print(query)
+    # query = []
+    # if tabela == "Raca":
+    #     query = Crud.delete_Raca_BD(id)
+    # elif tabela == "Especie":
+    #     query = Crud.delete_Especies_BD(id)
+    # elif tabela == "Animal":
+    #     query = Crud.delete_Animais_BD(id)
+    # elif tabela == "Cliente":
+    #     query = Crud.delete_Cliente_BD(id)
+    # elif tabela == "Telefone":
+    #     cliente_id = id[0]
+    #     ddd = id[1]
+    #     telefone = id[2]
+    #     query = Crud.delete_Telefone_BD(cliente_id, ddd, telefone)
+    # elif tabela == "Email":
+    #     cliente_id = id[0]
+    #     email = id[1]
+    #     query = Crud.delete_Email_BD(cliente_id, email)
+    # else:
+    #     print("Algo deu errado")
+
+    # print(query)
 
 def update_id(tabela, id, exclusividade=None, **colunas): # solucao ruim, refazer
     """Retorna qunatas vezes a tabela foi alterada.
@@ -267,22 +282,22 @@ def abrir_tela_filtrar():
     tela_filtrar.show()
     tela_bem_vindo.close()
 
-def abrir_tela_menu_excluir():
-    tela_menu_excluir.show()
+def abrir_tela_consultar():
+    tela_consulta.show()
     tela_bem_vindo.close()
 
-def abrir_tela_cadastro_menu():
+def abrir_tela_cadastrar_pet():
     tela_cadastro_pet.show()
-    tela_bem_vindo.close()
-
-def abrir_tela_menu_atualizar():
-    tela_menu_atualizacao.show()
     tela_bem_vindo.close()
 
 def voltar_tela_bem_vindo():
     tela_bem_vindo.show()
     tela_filtrar.close()
-    
+
+def voltar_tela_bem_vindo_consulta():
+    tela_bem_vindo.show()
+    tela_consulta.close()
+
 def onClicked_a():
     tela_filtrar.comboBox_coluna.clear()
     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do Animal", "Data de nascimento", "Peso", "Pelagem", "Sexo", "Primeira ida", "Última ida", "Castrado", "ID da raça", "Nome da Raça"])
@@ -322,7 +337,7 @@ def valor_filtro(s):
 
 #-- nao mexer --
 app = QtWidgets.QApplication(sys.argv)
-tela_bem_vindo = uic.loadUi('bem_vindo.ui')
+tela_bem_vindo = uic.loadUi('Pet_Inicial_Novo.ui')
 # tela_atualizacao_cliente = uic.loadUi('atualizacao_cliente.ui')
 # tela_atualizacao_pet = uic.loadUi('atualizacao_pet.ui')
 # tela_cadastro_cliente = uic.loadUi('cadastro_cliente.ui')
@@ -338,13 +353,16 @@ tela_consulta = uic.loadUi('tela_consulta_pet.ui')
 
 #-- nao mexer -- matteo
 tela_bem_vindo.show()
-tela_bem_vindo.btn_filtrar2.clicked.connect(abrir_tela_filtrar)
+tela_bem_vindo.btn_filtrar.clicked.connect(abrir_tela_filtrar)
 tela_bem_vindo.btn_cadastrar.clicked.connect(abrir_tela_cadastrar_pet)
-tela_bem_vindo.btn_atualizar2.clicked.connect(abrir_tela_menu_atualizar)
-tela_bem_vindo.btn_excluir2.clicked.connect(abrir_tela_menu_excluir)
+tela_bem_vindo.btn_consultar.clicked.connect(abrir_tela_consultar)
 #-- nao mexer --
 #-- matteo --
 
+tela_consulta.btn_voltar.clicked.connect(voltar_tela_bem_vindo_consulta)
+tela_consulta.pushButton_pesquisar.clicked.connect(acha_id)
+tela_consulta.btn_Consulta_excluir_Pet.clicked.connect(delete_id)
+tela_consulta.btn_Consulta_atualizar_Pet.clicked.connect(update_id)
 
 tela_filtrar.btn_voltar.clicked.connect(voltar_tela_bem_vindo)
 tabela = tela_filtrar.radioButton_especie.clicked.connect(onClicked_es)

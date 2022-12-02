@@ -486,39 +486,39 @@ def read_Animais_BD(coluna=None, valor=None, group=None):
 
 
 #UPDATE
-def update_Especies_BD(id, nome=None, alimentacao=None, exclusividade=None):
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
+# def update_Especies_BD(id, nome=None, alimentacao=None, exclusividade=None):
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
     
-    if exclusividade == 'nome':
-        sql = "UPDATE Especies SET nome = %s WHERE id = %s"
-        data = (
-            nome,
-            id
-        )
-    elif exclusividade == 'alimentacao':
-        sql = "UPDATE Especies SET alimentacao = %s WHERE id = %s"
-        data = (
-            alimentacao,
-            id
-        )
-    else:
-        sql = "UPDATE Especies SET nome = %s, alimentacao = %s WHERE id = %s"
-        data = (
-            nome, 
-            alimentacao,
-            id
-        )
+#     if exclusividade == 'nome':
+#         sql = "UPDATE Especies SET nome = %s WHERE id = %s"
+#         data = (
+#             nome,
+#             id
+#         )
+#     elif exclusividade == 'alimentacao':
+#         sql = "UPDATE Especies SET alimentacao = %s WHERE id = %s"
+#         data = (
+#             alimentacao,
+#             id
+#         )
+#     else:
+#         sql = "UPDATE Especies SET nome = %s, alimentacao = %s WHERE id = %s"
+#         data = (
+#             nome, 
+#             alimentacao,
+#             id
+#         )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit()
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit()
 
-    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+#     recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
 
-    cursor.close()
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close()
+#     connection.close() #Fecha a conexão com o banco
 
-    return (recordsaffected, " registros alterados")
+#     return (recordsaffected, " registros alterados")
 
 def update_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, cliente_id=None, raca_id=None, exclusividade=None):
     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -610,91 +610,91 @@ def update_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, se
 
     return (recordsaffected, " registros alterados")
 
-def update_Cliente_BD(cpf, nome=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, exclusividade=None):
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
+# def update_Cliente_BD(cpf, nome=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, exclusividade=None):
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if exclusividade == 'nome':
-        sql = "UPDATE Cliente SET nome = %s WHERE cpf = %s"
-        data = (
-            nome,
-            cpf
-        )
-    elif exclusividade == 'logradouro':
-        sql = "UPDATE Cliente SET logradouro = %s WHERE cpf = %s"
-        data = (
-            logradouro,
-            cpf
-        )
-    elif exclusividade == 'numero':
-        sql = "UPDATE Cliente SET numero = %s WHERE cpf = %s"
-        data = (
-            numero,
-            cpf
-        )
-    elif exclusividade == 'bairro':
-        sql = "UPDATE Cliente SET bairro = %s WHERE cpf = %s"
-        data = (
-            bairro,
-            cpf
-        )
-    elif exclusividade == 'cidade':
-        sql = "UPDATE Cliente SET cidade = %s WHERE cpf = %s"
-        data = (
-            cidade,
-            cpf
-        )
-    elif exclusividade == 'estado':
-        sql = "UPDATE Cliente SET estado = %s WHERE cpf = %s"
-        data = (
-            estado,
-            cpf
-        )
-    else:
-        sql = "UPDATE Cliente SET nome = %s, logradouro = %s, numero = %s, bairro = %s, cidade = %s, estado = %s WHERE cpf = %s"
-        data = (
-            nome,
-            logradouro,
-            numero,
-            bairro,
-            cidade,
-            estado,
-            cpf
-        )
+#     if exclusividade == 'nome':
+#         sql = "UPDATE Cliente SET nome = %s WHERE cpf = %s"
+#         data = (
+#             nome,
+#             cpf
+#         )
+#     elif exclusividade == 'logradouro':
+#         sql = "UPDATE Cliente SET logradouro = %s WHERE cpf = %s"
+#         data = (
+#             logradouro,
+#             cpf
+#         )
+#     elif exclusividade == 'numero':
+#         sql = "UPDATE Cliente SET numero = %s WHERE cpf = %s"
+#         data = (
+#             numero,
+#             cpf
+#         )
+#     elif exclusividade == 'bairro':
+#         sql = "UPDATE Cliente SET bairro = %s WHERE cpf = %s"
+#         data = (
+#             bairro,
+#             cpf
+#         )
+#     elif exclusividade == 'cidade':
+#         sql = "UPDATE Cliente SET cidade = %s WHERE cpf = %s"
+#         data = (
+#             cidade,
+#             cpf
+#         )
+#     elif exclusividade == 'estado':
+#         sql = "UPDATE Cliente SET estado = %s WHERE cpf = %s"
+#         data = (
+#             estado,
+#             cpf
+#         )
+#     else:
+#         sql = "UPDATE Cliente SET nome = %s, logradouro = %s, numero = %s, bairro = %s, cidade = %s, estado = %s WHERE cpf = %s"
+#         data = (
+#             nome,
+#             logradouro,
+#             numero,
+#             bairro,
+#             cidade,
+#             estado,
+#             cpf
+#         )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit()
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit()
 
-    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+#     recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
 
-    cursor.close()
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close()
+#     connection.close() #Fecha a conexão com o banco
 
-    return (recordsaffected, " registros alterados")
+#     return (recordsaffected, " registros alterados")
 
-def update_Raca_BD(id, nome=None, especie_id=None, exclusividade=None):
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
+# def update_Raca_BD(id, nome=None, especie_id=None, exclusividade=None):
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
 
-    if exclusividade == "nome":
-        sql = "UPDATE Raca SET nome = %s WHERE id = %s"
-        data = (
-            nome,
-            id
-        )
-    elif exclusividade == 'especie_id':
-        sql = "UPDATE Raca SET especie_id = %s WHERE id = %s"
-        data = (
-            especie_id,
-            id
-        )
-    else:
-        sql = "UPDATE Raca SET nome = %s, especie_id = %s WHERE id = %s"
-        data = (
-            nome,
-            especie_id,
-            id
-        )
+#     if exclusividade == "nome":
+#         sql = "UPDATE Raca SET nome = %s WHERE id = %s"
+#         data = (
+#             nome,
+#             id
+#         )
+#     elif exclusividade == 'especie_id':
+#         sql = "UPDATE Raca SET especie_id = %s WHERE id = %s"
+#         data = (
+#             especie_id,
+#             id
+#         )
+#     else:
+#         sql = "UPDATE Raca SET nome = %s, especie_id = %s WHERE id = %s"
+#         data = (
+#             nome,
+#             especie_id,
+#             id
+#         )
 
     
     cursor.execute(sql, data) #Executa o comando SQL
@@ -707,137 +707,137 @@ def update_Raca_BD(id, nome=None, especie_id=None, exclusividade=None):
 
     return (recordsaffected, " registros alterados")
 
-def update_Telefone_BD(pk, cliente_id=None, ddd=None, telefone=None, exclusividade=None):
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
-    pk = pk.split(" ")
-    cliente_id_pk = pk[0]
-    ddd_pk = pk[1]
-    telefone_pk = pk[2]
+# def update_Telefone_BD(pk, cliente_id=None, ddd=None, telefone=None, exclusividade=None):
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
+#     pk = pk.split(" ")
+#     cliente_id_pk = pk[0]
+#     ddd_pk = pk[1]
+#     telefone_pk = pk[2]
 
-    if exclusividade == 'cliente_id':
-        sql = "UPDATE Telefone SET cliente_id = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
-        data = (
-            cliente_id,
-            cliente_id_pk,
-            ddd_pk,
-            telefone_pk
-        )
-    elif exclusividade == 'ddd':
-        sql = "UPDATE Telefone SET ddd = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
-        data = (
-            ddd,
-            cliente_id_pk,
-            ddd_pk,
-            telefone_pk
-        )
-    elif exclusividade == 'telefone':
-        sql = "UPDATE Telefone SET telefone = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
-        data = (
-            telefone,
-            cliente_id_pk,
-            ddd_pk,
-            telefone_pk
-        )
-    else:
-        sql = "UPDATE Telefone SET cliente_id = %s, ddd = %s, telefone = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
-        data = (
-            cliente_id,
-            ddd,
-            telefone,
-            cliente_id_pk,
-            ddd_pk,
-            telefone_pk
-        )
+#     if exclusividade == 'cliente_id':
+#         sql = "UPDATE Telefone SET cliente_id = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
+#         data = (
+#             cliente_id,
+#             cliente_id_pk,
+#             ddd_pk,
+#             telefone_pk
+#         )
+#     elif exclusividade == 'ddd':
+#         sql = "UPDATE Telefone SET ddd = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
+#         data = (
+#             ddd,
+#             cliente_id_pk,
+#             ddd_pk,
+#             telefone_pk
+#         )
+#     elif exclusividade == 'telefone':
+#         sql = "UPDATE Telefone SET telefone = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
+#         data = (
+#             telefone,
+#             cliente_id_pk,
+#             ddd_pk,
+#             telefone_pk
+#         )
+#     else:
+#         sql = "UPDATE Telefone SET cliente_id = %s, ddd = %s, telefone = %s WHERE cliente_id = %s and ddd = %s and telefone = %s"
+#         data = (
+#             cliente_id,
+#             ddd,
+#             telefone,
+#             cliente_id_pk,
+#             ddd_pk,
+#             telefone_pk
+#         )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit()
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit()
 
-    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+#     recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
 
-    cursor.close()
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close()
+#     connection.close() #Fecha a conexão com o banco
 
-    return (recordsaffected, " registros alterados")
+#     return (recordsaffected, " registros alterados")
 
-def update_Email_BD(pk, cliente_id=None, email=None, exclusividade=None):
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
-    cursor = connection.cursor() #Cursor para comunicação com o banco
-    pk = pk.split(" ")
-    cliente_id_pk = pk[0]
-    email_pk = pk[1]
+# def update_Email_BD(pk, cliente_id=None, email=None, exclusividade=None):
+#     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+#     cursor = connection.cursor() #Cursor para comunicação com o banco
+#     pk = pk.split(" ")
+#     cliente_id_pk = pk[0]
+#     email_pk = pk[1]
 
-    if exclusividade == 'cliente_id':
-        sql = "UPDATE Email SET cliente_id = %s WHERE cliente_id = %s and email = %s"
-        data = (
-            cliente_id,
-            cliente_id_pk,
-            email_pk,
-        )
-    elif exclusividade == 'email':
-        sql = "UPDATE Email SET email = %s WHERE cliente_id = %s and email = %s"
-        data = (
-            email,
-            cliente_id_pk,
-            email_pk,
-        )
-    else:
-        sql = "UPDATE Email SET cliente_id = %s, email = %s WHERE cliente_id = %s and email = %s"
-        data = (
-            cliente_id,
-            email,
-            cliente_id_pk,
-            email_pk,
-        )
+#     if exclusividade == 'cliente_id':
+#         sql = "UPDATE Email SET cliente_id = %s WHERE cliente_id = %s and email = %s"
+#         data = (
+#             cliente_id,
+#             cliente_id_pk,
+#             email_pk,
+#         )
+#     elif exclusividade == 'email':
+#         sql = "UPDATE Email SET email = %s WHERE cliente_id = %s and email = %s"
+#         data = (
+#             email,
+#             cliente_id_pk,
+#             email_pk,
+#         )
+#     else:
+#         sql = "UPDATE Email SET cliente_id = %s, email = %s WHERE cliente_id = %s and email = %s"
+#         data = (
+#             cliente_id,
+#             email,
+#             cliente_id_pk,
+#             email_pk,
+#         )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit()
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit()
 
-    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+#     recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
 
-    cursor.close()
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close()
+#     connection.close() #Fecha a conexão com o banco
 
-    return (recordsaffected, " registros alterados")
+#     return (recordsaffected, " registros alterados")
 
 #DELETE
-def delete_Raca_BD(id):
-    connection = conectarBD("localhost", "root", "admin", "PetShop")
-    cursor = connection.cursor()
+# def delete_Raca_BD(id):
+#     connection = conectarBD("localhost", "root", "admin", "PetShop")
+#     cursor = connection.cursor()
 
-    sql = "DELETE FROM Raca WHERE id = %s"
-    data = ( 
-        id,
-    )
+#     sql = "DELETE FROM Raca WHERE id = %s"
+#     data = ( 
+#         id,
+#     )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit()
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit()
 
-    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+#     recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
 
-    cursor.close()
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close()
+#     connection.close() #Fecha a conexão com o banco
 
-    return (recordsaffected, " registros excluídos")
+#     return (recordsaffected, " registros excluídos")
 
-def delete_Especies_BD(id):
-    connection = conectarBD("localhost", "root", "admin", "PetShop")
-    cursor = connection.cursor()
+# def delete_Especies_BD(id):
+#     connection = conectarBD("localhost", "root", "admin", "PetShop")
+#     cursor = connection.cursor()
 
-    sql = "DELETE FROM Especies WHERE id = %s"
-    data = (
-        id,
-    )
+#     sql = "DELETE FROM Especies WHERE id = %s"
+#     data = (
+#         id,
+#     )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit()
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit()
 
-    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+#     recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
 
-    cursor.close()
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close()
+#     connection.close() #Fecha a conexão com o banco
 
-    return (recordsaffected, " registros excluídos")
+#     return (recordsaffected, " registros excluídos")
 
 def delete_Animais_BD(id):
     connection = conectarBD("localhost", "root", "admin", "PetShop")
@@ -858,65 +858,65 @@ def delete_Animais_BD(id):
 
     return (recordsaffected, " registros excluídos")
 
-def delete_Cliente_BD(cpf):
-    connection = conectarBD("localhost", "root", "admin", "PetShop")
-    cursor = connection.cursor()
+# def delete_Cliente_BD(cpf):
+#     connection = conectarBD("localhost", "root", "admin", "PetShop")
+#     cursor = connection.cursor()
 
-    sql = "DELETE FROM Cliente WHERE cpf = %s"
-    data = (
-        cpf,
-    )
+#     sql = "DELETE FROM Cliente WHERE cpf = %s"
+#     data = (
+#         cpf,
+#     )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit()
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit()
 
-    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+#     recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
 
-    cursor.close()
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close()
+#     connection.close() #Fecha a conexão com o banco
 
-    return (recordsaffected, " registros excluídos")
+#     return (recordsaffected, " registros excluídos")
 
-def delete_Telefone_BD(cliente_id, ddd, telefone):
-    connection = conectarBD("localhost", "root", "admin", "PetShop")
-    cursor = connection.cursor()
+# def delete_Telefone_BD(cliente_id, ddd, telefone):
+#     connection = conectarBD("localhost", "root", "admin", "PetShop")
+#     cursor = connection.cursor()
 
-    sql = "DELETE FROM Telefone WHERE cliente_id = %s and ddd = %s and telefone = %s"
-    data = (
-        cliente_id,
-        ddd,
-        telefone
-    )
+#     sql = "DELETE FROM Telefone WHERE cliente_id = %s and ddd = %s and telefone = %s"
+#     data = (
+#         cliente_id,
+#         ddd,
+#         telefone
+#     )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit()
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit()
 
-    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+#     recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
 
-    cursor.close()
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close()
+#     connection.close() #Fecha a conexão com o banco
 
-    return (recordsaffected, " registros excluídos")
+#     return (recordsaffected, " registros excluídos")
 
-def delete_Email_BD(cliente_id, email):
-    connection = conectarBD("localhost", "root", "admin", "PetShop")
-    cursor = connection.cursor()
+# def delete_Email_BD(cliente_id, email):
+#     connection = conectarBD("localhost", "root", "admin", "PetShop")
+#     cursor = connection.cursor()
 
-    sql = "DELETE FROM Email WHERE cliente_id = %s and email = %s"
-    data = (
-        cliente_id,
-        email
-    )
+#     sql = "DELETE FROM Email WHERE cliente_id = %s and email = %s"
+#     data = (
+#         cliente_id,
+#         email
+#     )
 
-    cursor.execute(sql, data) #Executa o comando SQL
-    connection.commit()
+#     cursor.execute(sql, data) #Executa o comando SQL
+#     connection.commit()
 
-    recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
+#     recordsaffected = cursor.rowcount #Obtém o número de linhas afetadas
 
-    cursor.close()
-    connection.close() #Fecha a conexão com o banco
+#     cursor.close()
+#     connection.close() #Fecha a conexão com o banco
 
-    return (recordsaffected, " registros excluídos")
+#     return (recordsaffected, " registros excluídos")
 
 
 

@@ -27,7 +27,7 @@
      <string>Nome do Pet</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_Consulta_excluir_Pet_2">
+   <widget class="QPushButton" name="btn_Consulta_atualizar_Pet">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -40,7 +40,7 @@
      <string notr="true">background-color: rgb(2, 158, 255);</string>
     </property>
     <property name="text">
-     <string>Consultar</string>
+     <string>Atualizar</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
