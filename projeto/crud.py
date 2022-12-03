@@ -21,7 +21,7 @@ create table Animais (
 	peso			decimal(10,2)		check (peso > 0),
 	pelagem			varchar(50)			not null,
     sexo			char(1)				not null,
-    primeira_ida	date				not null, /* ver se eh ativo */
+    primeira_ida	date				not null,
     ultima_ida		date				not null,
     castrado		boolean				not null,
 	raca_id		integer				references Especies(id)
@@ -148,7 +148,7 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
     int -- numero do id da especie que pertence o animal.
     """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+    connection = conectarBD("localhost", "root", "", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco, o cursor sabe o que o mysql precisa e o que o mysql retorna, fazendo o meio de campo entre o python e o mysql
 
     sql = "INSERT INTO Animais(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)"
@@ -173,7 +173,7 @@ def insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima
     cursor.close() #Fecha o cursor
     connection.close() #Fecha a conexão com o BD, boa pratica para economizar os recursos do BD
 
-    return (f"Foi cadastrado o animal {nome} com ID:", userid)
+    return f"Foi cadastrado o animal {nome} com ID: {userid}"
 
 # def insert_Cliente_BD(cpf, nome, logradouro, numero, cidade, estado, bairro):
 #     """Imprime no cmd o id do cliente/dono cadastrado no BD.
@@ -343,7 +343,7 @@ def read_Animais_BD(coluna=None, valor=None, group=None):
     string -- nome da coluna que sera utilizada para fazer o GROUP BY, padrao = None.
     """
 
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+    connection = conectarBD("localhost", "root", "", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
     if (coluna == "id") or (coluna == "peso")  or (coluna == "castrado") or (coluna == "cliente_id") or (coluna == "raca_id"):
@@ -521,7 +521,7 @@ def read_Animais_BD(coluna=None, valor=None, group=None):
 #     return (recordsaffected, " registros alterados")
 
 def update_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, sexo=None, primeira_ida=None, ultima_ida=None, castrado=None, cliente_id=None, raca_id=None, exclusividade=None):
-    connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
+    connection = conectarBD("localhost", "root", "", "PetShop") #Recebe a conexão estabelecida com o banco
     cursor = connection.cursor() #Cursor para comunicação com o banco
 
     if exclusividade == 'nome':
@@ -840,7 +840,7 @@ def update_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, se
 #     return (recordsaffected, " registros excluídos")
 
 def delete_Animais_BD(id):
-    connection = conectarBD("localhost", "root", "admin", "PetShop")
+    connection = conectarBD("localhost", "root", "", "PetShop")
     cursor = connection.cursor()
 
     sql = "DELETE FROM Animais WHERE id = %s"

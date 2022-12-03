@@ -92,7 +92,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>Sexo</string>
+     <string>Sexo (M ou F)</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="txt_primeiraIda">

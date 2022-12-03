@@ -1,7 +1,7 @@
 from PyQt5 import uic, QtWidgets
 from PyQt5.QtWidgets import (
     QMainWindow, 
-    QVBoxLayout, 
+    QTableWidgetItem, 
     QLabel
 )
 from PySide6.QtCore import QSize
@@ -108,15 +108,15 @@ def valida_sexo(sexo):
 
 def mostra(frase):
     sub_window = QMainWindow()
-    layout = QVBoxLayout()
-    sub_window.setLayout(layout)
-    sub_window.setFixedSize(QSize(100, 100))
+    # layout = QVBoxLayout()
+    # sub_window.setLayout(layout)
+    sub_window.setFixedSize(100, 100)
 
     # createTable(query)
     label = QLabel("")
     label.setText(frase)
 
-    sub_window.addWidget(label)
+    sub_window.setCentralWidget(label)
 
     sub_window.show()
 
@@ -152,8 +152,11 @@ def acha_id():
             tela_consulta.tableWidget_consulta_pet.removeRow(i)
     for n, el in enumerate(busca_id):
         tela_consulta.tableWidget_consulta_pet.insertRow(n)
-        for ni, i in enumerate(el):
-            tela_consulta.tableWidget_consulta_pet.setItem(n, ni, i)
+        for ni, v in enumerate(el):
+            print(v, type(v))
+            if type(v) == type(date.today()):
+                v = str('{0:%Y}-{0:%m}-{0:%d}.'.format(v))
+            tela_consulta.tableWidget_consulta_pet.setItem(n, ni, QTableWidgetItem(v))
     id = busca_id[0][0]
     return id
     # """Retorna id (int).
@@ -232,42 +235,41 @@ def update_id(): # solucao ruim, refazer
     string -- passa couna que sera a unica a sofrer UPDATE, padrao = None.
     dictionary -- colunas como chaves e seus novos valores como valores.
     """
-
-    contador = 0
-    if tabela == "Raca":
-        for chave in colunas:
-            Crud.update_Raca_BD(id, chave=colunas[chave], exclusividade=chave)
-            contador += 1
-    elif tabela == "Especie":
-        for chave in colunas:
-            Crud.update_Especies_BD(id, chave=colunas[chave], exclusividade=chave)
-            contador += 1
-    elif tabela == "Animal":
-        for chave in colunas:
-            Crud.update_Animais_BD(id, chave=colunas[chave], exclusividade=chave)
-            contador += 1
-    elif tabela == "Cliente":
-        for chave in colunas:
-            Crud.update_Cliente_BD(id, chave=colunas[chave], exclusividade=chave)
-            contador += 1
-    elif tabela == "Telefone":
-        cliente_id = id[0]
-        ddd = id[1]
-        telefone = id[2]
-        for chave in colunas:
-            Crud.update_Telefone_BD(cliente_id, ddd, telefone, chave=colunas[chave], exclusividade=chave)
-            contador += 1
-    elif tabela == "Email":
-        cliente_id = id[0]
-        email = id[1]
-        for chave in colunas:
-            Crud.update_Email_BD(cliente_id, email, chave=colunas[chave], exclusividade=chave)
-            contador += 1
-    else:
-        print("Algo deu errado")
-
-    print(f"{contador} colunas alteradas")
-#delete_id("Cliente", achar_id("Cliente", "nome", "Matteo"))
+    data_nova = tela_consulta.txt_atualizar.text()
+    retorno = Crud.update_Animais_BD(id, ultima_ida=data_nova, exclusividade='ultima_ida')
+    mostra(retorno)
+    # contador = 0
+    # if tabela == "Raca":
+    #     for chave in colunas:
+    #         Crud.update_Raca_BD(id, chave=colunas[chave], exclusividade=chave)
+    #         contador += 1
+    # elif tabela == "Especie":
+    #     for chave in colunas:
+    #         Crud.update_Especies_BD(id, chave=colunas[chave], exclusividade=chave)
+    #         contador += 1
+    # if tabela == "Animal":
+        # for chave in colunas:
+            # contador += 1
+    # elif tabela == "Cliente":
+    #     for chave in colunas:
+    #         Crud.update_Cliente_BD(id, chave=colunas[chave], exclusividade=chave)
+    #         contador += 1
+    # elif tabela == "Telefone":
+    #     cliente_id = id[0]
+    #     ddd = id[1]
+    #     telefone = id[2]
+    #     for chave in colunas:
+    #         Crud.update_Telefone_BD(cliente_id, ddd, telefone, chave=colunas[chave], exclusividade=chave)
+    #         contador += 1
+    # elif tabela == "Email":
+    #     cliente_id = id[0]
+    #     email = id[1]
+    #     for chave in colunas:
+    #         Crud.update_Email_BD(cliente_id, email, chave=colunas[chave], exclusividade=chave)
+    #         contador += 1
+    # else:
+    #     print("Algo deu errado")
+    # print(f"{retorno} colunas alteradas")
 
 # def eh_ativo(nome):
 #     primeira_ida = Crud.read_Animais_BD(coluna="nome", valor=nome)[6]
@@ -303,6 +305,10 @@ def voltar_tela_bem_vindo_consulta():
     tela_bem_vindo.show()
     tela_consulta.close()
 
+def voltar_tela_bem_vindo_cadastro():
+    tela_bem_vindo.show()
+    tela_cadastro_pet.close()
+
 def onClicked_a():
     tela_filtrar.comboBox_coluna.clear()
     tela_filtrar.comboBox_coluna.addItems(["ID", "Nome do Animal", "Data de nascimento", "Peso", "Pelagem", "Sexo", "Primeira ida", "Última ida", "Castrado", "ID da raça", "Nome da Raça"])
@@ -335,6 +341,21 @@ def onClicked_t():
 
 def valor_filtro(s):
     return s
+
+def cadastra():
+    nome = tela_cadastro_pet.txt_nome.text()
+    data_nasc = tela_cadastro_pet.txt_data.text()
+    peso = tela_cadastro_pet.txt_peso.text()
+    pelagem = tela_cadastro_pet.txt_pelagem.text()
+    sexo = tela_cadastro_pet.txt_sexo.text().upper()
+    primeira_ida = tela_cadastro_pet.txt_primeiraIda.text()
+    ultima_ida = tela_cadastro_pet.txt_ultimaIda.text()
+    castrado = tela_cadastro_pet.checkBox_castrado.isChecked()
+    if valida_sexo(sexo):
+        retorno = Crud.insert_Animais_BD(nome, data_nasc, peso, pelagem, sexo, primeira_ida, ultima_ida, castrado)
+        mostra(retorno)
+    else:
+        mostra("Erro na escrita do sexo")
 #-- FIM ------------ FUNCOES DE VALIDACAO E DE BACKEND, ENTRE TELAS E CRUD ----------------------
 
 
@@ -352,7 +373,7 @@ tela_cadastro_pet = uic.loadUi('cadastro_pet.ui')
 tela_filtrar = uic.loadUi('filtrar.ui')
 #tela_menu_cadastro = uic.loadUi('cadastro_menu.ui')
 #tela_menu_atualizacao = uic.loadUi('atualizacao_menu.ui')
-tela_consulta = uic.loadUi('tela_consulta_pet.ui')
+tela_consulta = uic.loadUi('tela_consulta.ui')
 
 tela_bem_vindo.show()
 tela_bem_vindo.btn_filtrar.clicked.connect(abrir_tela_filtrar)
@@ -363,7 +384,14 @@ tela_bem_vindo.btn_consultar.clicked.connect(abrir_tela_consultar)
 tela_consulta.btn_voltar.clicked.connect(voltar_tela_bem_vindo_consulta)
 tela_consulta.pushButton_pesquisar.clicked.connect(acha_id)
 tela_consulta.btn_Consulta_excluir_Pet.clicked.connect(delete_id)
-tela_consulta.btn_Consulta_atualizar_Pet.clicked.connect(update_id)
+tela_consulta.pushButton_atualizar.clicked.connect(update_id)
+
+tela_cadastro_pet.btn_voltar.clicked.connect(voltar_tela_bem_vindo_cadastro)
+tela_cadastro_pet.txt_data.setInputMask("0000-00-00")
+tela_cadastro_pet.txt_primeiraIda.setInputMask("0000-00-00")
+tela_cadastro_pet.txt_ultimaIda.setInputMask("0000-00-00")
+tela_cadastro_pet.btn_cadastrar.clicked.connect(cadastra)
+
 
 tela_filtrar.btn_voltar.clicked.connect(voltar_tela_bem_vindo)
 tabela = tela_filtrar.radioButton_especie.clicked.connect(onClicked_es)

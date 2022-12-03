@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>MVP PetShop</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QLabel" name="label">
@@ -27,7 +27,7 @@
      <string/>
     </property>
     <property name="pixmap">
-     <pixmap>../../../Projeto_final/projeto/seja bem vindo.png</pixmap>
+     <pixmap>C:\..\..\..\..\..\..\Tela_Seja_Bem_vindo.png</pixmap>
     </property>
    </widget>
    <widget class="QPushButton" name="btn_cadastrar">
