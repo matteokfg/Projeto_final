@@ -608,7 +608,7 @@ def update_Animais_BD(id, nome=None, data_nasc=None, peso=None, pelagem=None, se
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    return (recordsaffected, " registros alterados")
+    return f"{recordsaffected} registros alterados"
 
 # def update_Cliente_BD(cpf, nome=None, logradouro=None, numero=None, bairro=None, cidade=None, estado=None, exclusividade=None):
 #     connection = conectarBD("localhost", "root", "admin", "PetShop") #Recebe a conexão estabelecida com o banco
@@ -856,7 +856,7 @@ def delete_Animais_BD(id):
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    return (recordsaffected, " registros excluídos")
+    return f"{recordsaffected} registros excluídos")
 
 # def delete_Cliente_BD(cpf):
 #     connection = conectarBD("localhost", "root", "admin", "PetShop")
