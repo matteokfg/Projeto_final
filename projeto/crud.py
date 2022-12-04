@@ -856,7 +856,7 @@ def delete_Animais_BD(id):
     cursor.close()
     connection.close() #Fecha a conexão com o banco
 
-    return f"{recordsaffected} registros excluídos")
+    return f"{recordsaffected} registros excluídos"
 
 # def delete_Cliente_BD(cpf):
 #     connection = conectarBD("localhost", "root", "admin", "PetShop")

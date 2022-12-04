@@ -2,7 +2,8 @@ from PyQt5 import uic, QtWidgets
 from PyQt5.QtWidgets import (
     QMainWindow, 
     QTableWidgetItem, 
-    QLabel
+    QLabel,
+    QMessageBox
 )
 from PySide6.QtCore import QSize
 import sys
@@ -12,9 +13,8 @@ import mysql.connector
 import crud as Crud # importa as funcoes do documento crud.py
 # os.system("pip install mysql-connector-python")
 
-coluna = ""
 valor = ""
-id = 0
+pk = 0
 
 #-- INICIO ------------ FUNCOES DE VALIDACAO E DE BACKEND, ENTRE TELAS E CRUD -------------------
 def valida_data(data):
@@ -107,18 +107,22 @@ def valida_sexo(sexo):
 #     tableWidget.horizontalHeader().setSectionResizeMode(QHeaderView.Scretch)
 
 def mostra(frase):
-    sub_window = QMainWindow()
-    # layout = QVBoxLayout()
-    # sub_window.setLayout(layout)
-    sub_window.setFixedSize(100, 100)
+    msg = QMessageBox()
+    msg.setWindowTitle("Pop-up")
+    msg.setText(frase)
+    x = msg.exec_()
+    # sub_window = QMainWindow()
+    # # layout = QVBoxLayout()
+    # # sub_window.setLayout(layout)
+    # sub_window.setFixedSize(100, 100)
 
-    # createTable(query)
-    label = QLabel("")
-    label.setText(frase)
+    # # createTable(query)
+    # label = QLabel("")
+    # label.setText(frase)
 
-    sub_window.setCentralWidget(label)
+    # sub_window.setCentralWidget(label)
 
-    sub_window.show()
+    # sub_window.show()
 
 def read(): # funcao que pega valores da tela_filtrar e passa como parametros e usa o read_ _BD correto
     busca = []
@@ -145,20 +149,46 @@ def read(): # funcao que pega valores da tela_filtrar e passa como parametros e 
     mostra(busca)
 
 def acha_id():
-    nome = tela_consulta.txt_nome_pet.text()
-    busca_id = Crud.read_Animais_BD(coluna="nome", valor=nome)
-    if tela_consulta.tableWidget_consulta_pet.rowCount() != 0:
-        for i in range(len(busca_id)):
-            tela_consulta.tableWidget_consulta_pet.removeRow(i)
-    for n, el in enumerate(busca_id):
-        tela_consulta.tableWidget_consulta_pet.insertRow(n)
-        for ni, v in enumerate(el):
-            print(v, type(v))
-            if type(v) == type(date.today()):
-                v = str('{0:%Y}-{0:%m}-{0:%d}.'.format(v))
-            tela_consulta.tableWidget_consulta_pet.setItem(n, ni, QTableWidgetItem(v))
-    id = busca_id[0][0]
-    return id
+    global pk
+    try:
+        nome = tela_consulta.txt_nome_pet.text()
+        busca_id = Crud.read_Animais_BD(coluna="nome", valor=nome)
+        data_tabela = {"ID": [], "Nome": [], "Data nasc.": [], "Peso": [], "Pelagem": [], "Sexo": [], "Primeira ida": [], "Ultima ida": [], "Castrado?": []}
+        tela_consulta.tableWidget_consulta_pet.__init__(len(busca_id), len(data_tabela))
+        for n, key in enumerate(data_tabela):
+            for el in busca_id:
+                for vi, i in enumerate(el):
+                    if n == vi:
+                        data_tabela[key].append(i)
+        head = []
+        for n, key in enumerate(data_tabela):
+            head.append(key)
+            for m, item in enumerate(data_tabela[key]):
+                if type(item) == type(date.today()):
+                    item = str('{0:%Y}-{0:%m}-{0:%d}.'.format(item))
+                if type(item) == type(1):
+                    item = str(item)
+                newItem = QTableWidgetItem(item)
+                tela_consulta.tableWidget_consulta_pet.setItem(m, n, newItem)
+        tela_consulta.tableWidget_consulta_pet.setHorizontalHeaderLabels(head)
+        tela_consulta.tableWidget_consulta_pet.resizeColumnsToContents()
+        tela_consulta.tableWidget_consulta_pet.resizeRowsToContents()
+        tela_consulta.tableWidget_consulta_pet.show()
+        pk = busca_id[0][0]
+    except LookupError:
+        mostra("Não exite essa procura")
+    # if tela_consulta.tableWidget_consulta_pet.rowCount() != 0:
+    #     for i in range(len(busca_id)):
+    #         tela_consulta.tableWidget_consulta_pet.removeRow(i)
+    # for n, el in enumerate(busca_id):
+    #     tela_consulta.tableWidget_consulta_pet.insertRow(n)
+    #     for ni, v in enumerate(el):
+    #         if type(v) == type(date.today()):
+    #             v = str('{0:%Y}-{0:%m}-{0:%d}.'.format(v))
+    #         tela_consulta.tableWidget_consulta_pet.setItem(n, ni, QTableWidgetItem(v))
+    # print(pk, type(pk))
+    # return pk
+
     # """Retorna id (int).
 
     # Argumentos:
@@ -193,7 +223,8 @@ def acha_id():
     # return id[0]
 
 def delete_id():
-    retorno = Crud.delete_Animais_BD(id)
+    print(pk)
+    retorno = Crud.delete_Animais_BD(pk)
     mostra(retorno)
 
     # """Retorna qunatas linhas foram deletadas.
@@ -236,7 +267,7 @@ def update_id(): # solucao ruim, refazer
     dictionary -- colunas como chaves e seus novos valores como valores.
     """
     data_nova = tela_consulta.txt_atualizar.text()
-    retorno = Crud.update_Animais_BD(id, ultima_ida=data_nova, exclusividade='ultima_ida')
+    retorno = Crud.update_Animais_BD(pk, ultima_ida=data_nova, exclusividade='ultima_ida')
     mostra(retorno)
     # contador = 0
     # if tabela == "Raca":
@@ -387,9 +418,6 @@ tela_consulta.btn_Consulta_excluir_Pet.clicked.connect(delete_id)
 tela_consulta.pushButton_atualizar.clicked.connect(update_id)
 
 tela_cadastro_pet.btn_voltar.clicked.connect(voltar_tela_bem_vindo_cadastro)
-tela_cadastro_pet.txt_data.setInputMask("0000-00-00")
-tela_cadastro_pet.txt_primeiraIda.setInputMask("0000-00-00")
-tela_cadastro_pet.txt_ultimaIda.setInputMask("0000-00-00")
 tela_cadastro_pet.btn_cadastrar.clicked.connect(cadastra)
 
 
